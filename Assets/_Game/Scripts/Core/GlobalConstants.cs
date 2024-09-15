@@ -14,29 +14,29 @@ public static class GlobalConstants
         Hallway,
         Shop,
         Enemy,
-
+        Food,
     }
 
-    public class Layers
+    public enum Layers
     {
-        public const int LAYER_INTERACT = 8;
+        Interact = 8,
     }
 
     public class SavedDataPaths
     {
         public class SavedPlayerData
         {
-            public static string DATA_PATH_PLAYER_LEVELLING = Application.persistentDataPath + "/levelling.nigger";
-            public static string DATA_PATH_PLAYER_TRANSFORM = Application.persistentDataPath + "/transform.nigger";
-            public static string DATA_PATH_PLAYER_STATISTICS = Application.persistentDataPath + "/statistics.nigger";
-            public static string DATA_PATH_PLAYER_EQUIPPED = Application.persistentDataPath + "/equipped.nigger";
-            public static string DATA_PATH_PLAYER_EFFECTS = Application.persistentDataPath + "/effects.nigger";
-            public static string DATA_PATH_PLAYER_INVENTORY = Application.persistentDataPath + "/inventory.nigger";
+            public static string DATA_PATH_PLAYER_LEVELLING = Application.persistentDataPath + "/levelling.gg";
+            public static string DATA_PATH_PLAYER_TRANSFORM = Application.persistentDataPath + "/transform.gg";
+            public static string DATA_PATH_PLAYER_STATISTICS = Application.persistentDataPath + "/statistics.gg";
+            public static string DATA_PATH_PLAYER_EQUIPPED = Application.persistentDataPath + "/equipped.gg";
+            public static string DATA_PATH_PLAYER_EFFECTS = Application.persistentDataPath + "/effects.gg";
+            public static string DATA_PATH_PLAYER_INVENTORY = Application.persistentDataPath + "/inventory.gg";
         }
 
         public class SavedGameData
         {
-            public static string DATA_PATH_GAME_MAP = Application.persistentDataPath + "/map.nigger";
+            public static string DATA_PATH_GAME_MAP = Application.persistentDataPath + "/map.gg";
         }
     }
 }

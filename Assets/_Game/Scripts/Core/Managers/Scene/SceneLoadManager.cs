@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class SceneLoadManager : MonoSingleton<SceneLoadManager>
@@ -30,9 +29,7 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
 
     private void OnMenuToGameLoadDone(SceneLoader.Scenes scenes)
     {
-        Time.timeScale = 1;
-        SpawnPlayer();
-        PlayAmbience();
+        InitGame();
         SceneLoader.OnSceneLoadDone -= OnMenuToGameLoadDone;
     }
 
@@ -57,14 +54,21 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
 
     private void OnRestartGameDone(SceneLoader.Scenes scenes)
     {
-        Time.timeScale = 1;
-        PlayAmbience();
+        InitGame();
         SceneLoader.OnSceneLoadDone -= OnRestartGameDone;
     }
 
     public bool IsSceneLoaded(SceneLoader.Scenes sceneToCheck)
     {
         return SceneLoader.IsSceneLoaded(sceneToCheck);
+    }
+
+    private void InitGame()
+    {
+        Time.timeScale = 1;
+        SpawnPlayer();
+        LocalDataStorage.Instance.InitPlayerData();
+        PlayAmbience();
     }
 
     private void SpawnPlayer()
