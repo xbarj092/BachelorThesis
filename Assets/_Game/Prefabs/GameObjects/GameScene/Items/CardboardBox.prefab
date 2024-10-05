@@ -12,6 +12,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: CardboardBox
       objectReference: {fileID: 0}
+    - target: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d64b014b80d1e99468601c67d2736684, type: 3}
+    - target: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5635671606158594644, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 526.2184
@@ -60,6 +76,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5906434041033461365}
   m_SourcePrefab: {fileID: 100100000, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+--- !u!212 &2934354632435487449 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+  m_PrefabInstance: {fileID: 7759253359568750138}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5358534490309780274 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2446353360652985608, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
@@ -77,5 +98,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93c6f5f6284252341992909731862236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemType: 6
+  _spriteRenderer: {fileID: 2934354632435487449}
   <Stats>k__BackingField: {fileID: 11400000, guid: cf303edf92787a548a8fd35120fde75c, type: 2}

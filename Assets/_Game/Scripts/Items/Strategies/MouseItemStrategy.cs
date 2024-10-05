@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MouseItemStrategy : ItemStrategyBase
@@ -7,6 +5,7 @@ public class MouseItemStrategy : ItemStrategyBase
     public override void Use(Item item)
     {
         Debug.Log("[MouseItemStrategy] - Used mouse!");
+        PlaceOnMousePosition(item);
     }
 
     public override void PickUp(Item item)

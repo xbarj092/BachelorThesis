@@ -12,6 +12,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: CastrationKit
       objectReference: {fileID: 0}
+    - target: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fb5f74d60bdfd5e4589a11be298c8529, type: 3}
+    - target: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5635671606158594644, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 526.2184
@@ -77,5 +93,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6dcf66eba942a43b4c4dad3f7fcf02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemType: 3
+  _spriteRenderer: {fileID: 4915458218231152835}
   <Stats>k__BackingField: {fileID: 11400000, guid: 317db6837dee78440b6ad7fec29fae19, type: 2}
+--- !u!212 &4915458218231152835 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+  m_PrefabInstance: {fileID: 513897548310484000}
+  m_PrefabAsset: {fileID: 0}

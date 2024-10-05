@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CardboardBoxItemStrategy : ItemStrategyBase
@@ -7,6 +5,7 @@ public class CardboardBoxItemStrategy : ItemStrategyBase
     public override void Use(Item item)
     {
         Debug.Log("[CardboardBoxItemStrategy] - Used cardboard box!");
+        PlaceOnMousePosition(item);
     }
 
     public override void PickUp(Item item)
