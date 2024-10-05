@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LocalDataStorage : MonoSingleton<LocalDataStorage>
@@ -14,5 +15,6 @@ public class LocalDataStorage : MonoSingleton<LocalDataStorage>
     public void InitPlayerData()
     {
         PlayerData.PlayerStats = new(0, 2, 2, 5, 10);
+        PlayerData.InventoryData = new(new List<Item> { null, null, null, null, null, null });
     }
 }

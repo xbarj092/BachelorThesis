@@ -14,4 +14,15 @@ public class PlayerData
             DataEvents.OnPlayerStatsChangedInvoke(_playerStats);
         }
     }
+
+    [SerializeField] private InventoryData _inventoryData;
+    public InventoryData InventoryData
+    {
+        get => _inventoryData;
+        set
+        {
+            _inventoryData = value;
+            DataEvents.OnInventoryDataChangedInvoke(_inventoryData);
+        }
+    }
 }

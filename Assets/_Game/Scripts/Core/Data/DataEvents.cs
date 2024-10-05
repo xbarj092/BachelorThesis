@@ -14,6 +14,12 @@ public static class DataEvents
         OnPlayerStatsChanged?.Invoke(playerStats);
     }
 
+    public static event Action<InventoryData> OnInventoryDataChanged;
+    public static void OnInventoryDataChangedInvoke(InventoryData inventoryData)
+    {
+        OnInventoryDataChanged?.Invoke(inventoryData);
+    }
+
     public static event Action<MapLayout> OnMapLayoutCHanged;
     public static void OnMapLayoutChangedInvoke(MapLayout mapLayout)
     {

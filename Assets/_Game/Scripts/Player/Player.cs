@@ -24,6 +24,28 @@ public class Player : MonoBehaviour
         {
             PickupFood(collision.gameObject);
         }
+        else if (collision.gameObject.CompareTag(GlobalConstants.Tags.Item.ToString()))
+        {
+            PickupItem(collision.gameObject);
+        }
+    }
+
+    private void PickupItem(GameObject gameObject)
+    {
+        if (gameObject.TryGetComponent(out Item item))
+        {
+            InventoryData inventoryData = LocalDataStorage.Instance.PlayerData.InventoryData;
+            for (int i = 0; i < inventoryData.ItemsInInventory.Count; i++)
+            {
+                if (inventoryData.ItemsInInventory[i] == null)
+                {
+                    inventoryData.ItemsInInventory[i] = item;
+                    item.PickUp();
+                    LocalDataStorage.Instance.PlayerData.InventoryData = inventoryData;
+                    break;
+                }
+            }
+        }
     }
 
     private void PickupFood(GameObject foodObject)

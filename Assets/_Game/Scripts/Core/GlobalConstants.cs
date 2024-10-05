@@ -15,6 +15,7 @@ public static class GlobalConstants
         Shop,
         Enemy,
         Food,
+        Item
     }
 
     public enum Layers
