@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CardboardBox
   m_EditorClassIdentifier: 
   SpawnChance: 0
-  Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Sprite: {fileID: 21300000, guid: d64b014b80d1e99468601c67d2736684, type: 3}
   ItemType: 6

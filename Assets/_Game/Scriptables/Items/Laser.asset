@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Laser
   m_EditorClassIdentifier: 
   SpawnChance: 0
-  Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Sprite: {fileID: 21300000, guid: 33c649978d0f0e74cbafd1ad4e2913e6, type: 3}
   ItemType: 1

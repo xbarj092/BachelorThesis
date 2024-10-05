@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Mouse
   m_EditorClassIdentifier: 
   SpawnChance: 0
-  Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Sprite: {fileID: 21300000, guid: 677551a6d78258a489fd1aa6d7ebc9ff, type: 3}
   ItemType: 2
