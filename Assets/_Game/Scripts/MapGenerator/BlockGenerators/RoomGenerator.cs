@@ -53,16 +53,16 @@ namespace MapGenerator
 
         private void GenerateBaseRooms(AStar aStar, Room roomPrefab, GameObject roomFloorPrefab)
         {
-            GenerateRoom(aStar, roomPrefab, roomFloorPrefab, 10, 10);
-            GenerateRoom(aStar, roomPrefab, roomFloorPrefab, 60, 60);
+            GenerateRoom(aStar, roomPrefab, roomFloorPrefab, 10, 10, RoomType.Start);
+            GenerateRoom(aStar, roomPrefab, roomFloorPrefab, 60, 60, RoomType.End);
         }
 
-        private void GenerateRoom(AStar aStar, Room roomPrefab, GameObject roomFloorPrefab, int x, int y)
+        private void GenerateRoom(AStar aStar, Room roomPrefab, GameObject roomFloorPrefab, int x, int y, RoomType roomType)
         {
             Room newRoom = roomPrefab;
             newRoom.transform.localScale = GetRoomScale();
             Vector2 transform = new Vector2(x, y);
-            PlaceRoom(0, transform, newRoom, aStar, roomFloorPrefab);
+            PlaceRoom(0, transform, newRoom, aStar, roomFloorPrefab, roomType);
         }
 
         /// <summary>
@@ -83,13 +83,14 @@ namespace MapGenerator
         /// <param name="transform">The position to place the room.</param>
         /// <param name="newRoom">The room to place.</param>
         /// <param name="aStar">The AStar instance used for pathfinding.</param>
-        private void PlaceRoom(int numberOfTries, Vector2 transform, Room newRoom, AStar aStar, GameObject roomFloorPrefab)
+        private void PlaceRoom(int numberOfTries, Vector2 transform, Room newRoom, AStar aStar, GameObject roomFloorPrefab, RoomType roomType = RoomType.Normal)
         {
             if (numberOfTries <= 100)
             {
                 Room instantiatedRoom = UnityEngine.Object.Instantiate(newRoom, transform, Quaternion.identity);
+                instantiatedRoom.RoomType = roomType;
                 aStar.GetGrid().GetXY(transform, out int x, out int y);
-                newRoom.Init(x, y);
+                instantiatedRoom.Init(x, y);
                 PlacedRooms.Add(instantiatedRoom);
                 roomFloorPrefab.transform.localScale = new Vector2(newRoom.transform.localScale.x, newRoom.transform.localScale.y);
                 UnityEngine.Object.Instantiate(roomFloorPrefab, new Vector2(transform.x, transform.y), Quaternion.identity);
