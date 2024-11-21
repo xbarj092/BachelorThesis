@@ -1,39 +1,42 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rigidbody;
 
+    private Vector2 _moveInput;
+
     private void Update()
     {
-        Move();
-        DepleteFood();
+        // DepleteFood();
     }
 
-    private void Move()
+    private void FixedUpdate()
     {
-        float horizontalMove = Input.GetAxis("Horizontal");
-        float verticalMove = Input.GetAxis("Vertical");
+        _rigidbody.velocity = _moveInput;
 
-        _rigidbody.velocity = new(horizontalMove, verticalMove);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag(GlobalConstants.Tags.Food.ToString()))
+        if (_moveInput.sqrMagnitude > 0.01f)
         {
-            PickupFood(collision.gameObject);
-        }
-        else if (collision.gameObject.CompareTag(GlobalConstants.Tags.Item.ToString()))
-        {
-            PickupItem(collision.gameObject);
+            float targetAngle = Mathf.Atan2(_moveInput.y, _moveInput.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, targetAngle + 90);
         }
     }
 
-    private void PickupItem(GameObject gameObject)
+    private void OnMove(InputValue inputValue)
+    {
+        _moveInput = inputValue.Get<Vector2>();
+    }
+
+    public void PickupItem(GameObject gameObject)
     {
         if (gameObject.TryGetComponent(out Item item))
         {
+            if (item.Dropped)
+            {
+                return;
+            }
+
             InventoryData inventoryData = LocalDataStorage.Instance.PlayerData.InventoryData;
             for (int i = 0; i < inventoryData.ItemsInInventory.Count; i++)
             {
@@ -48,7 +51,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void PickupFood(GameObject foodObject)
+    public void PickupFood(GameObject foodObject)
     {
         PlayerStats stats = LocalDataStorage.Instance.PlayerData.PlayerStats;
         if (stats.CurrentFood < stats.MaxFood)
@@ -78,11 +81,12 @@ public class Player : MonoBehaviour
         LocalDataStorage.Instance.PlayerData.PlayerStats = stats;
     }
 
-    private void EatFood(PlayerStats stats)
+    public void EatFood(PlayerStats stats)
     {
         if (stats.CurrentFood > 1)
         {
             stats.CurrentFood -= 1;
+            LocalDataStorage.Instance.PlayerData.PlayerStats = stats;
         }
         else
         {

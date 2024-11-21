@@ -100,3 +100,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 2934354632435487449}
   <Stats>k__BackingField: {fileID: 11400000, guid: cf303edf92787a548a8fd35120fde75c, type: 2}
+  _ghostItem: {fileID: 34412899380115424, guid: d62c04a100e0aaa46bdfbc0b379ee2a6, type: 3}
+  _interaction: {fileID: 8882970482794418080}
+--- !u!114 &8882970482794418080 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1218436209528261018, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+  m_PrefabInstance: {fileID: 7759253359568750138}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5358534490309780274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9257ad0cb9fd573448c440f1145fe1eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

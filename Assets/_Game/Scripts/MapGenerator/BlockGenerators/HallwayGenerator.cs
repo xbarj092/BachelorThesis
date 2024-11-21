@@ -18,6 +18,13 @@ namespace MapGenerator
 
         private AStar _aStar;
 
+        private MapGenerator _mapGenerator;
+
+        public HallwayGenerator(MapGenerator mapGenerator)
+        {
+            _mapGenerator = mapGenerator;
+        }
+
         /// <summary>
         /// Generates hallways between rooms.
         /// </summary>
@@ -102,7 +109,12 @@ namespace MapGenerator
                 }
             }
 
-            _paths.Add(_aStar.FindPath(closestStartNode.X, closestStartNode.Y, closestEndNode.X, closestEndNode.Y));
+            List<PathNode> pathNodes = _aStar.FindPath(closestStartNode.X, closestStartNode.Y, closestEndNode.X, closestEndNode.Y);
+            foreach (PathNode pathNode in pathNodes)
+            {
+                pathNode.NodeType = NodeType.Hallway;
+            }
+            _paths.Add(pathNodes);
         }
 
         /// <summary>
@@ -151,31 +163,31 @@ namespace MapGenerator
             {
                 if (leftNode != null && rightNode == null)
                 {
-                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector2(0.5f, 0), new Vector2(0.05f, 1));
+                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0.5f, 0), new Vector2(0.05f, 1));
                 }
                 else if (leftNode == null && rightNode != null)
                 {
-                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector2(-0.5f, 0), new Vector2(0.05f, 1));
+                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(-0.5f, 0), new Vector2(0.05f, 1));
                 }
 
-                InstantiateHallway(_hallwayPrefab, pathNode, new Vector2(0, -0.5f), new Vector2(1, 0.05f));
-                InstantiateHallway(_hallwayPrefab, pathNode, new Vector2(0, 0.5f), new Vector2(1, 0.05f));
+                InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0, -0.5f), new Vector2(1, 0.05f));
+                InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0, 0.5f), new Vector2(1, 0.05f));
             }
             else
             {
                 if (topNode == null)
                 {
-                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector2(0, 0.5f), new Vector2(1, 0.05f));
+                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0, 0.5f), new Vector2(1, 0.05f));
                 }
                 if (bottomNode == null)
                 {
-                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector2(0, -0.5f), new Vector2(1, 0.05f));
+                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0, -0.5f), new Vector2(1, 0.05f));
                 }
 
                 InstantiateHallwayChunk(pathNode, leftNode, rightNode);
             }
 
-            InstantiateHallway(_hallwayFloorPrefab, pathNode, Vector2.zero, new Vector2(1, 1));
+            InstantiateHallway(_hallwayFloorPrefab, pathNode, new Vector3(0, 0f, 0.05f), new Vector2(1, 1));
         }
 
         /// <summary>
@@ -200,16 +212,16 @@ namespace MapGenerator
         {
             if (firstNode == null && secondNode != null)
             {
-                InstantiateHallway(_hallwayPrefab, currentNode, new Vector2(-0.5f, 0), new Vector2(0.05f, 1));
+                InstantiateHallway(_hallwayPrefab, currentNode, new Vector3(-0.5f, 0), new Vector2(0.05f, 1));
             }
             else if (firstNode != null && secondNode == null)
             {
-                InstantiateHallway(_hallwayPrefab, currentNode, new Vector2(0.5f, 0), new Vector2(0.05f, 1));
+                InstantiateHallway(_hallwayPrefab, currentNode, new Vector3(0.5f, 0), new Vector2(0.05f, 1));
             }
             else if (firstNode == null && secondNode == null)
             {
-                InstantiateHallway(_hallwayPrefab, currentNode, new Vector2(0.5f, 0), new Vector2(0.05f, 1));
-                InstantiateHallway(_hallwayPrefab, currentNode, new Vector2(-0.5f, 0), new Vector2(0.05f, 1));
+                InstantiateHallway(_hallwayPrefab, currentNode, new Vector3(0.5f, 0), new Vector2(0.05f, 1));
+                InstantiateHallway(_hallwayPrefab, currentNode, new Vector3(-0.5f, 0), new Vector2(0.05f, 1));
             }
         }
 
@@ -253,10 +265,10 @@ namespace MapGenerator
         /// <param name="pathNode">Current path node.</param>
         /// <param name="hallwayOffset">Offset for the hallway wall.</param>
         /// <param name="hallwayScale">Scale for the hallway wall.</param>
-        private void InstantiateHallway(GameObject prefab, PathNode pathNode, Vector2 hallwayOffset, Vector2 hallwayScale)
+        private void InstantiateHallway(GameObject prefab, PathNode pathNode, Vector3 hallwayOffset, Vector2 hallwayScale)
         {
-            Vector2 wallPosition = new Vector2(pathNode.X, pathNode.Y) + hallwayOffset;
-            UnityEngine.Object.Instantiate(prefab, wallPosition, Quaternion.identity).transform.localScale = hallwayScale;
+            Vector3 wallPosition = new Vector3(pathNode.X, pathNode.Y) + hallwayOffset;
+            UnityEngine.Object.Instantiate(prefab, wallPosition, Quaternion.identity, _mapGenerator.LayoutSpawnTransform).transform.localScale = hallwayScale;
         }
     }
 }

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CastrationKitItemStrategy : ItemStrategyBase
 {
+    public override bool CanUse(Item item)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void Use(Item item)
     {
         Debug.Log("[CastrationKitItemStrategy] - Used castration kit!");

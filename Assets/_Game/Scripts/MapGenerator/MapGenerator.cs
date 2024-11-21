@@ -11,7 +11,11 @@ namespace MapGenerator
         [SerializeField] private GameObject _hallwayPrefab;
         [SerializeField] private GameObject _hallwayFloorPrefab;
 
+        public Transform LayoutSpawnTransform;
+        public Transform ItemSpawnTransform;
+
         private AStar _aStar;
+        public AStar AStar => _aStar;
         private PrimsAlg _primsAlg;
         private RoomGenerator _roomGenerator;
         private HallwayGenerator _hallwayGenerator;
@@ -24,9 +28,9 @@ namespace MapGenerator
         {
             _primsAlg = new PrimsAlg();
             _bowyerWatson = new BowyerWatson();
-            _aStar = new AStar(DUNGEON_SIZE_X + 10, DUNGEON_SIZE_Y + 10);
-            _roomGenerator = new RoomGenerator();
-            _hallwayGenerator = new HallwayGenerator();
+            _aStar = new AStar();
+            _roomGenerator = new RoomGenerator(this);
+            _hallwayGenerator = new HallwayGenerator(this);
         }
 
         private void Start()

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ClothespinItemStrategy : ItemStrategyBase
 {
+    public override bool CanUse(Item item)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void Use(Item item)
     {
         Debug.Log("[ClothespinItemStrategy] - Used clothespin!");

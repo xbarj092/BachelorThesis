@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class CardboardBoxItemStrategy : ItemStrategyBase
 {
+    public override bool CanUse(Item item)
+    {
+        return true;
+    }
+
     public override void Use(Item item)
     {
         Debug.Log("[CardboardBoxItemStrategy] - Used cardboard box!");

@@ -93,6 +93,17 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
   m_PrefabInstance: {fileID: 6563974227048051689}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5476142464977042035 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1218436209528261018, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+  m_PrefabInstance: {fileID: 6563974227048051689}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8855443163729975009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9257ad0cb9fd573448c440f1145fe1eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8855443163729975009 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2446353360652985608, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
@@ -112,3 +123,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 1729777961005508362}
   <Stats>k__BackingField: {fileID: 11400000, guid: 964778f767154d944873a6f9cfb0f685, type: 2}
+  _ghostItem: {fileID: 34412899380115424, guid: d62c04a100e0aaa46bdfbc0b379ee2a6, type: 3}
+  _interaction: {fileID: 5476142464977042035}

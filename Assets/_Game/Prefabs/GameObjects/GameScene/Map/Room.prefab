@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7955139720716424925}
   - component: {fileID: 5338255670422564322}
   - component: {fileID: -8601652982514350325}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Room
   m_TagString: Room
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -112,6 +112,7 @@ MonoBehaviour:
       Value: {fileID: 3013150036535382391, guid: 2050bf487a5895a4cab4e2bf988feb8f, type: 3}
     - Key: 6
       Value: {fileID: 5906434041033461365, guid: b509a83eb2b369e4db9b2823e7ed224a, type: 3}
+  _kitten: {fileID: 5434703141080909983, guid: 7f5ce41964dae14499f39870e0fccff1, type: 3}
   RoomType: 0
   _spawnChances:
     _serializedList:

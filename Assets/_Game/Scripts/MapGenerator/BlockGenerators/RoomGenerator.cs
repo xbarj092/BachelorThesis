@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +9,13 @@ namespace MapGenerator
     internal class RoomGenerator
     {
         private List<Room> _placedRooms = new List<Room>();
+        private MapGenerator _mapGenerator;
+
+        public RoomGenerator(MapGenerator mapGenerator)
+        {
+            _mapGenerator = mapGenerator;
+        }
+
         /// <summary>
         /// Gets the list of rooms placed in the dungeon.
         /// </summary>
@@ -61,7 +67,7 @@ namespace MapGenerator
         {
             Room newRoom = roomPrefab;
             newRoom.transform.localScale = GetRoomScale();
-            Vector2 transform = new Vector2(x, y);
+            Vector2 transform = new(x, y);
             PlaceRoom(0, transform, newRoom, aStar, roomFloorPrefab, roomType);
         }
 
@@ -71,8 +77,8 @@ namespace MapGenerator
         /// <returns>The scale of the new room.</returns>
         private Vector2 GetRoomScale()
         {
-            int randomEvenX = UnityEngine.Random.Range(1, 4) * 2;
-            int randomEvenY = UnityEngine.Random.Range(1, 4) * 2;
+            int randomEvenX = Random.Range(1, 4) * 2;
+            int randomEvenY = Random.Range(1, 4) * 2;
             return new Vector2(randomEvenX + 1, randomEvenY + 1);
         }
 
@@ -87,14 +93,14 @@ namespace MapGenerator
         {
             if (numberOfTries <= 100)
             {
-                Room instantiatedRoom = UnityEngine.Object.Instantiate(newRoom, transform, Quaternion.identity);
+                Room instantiatedRoom = Object.Instantiate(newRoom, transform, Quaternion.identity, _mapGenerator.LayoutSpawnTransform);
                 instantiatedRoom.RoomType = roomType;
                 aStar.GetGrid().GetXY(transform, out int x, out int y);
-                instantiatedRoom.Init(x, y);
+                instantiatedRoom.Init(x, y, _mapGenerator);
                 PlacedRooms.Add(instantiatedRoom);
                 roomFloorPrefab.transform.localScale = new Vector2(newRoom.transform.localScale.x, newRoom.transform.localScale.y);
-                UnityEngine.Object.Instantiate(roomFloorPrefab, new Vector2(transform.x, transform.y), Quaternion.identity);
-                SetRoomNodes(newRoom, aStar);
+                GameObject roomObject = Object.Instantiate(roomFloorPrefab, new Vector2(transform.x, transform.y), Quaternion.identity, _mapGenerator.LayoutSpawnTransform);
+                SetRoomNodes(roomObject, aStar);
             }
         }
 
@@ -103,9 +109,9 @@ namespace MapGenerator
         /// </summary>
         /// <param name="newRoom">The newly placed room.</param>
         /// <param name="aStar">The AStar instance used for pathfinding.</param>
-        private void SetRoomNodes(Room newRoom, AStar aStar)
+        private void SetRoomNodes(GameObject newRoom, AStar aStar)
         {
-            Vector2 roomPosition = newRoom.transform.position;
+            Vector2 roomPosition = newRoom.transform.localPosition;
             Vector2 roomScale = newRoom.transform.localScale;
 
             int minX = Mathf.FloorToInt(roomPosition.x - roomScale.x / 2.1f);
@@ -113,9 +119,9 @@ namespace MapGenerator
             int minY = Mathf.FloorToInt(roomPosition.y - roomScale.y / 2.1f);
             int maxY = Mathf.CeilToInt(roomPosition.y + roomScale.y / 2.1f);
 
-            for (int x = minX; x < maxX; x++)
+            for (int x = minX + 1; x < maxX; x++)
             {
-                for (int y = minY; y < maxY; y++)
+                for (int y = minY + 1; y < maxY; y++)
                 {
                     PathNode pathNode = aStar.GetGrid().GetGridObject(x, y);
 
@@ -148,7 +154,7 @@ namespace MapGenerator
 
                 BuildRoomWalls(aStar, room, startXMin, startXMax, startYMin, startYMax);
 
-                UnityEngine.Object.Destroy(room.gameObject);
+                Object.Destroy(room.gameObject);
             }
         }
 
@@ -177,7 +183,7 @@ namespace MapGenerator
             PathNode roomNode = aStar.GetGrid().GetGridObject(x, y);
             if (roomNode != null && IsOuterNode(x, y, startXMin, startXMax, startYMin, startYMax))
             {
-                Vector2 tilePosition = new Vector2(x, y);
+                Vector2 tilePosition = new(x, y);
                 if (x == startXMin || x == startXMax || y == startYMin || y == startYMax)
                 {
                     if (x == startXMin && y == startYMin) // Bottom-left corner
@@ -248,7 +254,7 @@ namespace MapGenerator
         private void BuildSideWall(Room room, Vector2 tilePosition, Vector2 wallOffset, Vector2 wallScale)
         {
             Vector2 wallPosition = tilePosition + wallOffset;
-            UnityEngine.Object.Instantiate(room, wallPosition, Quaternion.identity).transform.localScale = wallScale;
+            Object.Instantiate(room, wallPosition, Quaternion.identity, _mapGenerator.LayoutSpawnTransform).transform.localScale = wallScale;
         }
     }
 }

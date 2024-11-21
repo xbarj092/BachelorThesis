@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1142952360133680930}
   - component: {fileID: 9142481910927600761}
   - component: {fileID: 6612681897695036894}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hallway
   m_TagString: Hallway
   m_Icon: {fileID: 0}

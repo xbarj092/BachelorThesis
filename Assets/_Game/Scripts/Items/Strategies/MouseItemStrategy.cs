@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class MouseItemStrategy : ItemStrategyBase
 {
+    public override bool CanUse(Item item)
+    {
+        return true;
+    }
+
     public override void Use(Item item)
     {
         Debug.Log("[MouseItemStrategy] - Used mouse!");

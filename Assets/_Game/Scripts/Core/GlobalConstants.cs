@@ -15,12 +15,14 @@ public static class GlobalConstants
         Shop,
         Enemy,
         Food,
-        Item
+        Item,
+        Player
     }
 
     public enum Layers
     {
-        Interact = 8,
+        Map = 8,
+        Kitten = 11
     }
 
     public class SavedDataPaths

@@ -8,6 +8,7 @@ TagManager:
   - Room
   - Food
   - Item
+  - PlayerInteraction
   layers:
   - Default
   - TransparentFX
@@ -16,15 +17,15 @@ TagManager:
   - Water
   - UI
   - 
+  - Player
+  - Map
+  - Player Noise
   - 
+  - Kitten
   - 
+  - Interact
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - GhostObject
   - 
   - 
   - 

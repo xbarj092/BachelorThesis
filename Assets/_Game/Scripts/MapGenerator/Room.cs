@@ -7,6 +7,7 @@ namespace MapGenerator
     public class Room : MonoBehaviour
     {
         [SerializeField] private SerializedDictionary<ItemType, Item> _items = new();
+        [SerializeField] private Kitten _kitten;
 
         public RoomType RoomType;
 
@@ -15,8 +16,11 @@ namespace MapGenerator
         [SerializeField] private SerializedDictionary<RoomType, ItemSpawnChance> _spawnChances = new();
         private ItemSpawnChance _spawnChance;
 
-        public void Init(int x, int y)
+        private MapGenerator _mapGenerator;
+
+        public void Init(int x, int y, MapGenerator mapGenerator)
         {
+            _mapGenerator = mapGenerator;
             _gridCoordinates = new Vector2Int(x, y);
             _spawnChance = _spawnChances[RoomType];
             SpawnItems();
@@ -24,6 +28,7 @@ namespace MapGenerator
 
         private void SpawnItems()
         {
+            // Instantiate(_kitten, transform.position, Quaternion.identity);
             foreach (KeyValuePair<ItemType, float> spawnChances in _spawnChance.ItemSpawnChances)
             {
                 int randomNumber = Random.Range(0, 6);
@@ -44,7 +49,7 @@ namespace MapGenerator
                     float spawnY = Random.Range(minZ, maxZ);
 
                     Vector2 spawnPosition = new(spawnX, spawnY);
-                    Instantiate(_items[spawnChances.Key], spawnPosition, Quaternion.identity);
+                    Instantiate(_items[spawnChances.Key], spawnPosition, Quaternion.identity, _mapGenerator.ItemSpawnTransform);
                 }
             }
         }

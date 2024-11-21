@@ -2,6 +2,7 @@ using UnityEngine;
 
 public abstract class ItemStrategyBase : IItemStrategy
 {
+    public abstract bool CanUse(Item item);
     public abstract void Use(Item item);
     public virtual void PickUp(Item item)
     {
@@ -10,8 +11,22 @@ public abstract class ItemStrategyBase : IItemStrategy
 
     protected void PlaceOnMousePosition(Item item)
     {
-        Vector3 mousePosition = Input.mousePosition;
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 0));
-        Object.Instantiate(item, worldPosition, Quaternion.identity);
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0;
+
+        PlayerInteraction player = GameObject.FindFirstObjectByType<PlayerInteraction>();
+        Vector3 playerPosition = player.transform.position;
+
+        Vector3 validPosition = player.GetValidPlacementPosition(playerPosition, mousePosition);
+
+        item.gameObject.transform.position = validPosition;
+        item.gameObject.SetActive(true);
+
+        InventoryData inventory = LocalDataStorage.Instance.PlayerData.InventoryData;
+        if (inventory.ItemsInInventory[inventory.CurrentHighlightIndex] == item)
+        {
+            inventory.ItemsInInventory[inventory.CurrentHighlightIndex] = null;
+            LocalDataStorage.Instance.PlayerData.InventoryData = inventory;
+        }
     }
 }

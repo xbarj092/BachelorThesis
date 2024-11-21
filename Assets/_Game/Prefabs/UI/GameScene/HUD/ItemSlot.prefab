@@ -89,6 +89,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemImage: {fileID: 7060490216649242077}
+  _borderImage: {fileID: 1425977572729228700}
+  _defaultSprite: {fileID: 21300000, guid: 3a7c2e0c79a211548882099dba259553, type: 3}
+  _highlightedSprite: {fileID: 21300000, guid: 940df96e24221ab4abb81abc55d90c2f, type: 3}
 --- !u!1 &3678259022874191572
 GameObject:
   m_ObjectHideFlags: 0
