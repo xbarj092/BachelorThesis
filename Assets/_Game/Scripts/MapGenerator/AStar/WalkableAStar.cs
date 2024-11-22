@@ -15,7 +15,7 @@ public class WalkableAStar : AStar
     /// <returns>True if the node is walkable, otherwise false.</returns>
     internal override bool IsNodeWalkable(PathNode node)
     {
-        return node.NodeType == NodeType.Room || node.NodeType == NodeType.Hallway;
+        return node?.NodeType == NodeType.Room || node?.NodeType == NodeType.Hallway;
     }
 
     internal override int CalculateDistanceCost(PathNode startNode, PathNode endNode)
@@ -24,7 +24,7 @@ public class WalkableAStar : AStar
         int yDistance = Mathf.Abs(startNode.Y - endNode.Y);
 
         int straightCost = 10;
-        int diagonalCost = 14;
+        int diagonalCost = 20;
 
         int remaining = Mathf.Abs(xDistance - yDistance);
         return diagonalCost * Mathf.Min(xDistance, yDistance) + straightCost * remaining;

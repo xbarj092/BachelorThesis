@@ -19,6 +19,11 @@ public class TrappedState : BaseState
             return runningAwayState;
         }
 
+        if (!_kitten.IsTrapped && _brain.GetState(StateType.Idle, out BaseState idleState))
+        {
+            return idleState;
+        }
+
         return null;
     }
 

@@ -14,7 +14,7 @@ public class RoamingState : BaseState
     {
         Debug.Log("[RoamingState] - entered roaming state");
 
-        Vector3 targetPosition = _brain.PlayerTransform.localPosition;
+        Vector3 targetPosition = FindFirstObjectByType<Player>().transform.position;
         _brain.AStar.GetGrid().GetXY(_kitten.transform.localPosition, out int kittenX, out int kittenY);
         _brain.AStar.GetGrid().GetXY(targetPosition, out int targetX, out int targetY);
         _path = _brain.AStar.FindPath(kittenX, kittenY, targetX, targetY);
@@ -77,7 +77,7 @@ public class RoamingState : BaseState
             return matingState;
         }
 
-        if ((_kitten.IsInRangeOfPlayer || _kitten.CanSeePlayer) && _brain.GetState(StateType.Focused, out BaseState focusedState))
+        if ((_kitten.IsInRangeOfPlayer || _kitten.CanSeeTarget) && _brain.GetState(StateType.Focused, out BaseState focusedState))
         {
             return focusedState;
         }

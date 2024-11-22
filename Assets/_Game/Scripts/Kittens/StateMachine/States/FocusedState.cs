@@ -13,100 +13,70 @@ public class FocusedState : BaseState
 
     private float _timeoutTimer;
 
+    private Transform _currentTarget;
+
+    private Vector3 _lastKnownPosition;
+
     public override void OnStateEnter()
     {
-        Debug.Log("[FocusedState] - entered focused state");
+        Debug.Log("[FocusedState] - Entered focused state");
         _path.Clear();
         _currentPathIndex = 0;
         _timeoutTimer = 0;
+
+        UpdateFocusTarget();
+        if (_currentTarget != null)
+        {
+            _lastKnownPosition = _currentTarget.position;
+        }
     }
 
     public override BaseState ExecuteState()
     {
         if (_kitten.IsDead && _brain.GetState(StateType.Death, out BaseState deathState))
         {
-            _kitten.CanSeePlayer = false;
+            _kitten.CanSeeTarget = false;
             return deathState;
         }
-
         if (_kitten.IsTrapped && _brain.GetState(StateType.Trapped, out BaseState trappedState))
         {
-            _kitten.CanSeePlayer = false;
+            _kitten.CanSeeTarget = false;
             return trappedState;
         }
-
         if (_kitten.IsRunningAway && _brain.GetState(StateType.RunningAway, out BaseState runningAwayState))
         {
-            _kitten.CanSeePlayer = false;
+            _kitten.CanSeeTarget = false;
             return runningAwayState;
         }
 
-        if (_kitten.IsInRangeOfPlayer || _kitten.CanSeePlayer)
+        UpdateFocusTarget();
+
+        if (_currentTarget != null)
         {
-            _timeoutTimer = 0;
-            _path.Clear();
-            MoveDirectlyToTarget(_brain.PlayerTransform.position);
-            return null;
-        }
+            _lastKnownPosition = _currentTarget.position;
 
-        _timeoutTimer += Time.deltaTime;
-
-        if (_timeoutTimer >= _timeoutDuration && _brain.GetState(StateType.Idle, out BaseState idleState))
-        {
-            return idleState;
-        }
-
-        if (_path.Count == 0 || _currentPathIndex >= _path.Count)
-        {
-            Vector3 lastKnownPosition = _brain.PlayerTransform.localPosition;
-            _brain.AStar.GetGrid().GetXY(_kitten.transform.localPosition, out int kittenX, out int kittenY);
-            _brain.AStar.GetGrid().GetXY(lastKnownPosition, out int targetX, out int targetY);
-            _path = _brain.AStar.FindPath(kittenX, kittenY, targetX, targetY);
-
-            if (_path == null || _path.Count == 0)
+            if (_kitten.IsInRangeOfPlayer || _kitten.CanSeeTarget)
             {
-                _isPathSet = false;
-
-                List<Vector2Int> neighborOffsets = new()
-                {
-                    new(-1, -1),
-                    new(1, -1),
-                    new(-1, 1),
-                    new(1, 1),
-                    new(1, 0),
-                    new(-1, 0),
-                    new(0, 1),
-                    new(0, -1)
-                };
-
-                foreach (Vector2Int offset in neighborOffsets)
-                {
-                    int neighborX = targetX + offset.x;
-                    int neighborY = targetY + offset.y;
-
-                    if (_brain.AStar.IsNodeWalkable(_brain.AStar.GetGrid().GetGridObject(neighborX, neighborY)))
-                    {
-                        _path = _brain.AStar.FindPath(kittenX, kittenY, neighborX, neighborY);
-
-                        if (_path != null && _path.Count > 0)
-                        {
-                            _currentPathIndex = 1;
-                            _isPathSet = true;
-                            break;
-                        }
-                    }
-                }
+                _timeoutTimer = 0;
+                _path.Clear();
+                MoveDirectlyToTarget(_currentTarget.position);
+                return null;
             }
             else
             {
-                _currentPathIndex = 1;
-                _isPathSet = true;
+                _currentTarget = null;
             }
         }
 
-        if (_isPathSet)
+        if (_currentTarget == null)
         {
-            FollowPath();
+            FollowPathTo(_lastKnownPosition);
+        }
+
+        _timeoutTimer += Time.deltaTime;
+        if (_timeoutTimer >= _timeoutDuration && _brain.GetState(StateType.Idle, out BaseState idleState))
+        {
+            return idleState;
         }
 
         return null;
@@ -115,24 +85,59 @@ public class FocusedState : BaseState
     public override void OnStateExit()
     {
         _path.Clear();
+        _currentTarget = null;
         Debug.Log("[FocusedState] - exited focused state");
     }
 
-    private void FollowPath()
+    private void UpdateFocusTarget()
+    {
+        if (_brain.MouseTransform != null)
+        {
+            _currentTarget = _brain.MouseTransform;
+        }
+        else if (_brain.LaserTransform != null)
+        {
+            _currentTarget = _brain.LaserTransform;
+        }
+        else if (_brain.PlayerTransform != null)
+        {
+            _currentTarget = _brain.PlayerTransform;
+        }
+        else
+        {
+            _currentTarget = null;
+        }
+    }
+
+    private void FollowPathTo(Vector3 targetPosition)
     {
         if (_path.Count == 0 || _currentPathIndex >= _path.Count)
         {
-            return;
+            _brain.AStar.GetGrid().GetXY(_kitten.transform.localPosition, out int kittenX, out int kittenY);
+            _brain.AStar.GetGrid().GetXY(targetPosition, out int targetX, out int targetY);
+            _path = _brain.AStar.FindPath(kittenX, kittenY, targetX, targetY);
+
+            if (_path == null || _path.Count == 0)
+            {
+                _path = new();
+                _isPathSet = false;
+                return;
+            }
+
+            _currentPathIndex = _path.Count > 1 ? 1 : 0;
+            _isPathSet = true;
         }
 
-        PathNode currentNode = _path[_currentPathIndex];
-        Vector3 targetPosition = _brain.AStar.Grid.GetWorldPosition(currentNode.X, currentNode.Y);
-
-        MoveDirectlyToTarget(targetPosition);
-
-        if (Vector3.Distance(_kitten.transform.position, targetPosition) <= 0.1f)
+        if (_isPathSet)
         {
-            _currentPathIndex++;
+            PathNode currentNode = _path[_currentPathIndex];
+            Vector3 nodePosition = _brain.AStar.Grid.GetWorldPosition(currentNode.X, currentNode.Y);
+            MoveDirectlyToTarget(nodePosition);
+
+            if (Vector3.Distance(_kitten.transform.position, nodePosition) <= 0.1f)
+            {
+                _currentPathIndex++;
+            }
         }
     }
 

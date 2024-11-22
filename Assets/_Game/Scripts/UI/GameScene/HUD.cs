@@ -7,6 +7,8 @@ public class HUD : MonoBehaviour
     [SerializeField] private List<Image> _foodUnits;
     [SerializeField] private List<ItemSlot> _itemSlots;
 
+    private int _currentHighlightIndex;
+
     private void OnEnable()
     {
         DataEvents.OnPlayerStatsChanged += ChangeFoodAmount;
@@ -22,11 +24,6 @@ public class HUD : MonoBehaviour
     {
         DataEvents.OnPlayerStatsChanged -= ChangeFoodAmount;
         DataEvents.OnInventoryDataChanged -= ChangeInventoryItems;
-    }
-
-    private void Update()
-    {
-        HandleMouseWheelInput();
     }
 
     private void ChangeFoodAmount(PlayerStats playerStats)
@@ -57,19 +54,13 @@ public class HUD : MonoBehaviour
 
         if (_itemSlots.Count > 0)
         {
-            HighlightItem(inventoryData.CurrentHighlightIndex);
-        }
-    }
+            if (_currentHighlightIndex != inventoryData.CurrentHighlightIndex)
+            {
+                RemoveHighlight(_currentHighlightIndex);
+            }
 
-    private void HandleMouseWheelInput()
-    {
-        if (UnityEngine.InputSystem.Mouse.current.scroll.y.ReadValue() > 0)
-        {
-            ChangeHighlight(-1);
-        }
-        else if (UnityEngine.InputSystem.Mouse.current.scroll.y.ReadValue() < 0)
-        {
-            ChangeHighlight(1);
+            HighlightItem(inventoryData.CurrentHighlightIndex);
+            _currentHighlightIndex = inventoryData.CurrentHighlightIndex;
         }
     }
 

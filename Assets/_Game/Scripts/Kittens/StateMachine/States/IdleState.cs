@@ -27,7 +27,7 @@ public class IdleState : BaseState
             return matingState;
         }
 
-        if ((_kitten.IsInRangeOfPlayer || _kitten.CanSeePlayer) && _brain.GetState(StateType.Focused, out BaseState focusedState))
+        if ((_kitten.IsInRangeOfPlayer || _kitten.CanSeeTarget) && _brain.GetState(StateType.Focused, out BaseState focusedState))
         {
             return focusedState;
         }

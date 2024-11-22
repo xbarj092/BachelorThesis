@@ -1,22 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CastrationKitItemStrategy : ItemStrategyBase
 {
+    private Kitten _kitten;
+
     public override bool CanUse(Item item)
     {
-        throw new System.NotImplementedException();
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+        if (hit.collider != null && hit.collider.TryGetComponent(out Kitten kitten))
+        {
+            _kitten = kitten;
+            return true;
+        }
+
+        return false;
     }
 
     public override void Use(Item item)
     {
-        Debug.Log("[CastrationKitItemStrategy] - Used castration kit!");
+        _kitten.IsCastrated = true;
+        LocalDataStorage.Instance.PlayerData.InventoryData.RemoveItemFromInventory(item);
+        Debug.Log("[CastrationKitItemStrategy] - Used castration kit");
     }
 
     public override void PickUp(Item item)
     {
         base.PickUp(item);
-        Debug.Log("[ClothespinItemStrategy] - Picked up castration kit!");
+        Debug.Log("[CastrationKitItemStrategy] - Picked up castration kit!");
     }
 }

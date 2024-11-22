@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -88,9 +89,97 @@ public class PlayerInteraction : MonoBehaviour
                 _ghostRenderer.material.SetInt("_Outlined", CanItemBePlaced() ? 0 : 1);
             }
         }
+
+        HandleMouseWheelInput();
+        if (_ghostItem != null)
+        {
+            _ghostItem.transform.rotation = Quaternion.identity;
+        }
     }
 
-    // Actions
+    private void HandleMouseWheelInput()
+    {
+        if (UnityEngine.InputSystem.Mouse.current.scroll.y.ReadValue() > 0)
+        {
+            ChangeSelectedItem(-1);
+        }
+        else if (UnityEngine.InputSystem.Mouse.current.scroll.y.ReadValue() < 0)
+        {
+            ChangeSelectedItem(1);
+        }
+    }
+
+    private void ChangeSelectedItem(int direction)
+    {
+        InventoryData inventoryData = LocalDataStorage.Instance.PlayerData.InventoryData;
+
+        if (inventoryData.ItemsInInventory.Count == 0)
+        {
+            return;
+        }
+
+        int nextHighlight = LocalDataStorage.Instance.PlayerData.InventoryData.CurrentHighlightIndex;
+        for (int i = 0; i < inventoryData.ItemsInInventory.Count; i++)
+        {
+            nextHighlight = (nextHighlight + direction + inventoryData.ItemsInInventory.Count) % inventoryData.ItemsInInventory.Count;
+            if (inventoryData.ItemsInInventory[nextHighlight] != null)
+            {
+                break;
+            }
+        }
+
+        if (inventoryData.ItemsInInventory[nextHighlight] == null)
+        {
+            return;
+        }
+
+        UpdateGhostOrCarryingItemVisuals(inventoryData.ItemsInInventory[nextHighlight]);
+
+        inventoryData.CurrentHighlightIndex = nextHighlight;
+        LocalDataStorage.Instance.PlayerData.InventoryData = inventoryData;
+    }
+
+    private void UpdateGhostOrCarryingItemVisuals(Item selectedItem)
+    {
+        if (selectedItem == null)
+        {
+            return;
+        }
+
+        if (_carryingItem != null)
+        {
+            InventoryData inventoryData = LocalDataStorage.Instance.PlayerData.InventoryData;
+            if (!inventoryData.ItemsInInventory.Contains(_carryingItem))
+            {
+                if (inventoryData.HasRoomInInventory())
+                {
+                    PlaceInInventory();
+                }
+                else
+                {
+                    _carryingItem.transform.position = transform.position;
+                    _carryingItem.gameObject.SetActive(true);
+                    _carryingItem.Dropped = true;
+                    _carryingItem.IsPickedUp(false);
+                }
+            }
+
+            DestroyGhostItem();
+            _carryingItem = selectedItem;
+            StartCoroutine(HideItemAndCreateGhost(selectedItem));
+        }
+
+        if (_highlightedItem != null)
+        {
+            _highlightedItem.Unhighlight();
+        }
+
+        if (selectedItem != null)
+        {
+            _highlightedItem = selectedItem;
+            _highlightedItem.Highlight();
+        }
+    }
 
     private void PickUpFromGroundOrUse()
     {
@@ -151,6 +240,7 @@ public class PlayerInteraction : MonoBehaviour
 
         item.transform.position = transform.position;
         item.gameObject.SetActive(true);
+        item.IsPickedUp(false);
         item.Dropped = true;
 
         if (_carryingItem != null)
@@ -158,7 +248,11 @@ public class PlayerInteraction : MonoBehaviour
             DestroyGhostItem();
         }
 
-        inventoryData.ItemsInInventory[inventoryData.CurrentHighlightIndex] = null;
+        if (inventoryData.ItemsInInventory.Contains(item))
+        {
+            inventoryData.ItemsInInventory[inventoryData.CurrentHighlightIndex] = null;
+        }
+
         LocalDataStorage.Instance.PlayerData.InventoryData = inventoryData;
     }
 
@@ -173,6 +267,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             case ItemUsageType.SingleUse:
                 _carryingItem.UseStart();
+                DestroyGhostItem();
                 break;
 
             case ItemUsageType.HoldToUse:
@@ -180,8 +275,6 @@ public class PlayerInteraction : MonoBehaviour
                 _carryingItem.UseStart();
                 break;
         }
-
-        DestroyGhostItem();
     }
 
     private void StopUsingItem()
@@ -194,8 +287,6 @@ public class PlayerInteraction : MonoBehaviour
         _isUsingItem = false;
         _carryingItem.UseStop();
     }
-
-    // Helpers
 
     private void PlaceItem()
     {
@@ -224,6 +315,7 @@ public class PlayerInteraction : MonoBehaviour
             return;
         }
 
+        item.IsPickedUp(true);
         _carryingItem = item;
         StartCoroutine(HideItemAndCreateGhost(item));
     }
@@ -232,9 +324,30 @@ public class PlayerInteraction : MonoBehaviour
     {
         yield return null;
         item.gameObject.SetActive(false);
+        item.IsPickedUp(true);
+
+        if (item.Stats.ItemType == ItemType.Laser)
+        {
+            ((Laser)item).OnBatteryChanged += OnBatteryChanged;
+        }
 
         _ghostItem = Instantiate(item.GetGhostItem(), transform);
         _ghostRenderer = _ghostItem.GetComponent<SpriteRenderer>();
+    }
+
+    private void OnBatteryChanged(float battery)
+    {
+        if (battery > 0)
+        {
+            // update some UI?
+        }
+        else
+        {
+            ((Laser)_carryingItem).OnBatteryChanged -= OnBatteryChanged;
+            LocalDataStorage.Instance.PlayerData.InventoryData.RemoveItemFromInventory(_carryingItem);
+            StopUsingItem();
+            DestroyGhostItem();
+        }
     }
 
     private void HighlightItem(Item item)

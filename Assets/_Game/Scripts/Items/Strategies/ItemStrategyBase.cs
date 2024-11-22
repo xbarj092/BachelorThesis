@@ -22,11 +22,6 @@ public abstract class ItemStrategyBase : IItemStrategy
         item.gameObject.transform.position = validPosition;
         item.gameObject.SetActive(true);
 
-        InventoryData inventory = LocalDataStorage.Instance.PlayerData.InventoryData;
-        if (inventory.ItemsInInventory[inventory.CurrentHighlightIndex] == item)
-        {
-            inventory.ItemsInInventory[inventory.CurrentHighlightIndex] = null;
-            LocalDataStorage.Instance.PlayerData.InventoryData = inventory;
-        }
+        LocalDataStorage.Instance.PlayerData.InventoryData.RemoveItemFromInventory(item);
     }
 }

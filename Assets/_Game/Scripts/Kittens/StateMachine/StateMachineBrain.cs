@@ -11,6 +11,9 @@ public class StateMachineBrain : MonoBehaviour
     public WalkableAStar AStar;
     public Transform PlayerTransform;
 
+    public Transform MouseTransform;
+    public Transform LaserTransform;
+
     public IEnumerator SetUpBrain(Kitten kittenToControl)
     {
         yield return new WaitForSeconds(0.5f);

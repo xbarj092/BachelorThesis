@@ -3,6 +3,7 @@ using UnityEngine;
 public class ItemInteractions : MonoBehaviour
 {
     [SerializeField] private CircleCollider2D _collider;
+    [SerializeField] private Item _item;
 
     private void OnEnable()
     {
@@ -34,6 +35,19 @@ public class ItemInteractions : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.TryGetComponent(out Kitten kitten))
+        {
+            if (_item == null || !_item.Used)
+            {
+                return;
+            }
+
+            if (_item?.Stats.ItemType == ItemType.CardboardBox && gameObject.CompareTag(GlobalConstants.Tags.Item.ToString()))
+            {
+                kitten.IsTrapped = true;
+            }
+        }
+
         if (collision.gameObject.TryGetComponent(out Player player))
         {
             if (gameObject.CompareTag(GlobalConstants.Tags.Item.ToString()))

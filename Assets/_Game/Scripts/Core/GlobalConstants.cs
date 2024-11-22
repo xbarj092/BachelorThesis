@@ -22,7 +22,8 @@ public static class GlobalConstants
     public enum Layers
     {
         Map = 8,
-        Kitten = 11
+        Kitten = 11,
+        Player = 7
     }
 
     public class SavedDataPaths

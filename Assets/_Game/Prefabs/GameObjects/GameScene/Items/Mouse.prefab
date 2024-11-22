@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4263060445795071273, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+      propertyPath: _item
+      value: 
+      objectReference: {fileID: 413877706589494400}
     - target: {fileID: 2446353360652985608, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
       propertyPath: m_Name
       value: Mouse
@@ -123,5 +127,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 1729777961005508362}
   <Stats>k__BackingField: {fileID: 11400000, guid: 964778f767154d944873a6f9cfb0f685, type: 2}
-  _ghostItem: {fileID: 34412899380115424, guid: d62c04a100e0aaa46bdfbc0b379ee2a6, type: 3}
+  _ghostItem: {fileID: 8855443163729975009, guid: 15238bb923500ed4c823badb62faa1c3, type: 3}
   _interaction: {fileID: 5476142464977042035}
+  UsageType: 0
+  Dropped: 0
+  Used: 0

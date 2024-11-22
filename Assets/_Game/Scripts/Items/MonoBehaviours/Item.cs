@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] protected SpriteRenderer _spriteRenderer;
     [field: SerializeField] public UseableItem Stats { get; private set; }
 
     [SerializeField] private GameObject _ghostItem;
@@ -11,12 +11,13 @@ public class Item : MonoBehaviour
 
     private ItemStrategyBase _strategy;
     private StrategyFactory _strategyFactory = new();
-    private bool _pickedUp;
+    protected bool _pickedUp;
 
     public ItemUsageType UsageType;
     public bool IsInteractable => _interaction.Interactable;
 
     public bool Dropped;
+    public bool Used;
 
     public event Action OnItemOutOfRange;
     private void OnItemOutOfRangeInvoke()
@@ -24,7 +25,7 @@ public class Item : MonoBehaviour
         OnItemOutOfRange?.Invoke();
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _strategy = _strategyFactory.CreateStrategy(Stats.ItemType);
         _spriteRenderer.sprite = Stats.Sprite;
@@ -47,12 +48,14 @@ public class Item : MonoBehaviour
 
     public virtual void UseStart()
     {
+        Used = true;
         _strategy.Use(this);
     }
 
     public virtual void UseStop()
     {
-        // TODO
+        Used = false;
+        ((LaserItemStrategy)_strategy).StopCoroutines();
     }
 
     public virtual void PickUp()

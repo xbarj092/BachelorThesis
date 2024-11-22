@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4263060445795071273, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+      propertyPath: _item
+      value: 
+      objectReference: {fileID: 3013150036535382391}
     - target: {fileID: 2446353360652985608, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
       propertyPath: m_Name
       value: Clothespin
@@ -106,8 +110,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 5672484051137933436}
   <Stats>k__BackingField: {fileID: 11400000, guid: 38eb321b4689e1b4b87cfb19480ea4eb, type: 2}
-  _ghostItem: {fileID: 34412899380115424, guid: d62c04a100e0aaa46bdfbc0b379ee2a6, type: 3}
+  _ghostItem: {fileID: 3196723916548866455, guid: fe27c40ee4ba7684fa0f7ffac775b8a5, type: 3}
   _interaction: {fileID: 2109649841185238277}
+  UsageType: 0
+  Dropped: 0
+  Used: 0
 --- !u!212 &5672484051137933436 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}

@@ -17,4 +17,13 @@ public class InventoryData
     {
         return ItemsInInventory.Any(item => item == null);
     }
+
+    public void RemoveItemFromInventory(Item item)
+    {
+        if (ItemsInInventory[CurrentHighlightIndex] == item)
+        {
+            ItemsInInventory[CurrentHighlightIndex] = null;
+            DataEvents.OnInventoryDataChangedInvoke(this);
+        }
+    }
 }

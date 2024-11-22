@@ -57,6 +57,8 @@ MonoBehaviour:
   - {fileID: 4220078714057065120}
   _initState: 0
   PlayerTransform: {fileID: 0}
+  MouseTransform: {fileID: 0}
+  LaserTransform: {fileID: 0}
 --- !u!114 &8026934611474299905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,10 +312,14 @@ MonoBehaviour:
   _deadSprite: {fileID: 21300000, guid: ee461e503eda73c4b9114b06ffe246da, type: 3}
   _viewRange: 5
   _viewAngle: 60
+  _obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 256
   Rigidbody: {fileID: 1606511128137652074}
+  IsCastrated: 0
   IsDead: 0
   IsInRangeOfPlayer: 0
-  CanSeePlayer: 0
+  CanSeeTarget: 0
   IsMating: 0
   IsTrapped: 0
   IsRunningAway: 0
