@@ -34,7 +34,7 @@ public class Kitten : MonoBehaviour
     public bool IsTrapped;
     public bool IsRunningAway;
 
-    private float _matingTimeout = 15f;
+    private float _matingTimeout = 20f;
     private float _currentMatingTimeout = 0f;
 
     private Transform _playerTransform;
@@ -54,7 +54,7 @@ public class Kitten : MonoBehaviour
             _playerTransform = player.transform;
         }
 
-        // InvokeRepeating(nameof(Starve), 1, 1);
+        InvokeRepeating(nameof(Starve), 1, 1);
     }
 
     private void Update()
@@ -82,6 +82,7 @@ public class Kitten : MonoBehaviour
         if (_currentTimeToLive <= 0)
         {
             IsDead = true;
+            gameObject.SetActive(false);
             _renderer.sprite = _deadSprite;
         }
     }
@@ -242,7 +243,10 @@ public class Kitten : MonoBehaviour
     {
         _currentTarget = null;
         _currentFocusType = FocusTargetType.None;
-        _renderer.sprite = _defaultSprite;
+        if (!IsTrapped)
+        {
+            _renderer.sprite = _defaultSprite;
+        }
         CanSeeTarget = false;
     }
 

@@ -17,7 +17,6 @@ public class StateMachineBrain : MonoBehaviour
     public IEnumerator SetUpBrain(Kitten kittenToControl)
     {
         yield return new WaitForSeconds(0.5f);
-        PlayerTransform = FindFirstObjectByType<Player>().transform;
         AStar aStar = FindFirstObjectByType<MapGenerator.MapGenerator>().AStar;
         AStar = new(aStar.Grid);
 

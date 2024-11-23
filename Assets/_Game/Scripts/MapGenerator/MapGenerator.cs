@@ -39,13 +39,13 @@ namespace MapGenerator
             _hallwayGenerator = new HallwayGenerator(this);
         }
 
-        private void Start()
+        public IEnumerator GenerateMap()
         {
             _roomGenerator.GenerateRooms(_dungeonSizeX, _dungeonSizeY, _numberOfRooms, _aStar, _roomPrefab, _floorPrefab);
             _hallwayGenerator.GenerateHallways(_bowyerWatson.GenerateTriangularMesh(_roomGenerator.PlacedRooms), 
                 _roomGenerator.PlacedRooms, _aStar, _primsAlg, _hallwayPrefab, _hallwayFloorPrefab);
             _roomGenerator.BuildRooms(_aStar);
-            StartCoroutine(WaitForHallways());
+            yield return StartCoroutine(WaitForHallways());
         }
 
         private IEnumerator WaitForHallways()

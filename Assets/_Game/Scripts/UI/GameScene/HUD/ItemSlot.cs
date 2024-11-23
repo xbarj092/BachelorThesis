@@ -32,6 +32,7 @@ public class ItemSlot : MonoBehaviour
     private void SetUpLaser(Laser laser)
     {
         _batteryProgressBar.gameObject.SetActive(true);
+        _batteryProgressBar.SetProgress(laser.Battery / ((LaserItem)laser.Stats).Battery);
         laser.OnBatteryChanged += OnBatteryChanged;
     }
 

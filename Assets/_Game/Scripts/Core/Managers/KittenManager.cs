@@ -10,7 +10,7 @@ public class KittenManager : MonoSingleton<KittenManager>
 
     public void CreateKitten(Vector3 position, bool? male = null)
     {
-        Kitten kitten = Instantiate(_kittenPrefab, position, Quaternion.identity);
+        Kitten kitten = Instantiate(_kittenPrefab, position, Quaternion.identity, SpawnTransform);
         if (male != null)
         {
             kitten.Male = male.Value;

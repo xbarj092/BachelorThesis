@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class SceneLoadManager : MonoSingleton<SceneLoadManager>
@@ -30,7 +31,7 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
 
     private void OnMenuToGameLoadDone(SceneLoader.Scenes scenes)
     {
-        InitGame();
+        StartCoroutine(InitGame());
         SceneLoader.OnSceneLoadDone -= OnMenuToGameLoadDone;
     }
 
@@ -55,7 +56,7 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
 
     private void OnRestartGameDone(SceneLoader.Scenes scenes)
     {
-        InitGame();
+        StartCoroutine(InitGame());
         SceneLoader.OnSceneLoadDone -= OnRestartGameDone;
     }
 
@@ -64,10 +65,12 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
         return SceneLoader.IsSceneLoaded(sceneToCheck);
     }
 
-    private void InitGame()
+    private IEnumerator InitGame()
     {
         Time.timeScale = 1;
-        KittenManager.Instance.SpawnTransform = FindObjectOfType<MapGenerator.MapGenerator>().KittenSpawnTransform;
+        MapGenerator.MapGenerator generator = FindObjectOfType<MapGenerator.MapGenerator>();
+        KittenManager.Instance.SpawnTransform = generator.KittenSpawnTransform;
+        yield return StartCoroutine(generator.GenerateMap());
         SpawnEntities();
         LocalDataStorage.Instance.InitPlayerData();
         PlayAmbience();

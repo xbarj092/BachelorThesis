@@ -36,18 +36,13 @@ namespace MapGenerator
         {
             int kittensSpawned = 0;
             int randomNumber = Random.Range(0, 6);
-            if (randomNumber == 5)
-            {
-                kittensSpawned = 2;
-            }
-            else if (randomNumber > 3)
+            if (randomNumber > 3)
             {
                 kittensSpawned = 1;
             }
 
             for (int i = 0; i < kittensSpawned; i++)
             {
-                
                 KittenManager.Instance.CreateKitten(GetRandomCoords());
             }
         }

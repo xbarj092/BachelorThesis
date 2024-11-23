@@ -209,4 +209,27 @@ public class AStar
         }
         return lowestFCostNode;
     }
+
+    /// <summary>
+    /// Gets all walkable nodes in the grid.
+    /// </summary>
+    /// <returns>A list of all walkable nodes in the grid.</returns>
+    internal List<PathNode> GetAllWalkableNodes()
+    {
+        List<PathNode> walkableNodes = new();
+
+        for (int x = 0; x < Grid.GetWidth(); x++)
+        {
+            for (int y = 0; y < Grid.GetHeight(); y++)
+            {
+                PathNode node = Grid.GetGridObject(x, y);
+                if (IsNodeWalkable(node))
+                {
+                    walkableNodes.Add(node);
+                }
+            }
+        }
+
+        return walkableNodes;
+    }
 }
