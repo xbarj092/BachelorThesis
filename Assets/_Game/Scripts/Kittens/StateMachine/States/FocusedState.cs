@@ -1,5 +1,6 @@
 using MapGenerator;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class FocusedState : BaseState
@@ -10,6 +11,7 @@ public class FocusedState : BaseState
     private List<PathNode> _path = new();
     private int _currentPathIndex;
     private bool _isPathSet;
+    private bool _targetLost;
 
     private float _timeoutTimer;
 
@@ -38,15 +40,22 @@ public class FocusedState : BaseState
             _kitten.CanSeeTarget = false;
             return deathState;
         }
+        
         if (_kitten.IsTrapped && _brain.GetState(StateType.Trapped, out BaseState trappedState))
         {
             _kitten.CanSeeTarget = false;
             return trappedState;
         }
+        
         if (_kitten.IsRunningAway && _brain.GetState(StateType.RunningAway, out BaseState runningAwayState))
         {
             _kitten.CanSeeTarget = false;
             return runningAwayState;
+        }
+
+        if (_targetLost && _brain.GetState(StateType.Idle, out BaseState idleState))
+        {
+            return idleState;
         }
 
         UpdateFocusTarget();
@@ -74,7 +83,7 @@ public class FocusedState : BaseState
         }
 
         _timeoutTimer += Time.deltaTime;
-        if (_timeoutTimer >= _timeoutDuration && _brain.GetState(StateType.Idle, out BaseState idleState))
+        if (_timeoutTimer >= _timeoutDuration && _brain.GetState(StateType.Idle, out idleState))
         {
             return idleState;
         }
@@ -86,6 +95,7 @@ public class FocusedState : BaseState
     {
         _path.Clear();
         _currentTarget = null;
+        _targetLost = false;
         Debug.Log("[FocusedState] - exited focused state");
     }
 
@@ -113,8 +123,14 @@ public class FocusedState : BaseState
     {
         if (_path.Count == 0 || _currentPathIndex >= _path.Count)
         {
+            if (Vector2.Distance(_kitten.transform.localPosition, targetPosition) < 1f)
+            {
+                _targetLost = true;
+            }
+
             _brain.AStar.GetGrid().GetXY(_kitten.transform.localPosition, out int kittenX, out int kittenY);
             _brain.AStar.GetGrid().GetXY(targetPosition, out int targetX, out int targetY);
+
             _path = _brain.AStar.FindPath(kittenX, kittenY, targetX, targetY);
 
             if (_path == null || _path.Count == 0)

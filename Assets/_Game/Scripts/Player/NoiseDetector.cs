@@ -23,7 +23,11 @@ public class PlayerNoise : MonoBehaviour
     {
         if (collision.TryGetComponent(out Kitten kitten))
         {
-            kitten.IsInRangeOfPlayer = true;
+            Vector2 direction = (kitten.transform.position - transform.position).normalized;
+            float distance = Vector2.Distance(transform.position, kitten.transform.position);
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, LayerMask.GetMask(GlobalConstants.Layers.Map.ToString()));
+            kitten.IsInRangeOfPlayer = hit.collider == null;
         }
     }
 

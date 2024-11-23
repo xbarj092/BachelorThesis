@@ -257,6 +257,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kitten (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4420139627812897466, guid: 7f5ce41964dae14499f39870e0fccff1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

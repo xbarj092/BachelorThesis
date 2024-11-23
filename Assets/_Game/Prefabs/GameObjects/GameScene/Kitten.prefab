@@ -331,11 +331,13 @@ MonoBehaviour:
   Rigidbody: {fileID: 1606511128137652074}
   PotentialPartner: {fileID: 0}
   IsCastrated: 0
+  Male: 0
   IsDead: 0
   IsInRangeOfPlayer: 0
   CanSeeTarget: 0
   IsApproaching: 0
   IsMating: 0
+  AlreadyMated: 0
   IsTrapped: 0
   IsRunningAway: 0
 --- !u!50 &1606511128137652074

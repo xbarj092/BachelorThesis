@@ -115,9 +115,18 @@ public class Kitten : MonoBehaviour
 
             float distanceToTarget = Vector2.Distance(transform.position, hit.transform.position);
 
+            Vector2 directionToTarget = (hit.transform.position - transform.position).normalized;
+
+            int layerMask = LayerMask.GetMask(GlobalConstants.Layers.Map.ToString());
+            RaycastHit2D rayHit = Physics2D.Raycast(transform.position, directionToTarget, distanceToTarget, layerMask);
+
+            if (rayHit.collider != null)
+            {
+                continue;
+            }
+
             if (targetType == FocusTargetType.Player)
             {
-                Vector2 directionToTarget = (hit.transform.position - transform.position).normalized;
                 float angleToTarget = Vector2.Angle(transform.right, directionToTarget);
 
                 if (distanceToTarget > _viewRange || angleToTarget > _viewAngle / 2)
@@ -125,13 +134,6 @@ public class Kitten : MonoBehaviour
                     continue;
                 }
 
-                int layerMask = ~LayerMask.GetMask(GlobalConstants.Layers.Kitten.ToString());
-                RaycastHit2D rayHit = Physics2D.Raycast(transform.position, directionToTarget, distanceToTarget, layerMask);
-
-                if (rayHit.collider == null || rayHit.collider != hit)
-                {
-                    continue;
-                }
             }
 
             if (IsHigherPriority(targetType, highestPriority))
@@ -255,6 +257,6 @@ public class Kitten : MonoBehaviour
 
     public bool CanMate()
     {
-        return CanPerformActions() && !AlreadyMated;
+        return CanPerformActions() && !CanSeeTarget && !IsInRangeOfPlayer && !AlreadyMated;
     }
 }

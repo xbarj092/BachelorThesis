@@ -163,6 +163,16 @@ public class PlayerInteraction : MonoBehaviour
                 }
             }
 
+            if (_carryingItem is Laser laser)
+            {
+                laser.OnBatteryChanged -= OnBatteryChanged;
+            }
+
+            if (_isUsingItem)
+            {
+                StopUsingItem();
+            }
+
             DestroyGhostItem();
             _carryingItem = selectedItem;
             HideItemAndCreateGhost(selectedItem);
@@ -228,6 +238,16 @@ public class PlayerInteraction : MonoBehaviour
             _player.PickupItem(_carryingItem.gameObject);
         }
 
+        if (_carryingItem is Laser laser)
+        {
+            laser.OnBatteryChanged -= OnBatteryChanged;
+        }
+
+        if (_isUsingItem)
+        {
+            StopUsingItem();
+        }
+
         _carryingItem.IsPickedUp(false);
         DestroyGhostItem();
     }
@@ -236,6 +256,20 @@ public class PlayerInteraction : MonoBehaviour
     {
         InventoryData inventoryData = LocalDataStorage.Instance.PlayerData.InventoryData;
         Item item = _carryingItem == null ? inventoryData.ItemsInInventory[inventoryData.CurrentHighlightIndex] : _carryingItem;
+        if (item == null)
+        {
+            return;
+        }
+
+        if (_isUsingItem)
+        {
+            StopUsingItem();
+        }
+
+        if (item is Laser laser)
+        {
+            laser.OnBatteryChanged -= OnBatteryChanged;
+        }
 
         item.transform.position = transform.position;
         item.gameObject.SetActive(true);
@@ -341,9 +375,9 @@ public class PlayerInteraction : MonoBehaviour
         }
         else
         {
+            StopUsingItem();
             ((Laser)_carryingItem).OnBatteryChanged -= OnBatteryChanged;
             LocalDataStorage.Instance.PlayerData.InventoryData.RemoveItemFromInventory(_carryingItem);
-            StopUsingItem();
             DestroyGhostItem();
         }
     }
