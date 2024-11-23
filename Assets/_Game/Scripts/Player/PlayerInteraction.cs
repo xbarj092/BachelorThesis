@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Progress;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -166,7 +165,7 @@ public class PlayerInteraction : MonoBehaviour
 
             DestroyGhostItem();
             _carryingItem = selectedItem;
-            StartCoroutine(HideItemAndCreateGhost(selectedItem));
+            HideItemAndCreateGhost(selectedItem);
         }
 
         if (_highlightedItem != null)
@@ -317,12 +316,11 @@ public class PlayerInteraction : MonoBehaviour
 
         item.IsPickedUp(true);
         _carryingItem = item;
-        StartCoroutine(HideItemAndCreateGhost(item));
+        HideItemAndCreateGhost(item);
     }
 
-    private IEnumerator HideItemAndCreateGhost(Item item)
+    private void HideItemAndCreateGhost(Item item)
     {
-        yield return null;
         item.gameObject.SetActive(false);
         item.IsPickedUp(true);
 

@@ -14,7 +14,7 @@ public class Item : MonoBehaviour
     protected bool _pickedUp;
 
     public ItemUsageType UsageType;
-    public bool IsInteractable => _interaction.Interactable;
+    public virtual bool IsInteractable => _interaction.Interactable;
 
     public bool Dropped;
     public bool Used;
@@ -41,7 +41,7 @@ public class Item : MonoBehaviour
         _interaction.OnItemOutOfRange -= OnItemOutOfRangeInvoke;
     }
 
-    public bool CanUse()
+    public virtual bool CanUse()
     {
         return _strategy.CanUse(this);
     }

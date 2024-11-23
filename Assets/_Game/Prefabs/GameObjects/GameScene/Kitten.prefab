@@ -55,6 +55,7 @@ MonoBehaviour:
   - {fileID: 8890314529962348561}
   - {fileID: 6653220662697603404}
   - {fileID: 4220078714057065120}
+  - {fileID: 6038000374573464598}
   _initState: 0
   PlayerTransform: {fileID: 0}
   MouseTransform: {fileID: 0}
@@ -85,6 +86,7 @@ GameObject:
   - component: {fileID: 2529649059364383967}
   - component: {fileID: 1774946690935229404}
   - component: {fileID: 8890314529962348561}
+  - component: {fileID: 6038000374573464598}
   - component: {fileID: 6653220662697603404}
   - component: {fileID: 4220078714057065120}
   m_Layer: 0
@@ -179,6 +181,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StateType: 4
+--- !u!114 &6038000374573464598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3518142528049713087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83b7160c43e6b0d4aab24a31c4c3d51d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateType: 7
 --- !u!114 &6653220662697603404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +255,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8351655566145860526}
+  - {fileID: 7607498380715351357}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1696414746421632992
@@ -312,14 +328,13 @@ MonoBehaviour:
   _deadSprite: {fileID: 21300000, guid: ee461e503eda73c4b9114b06ffe246da, type: 3}
   _viewRange: 5
   _viewAngle: 60
-  _obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 256
   Rigidbody: {fileID: 1606511128137652074}
+  PotentialPartner: {fileID: 0}
   IsCastrated: 0
   IsDead: 0
   IsInRangeOfPlayer: 0
   CanSeeTarget: 0
+  IsApproaching: 0
   IsMating: 0
   IsTrapped: 0
   IsRunningAway: 0
@@ -385,3 +400,112 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.05}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!1 &8316813847617434924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7607498380715351357}
+  - component: {fileID: 1489492232657161685}
+  - component: {fileID: 7370802872465854814}
+  - component: {fileID: 1655299748056043057}
+  m_Layer: 17
+  m_Name: KittenChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7607498380715351357
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8316813847617434924}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1689296769088205936}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1489492232657161685
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8316813847617434924}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.5
+--- !u!114 &7370802872465854814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8316813847617434924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eb71528f8533ea44b1de7244f5c490e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _kitten: {fileID: 5434703141080909983}
+--- !u!50 &1655299748056043057
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8316813847617434924}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

@@ -72,9 +72,9 @@ public class RoamingState : BaseState
             return trappedState;
         }
 
-        if (_kitten.IsMating && _brain.GetState(StateType.Mating, out BaseState matingState))
+        if (_kitten.IsApproaching && _kitten.CanMate() && _brain.GetState(StateType.Approach, out BaseState approachState))
         {
-            return matingState;
+            return approachState;
         }
 
         if ((_kitten.IsInRangeOfPlayer || _kitten.CanSeeTarget) && _brain.GetState(StateType.Focused, out BaseState focusedState))

@@ -209,7 +209,6 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 256
-  Battery: 0
 --- !u!114 &7678433059843681468 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1218436209528261018, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}

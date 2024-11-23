@@ -17,15 +17,22 @@ public class Kitten : MonoBehaviour
     [SerializeField] private float _viewAngle = 60f;
 
     public Rigidbody2D Rigidbody;
+    public Kitten PotentialPartner;
 
     public bool IsCastrated;
+    public bool Male;
 
     public bool IsDead;
     public bool IsInRangeOfPlayer;
     public bool CanSeeTarget;
+    public bool IsApproaching;
     public bool IsMating;
+    public bool AlreadyMated;
     public bool IsTrapped;
     public bool IsRunningAway;
+
+    private float _matingTimeout = 15f;
+    private float _currentMatingTimeout = 0f;
 
     private Transform _playerTransform;
 
@@ -38,6 +45,8 @@ public class Kitten : MonoBehaviour
         StartCoroutine(_stateMachineBrain.SetUpBrain(this));
         _currentTimeToLive = _timeToLive;
 
+        Male = Random.Range(0, 2) == 0;
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
@@ -49,6 +58,16 @@ public class Kitten : MonoBehaviour
 
     private void Update()
     {
+        if (AlreadyMated)
+        {
+            _currentMatingTimeout += Time.deltaTime;
+            if (_currentMatingTimeout >= _matingTimeout)
+            {
+                _currentMatingTimeout = 0f;
+                AlreadyMated = false;
+            }
+        }
+
         if (_playerTransform != null)
         {
             CheckFieldOfView();
@@ -179,7 +198,6 @@ public class Kitten : MonoBehaviour
                 _stateMachineBrain.PlayerTransform = null;
                 _stateMachineBrain.LaserTransform = null;
                 CanSeeTarget = true;
-                Debug.Log("Kitten focuses on a mouse!");
                 break;
 
             case FocusTargetType.Player:
@@ -187,7 +205,6 @@ public class Kitten : MonoBehaviour
                 _stateMachineBrain.PlayerTransform = _currentTarget.transform;
                 _stateMachineBrain.LaserTransform = null;
                 CanSeeTarget = true;
-                Debug.Log("Kitten focuses on the player!");
                 break;
 
             case FocusTargetType.Laser:
@@ -195,7 +212,6 @@ public class Kitten : MonoBehaviour
                 _stateMachineBrain.PlayerTransform = null;
                 _stateMachineBrain.LaserTransform = _currentTarget.transform;
                 CanSeeTarget = true;
-                Debug.Log("Kitten focuses on the laser!");
                 break;
 
             default:
@@ -209,7 +225,6 @@ public class Kitten : MonoBehaviour
         _currentTarget = null;
         _currentFocusType = FocusTargetType.None;
         CanSeeTarget = false;
-        Debug.Log("Kitten has no focus.");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -233,8 +248,13 @@ public class Kitten : MonoBehaviour
         }
     }
 
-    private bool CanPerformActions()
+    public bool CanPerformActions()
     {
-        return !IsDead && !IsTrapped && !IsRunningAway;
+        return !IsDead && !IsTrapped && !IsRunningAway && !IsMating;
+    }
+
+    public bool CanMate()
+    {
+        return CanPerformActions() && !AlreadyMated;
     }
 }

@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class CardboardBox : Item
 {
-    
+    public bool HasKitten;
+    public override bool IsInteractable => !HasKitten && base.IsInteractable;
 }

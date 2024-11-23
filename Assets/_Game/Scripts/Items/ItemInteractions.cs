@@ -42,8 +42,9 @@ public class ItemInteractions : MonoBehaviour
                 return;
             }
 
-            if (_item?.Stats.ItemType == ItemType.CardboardBox && gameObject.CompareTag(GlobalConstants.Tags.Item.ToString()))
+            if (_item != null && _item is CardboardBox box && !box.HasKitten && !kitten.IsTrapped && !kitten.IsDead && gameObject.CompareTag(GlobalConstants.Tags.Item.ToString()))
             {
+                box.HasKitten = true;
                 kitten.IsTrapped = true;
             }
         }
@@ -52,6 +53,11 @@ public class ItemInteractions : MonoBehaviour
         {
             if (gameObject.CompareTag(GlobalConstants.Tags.Item.ToString()))
             {
+                if (_item.Used && _item.Stats.ItemType != ItemType.CardboardBox || _item is CardboardBox box && box.HasKitten)
+                {
+                    return;
+                }
+
                 player.PickupItem(gameObject);
             }
             else if (gameObject.CompareTag(GlobalConstants.Tags.Food.ToString()))

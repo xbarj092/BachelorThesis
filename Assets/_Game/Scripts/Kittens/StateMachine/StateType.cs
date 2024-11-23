@@ -6,5 +6,6 @@ public enum StateType
     RunningAway = 3,
     Trapped = 4,
     Mating = 5,
-    Death = 6
+    Death = 6,
+    Approach = 7
 }

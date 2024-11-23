@@ -37,7 +37,7 @@ public class MouseItemStrategy : ItemStrategyBase
     {
         float elapsedTime = 0f;
 
-        float amplitude = 0.01f;
+        float amplitude = 0.05f;
         float frequency = 5f;
         float speed = 2f;
         float duration = 10f;

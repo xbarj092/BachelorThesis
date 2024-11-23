@@ -16,6 +16,11 @@ public class MatingState : BaseState
             return deathState;
         }
 
+        if ((_kitten.PotentialPartner.IsDead || _kitten.PotentialPartner.IsTrapped) && _brain.GetState(StateType.Roaming, out BaseState roamingState))
+        {
+            return roamingState;
+        }
+
         if (_kitten.IsTrapped && _brain.GetState(StateType.Trapped, out BaseState trappedState))
         {
             return trappedState;
@@ -23,6 +28,16 @@ public class MatingState : BaseState
 
         if (IsDoneWaiting() && _brain.GetState(StateType.Idle, out BaseState idleState))
         {
+            if (_kitten.Male)
+            {
+                Vector3 spawnPosition = (_kitten.transform.position + _kitten.PotentialPartner.transform.position) / 2f;
+                Kitten kitten = Instantiate(_kitten, spawnPosition, Quaternion.identity);
+                kitten.IsMating = false;
+            }
+
+            _kitten.IsMating = false;
+            _kitten.AlreadyMated = true;
+            _kitten.PotentialPartner = null;
             return idleState;
         }
 
@@ -32,6 +47,7 @@ public class MatingState : BaseState
     public override void OnStateExit()
     {
         _kitten.IsMating = false;
+        _kitten.PotentialPartner = null;
         Debug.Log("[MatingState] - exitted mating state");
     }
 
