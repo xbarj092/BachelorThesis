@@ -203,6 +203,7 @@ MonoBehaviour:
   _ghostItem: {fileID: 6599099477623242798, guid: 169e4c6a615a71e43b333bc536ba633a, type: 3}
   _interaction: {fileID: 7678433059843681468}
   UsageType: 1
+  Highlighting: 0
   Dropped: 0
   Used: 0
   _laserDot: {fileID: 1176001775025498404}

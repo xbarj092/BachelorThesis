@@ -130,5 +130,6 @@ MonoBehaviour:
   _ghostItem: {fileID: 8855443163729975009, guid: 15238bb923500ed4c823badb62faa1c3, type: 3}
   _interaction: {fileID: 5476142464977042035}
   UsageType: 0
+  Highlighting: 0
   Dropped: 0
   Used: 0

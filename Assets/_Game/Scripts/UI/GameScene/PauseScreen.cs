@@ -5,6 +5,7 @@ public class PauseScreen : GameScreen
     // bound from inspector
     public void Resume()
     {
+        Time.timeScale = 1;
         CloseScreen();
     }
 

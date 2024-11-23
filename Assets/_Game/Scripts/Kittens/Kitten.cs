@@ -11,6 +11,9 @@ public class Kitten : MonoBehaviour
     [Header("Death Settings")]
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] private Sprite _deadSprite;
+    [SerializeField] private Sprite _defaultSprite;
+    [SerializeField] private Sprite _focusedSprite;
+    [SerializeField] private Sprite _trappedSprite;
 
     [Header("Field of View Settings")]
     [SerializeField] private float _viewRange = 5f;
@@ -44,8 +47,6 @@ public class Kitten : MonoBehaviour
     {
         StartCoroutine(_stateMachineBrain.SetUpBrain(this));
         _currentTimeToLive = _timeToLive;
-
-        Male = Random.Range(0, 2) == 0;
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -83,6 +84,18 @@ public class Kitten : MonoBehaviour
             IsDead = true;
             _renderer.sprite = _deadSprite;
         }
+    }
+
+    public void Trap()
+    {
+        IsTrapped = true;
+        _renderer.sprite = _trappedSprite;
+    }
+
+    public void Untrap()
+    {
+        IsTrapped = false;
+        _renderer.sprite = _defaultSprite;
     }
 
     private void CheckFieldOfView()
@@ -199,6 +212,7 @@ public class Kitten : MonoBehaviour
                 _stateMachineBrain.MouseTransform = _currentTarget.transform;
                 _stateMachineBrain.PlayerTransform = null;
                 _stateMachineBrain.LaserTransform = null;
+                _renderer.sprite = _focusedSprite;
                 CanSeeTarget = true;
                 break;
 
@@ -206,6 +220,7 @@ public class Kitten : MonoBehaviour
                 _stateMachineBrain.MouseTransform = null;
                 _stateMachineBrain.PlayerTransform = _currentTarget.transform;
                 _stateMachineBrain.LaserTransform = null;
+                _renderer.sprite = _focusedSprite;
                 CanSeeTarget = true;
                 break;
 
@@ -213,6 +228,7 @@ public class Kitten : MonoBehaviour
                 _stateMachineBrain.MouseTransform = null;
                 _stateMachineBrain.PlayerTransform = null;
                 _stateMachineBrain.LaserTransform = _currentTarget.transform;
+                _renderer.sprite = _focusedSprite;
                 CanSeeTarget = true;
                 break;
 
@@ -226,6 +242,7 @@ public class Kitten : MonoBehaviour
     {
         _currentTarget = null;
         _currentFocusType = FocusTargetType.None;
+        _renderer.sprite = _defaultSprite;
         CanSeeTarget = false;
     }
 

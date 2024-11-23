@@ -113,6 +113,7 @@ MonoBehaviour:
   _ghostItem: {fileID: 2797450546706936104, guid: 8012bf0d87c9fb04ab4fc6294f14c000, type: 3}
   _interaction: {fileID: 1714035677799800250}
   UsageType: 0
+  Highlighting: 0
   Dropped: 0
   Used: 0
 --- !u!212 &4915458218231152835 stripped

@@ -5,14 +5,23 @@ namespace MapGenerator
 {
     public class MapGenerator : MonoBehaviour
     {
+        [Header("Map Parts")]
         [SerializeField] private Room _roomPrefab;
         [SerializeField] private GameObject _floorPrefab;
-
+        [Space]
         [SerializeField] private GameObject _hallwayPrefab;
         [SerializeField] private GameObject _hallwayFloorPrefab;
 
+        [Header("Map Parameters")]
+        [SerializeField] private int _dungeonSizeX;
+        [SerializeField] private int _dungeonSizeY;
+        [Space]
+        [SerializeField] private int _numberOfRooms;
+
+        [Header("Spawn Transforms")]
         public Transform LayoutSpawnTransform;
         public Transform ItemSpawnTransform;
+        public Transform KittenSpawnTransform;
 
         private AStar _aStar;
         public AStar AStar => _aStar;
@@ -20,9 +29,6 @@ namespace MapGenerator
         private RoomGenerator _roomGenerator;
         private HallwayGenerator _hallwayGenerator;
         private BowyerWatson _bowyerWatson;
-
-        private const int DUNGEON_SIZE_X = 50;
-        private const int DUNGEON_SIZE_Y = 50;
 
         private void Awake()
         {
@@ -35,9 +41,7 @@ namespace MapGenerator
 
         private void Start()
         {
-            // TODO - generate 2 rooms at the start - start room and boss room
-            // put the player in the start room
-            _roomGenerator.GenerateRooms(DUNGEON_SIZE_X, DUNGEON_SIZE_Y, 50, _aStar, _roomPrefab, _floorPrefab);
+            _roomGenerator.GenerateRooms(_dungeonSizeX, _dungeonSizeY, _numberOfRooms, _aStar, _roomPrefab, _floorPrefab);
             _hallwayGenerator.GenerateHallways(_bowyerWatson.GenerateTriangularMesh(_roomGenerator.PlacedRooms), 
                 _roomGenerator.PlacedRooms, _aStar, _primsAlg, _hallwayPrefab, _hallwayFloorPrefab);
             _roomGenerator.BuildRooms(_aStar);

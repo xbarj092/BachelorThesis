@@ -31,8 +31,7 @@ public class MatingState : BaseState
             if (_kitten.Male)
             {
                 Vector3 spawnPosition = (_kitten.transform.position + _kitten.PotentialPartner.transform.position) / 2f;
-                Kitten kitten = Instantiate(_kitten, spawnPosition, Quaternion.identity);
-                kitten.IsMating = false;
+                KittenManager.Instance.CreateKitten(spawnPosition);
             }
 
             _kitten.IsMating = false;

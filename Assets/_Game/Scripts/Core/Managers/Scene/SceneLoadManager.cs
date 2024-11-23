@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SceneLoadManager : MonoSingleton<SceneLoadManager>
@@ -66,18 +67,22 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
     private void InitGame()
     {
         Time.timeScale = 1;
-        SpawnPlayer();
+        KittenManager.Instance.SpawnTransform = FindObjectOfType<MapGenerator.MapGenerator>().KittenSpawnTransform;
+        SpawnEntities();
         LocalDataStorage.Instance.InitPlayerData();
         PlayAmbience();
     }
 
-    private void SpawnPlayer()
+    private void SpawnEntities()
     {
         Player player = FindObjectOfType<Player>();
         if (player != null)
         {
-            player.transform.position = new(10, 10);
+            player.transform.position = new(24, 24);
         }
+
+        KittenManager.Instance.CreateKitten(new(26, 26, 0), true);
+        KittenManager.Instance.CreateKitten(new(50, 50, 0), false);
     }
 
     private void PlayMenuMusic()

@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deathScreenPrefab: {fileID: 6645616536697700446, guid: cd98e45a83358de4ca2cb78fa332cb2d, type: 3}
-  _pauseScreenPrefab: {fileID: 0}
+  _pauseScreenPrefab: {fileID: 9174107645587094118, guid: 7377fdde25d1cea43af95f5ce003dcb5, type: 3}
 --- !u!1001 &7592991500202352056
 PrefabInstance:
   m_ObjectHideFlags: 0

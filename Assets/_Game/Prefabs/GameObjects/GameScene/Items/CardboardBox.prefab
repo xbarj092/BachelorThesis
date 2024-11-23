@@ -107,8 +107,10 @@ MonoBehaviour:
   _ghostItem: {fileID: 5358534490309780274, guid: 6f6d7fe031bba0644872ac6314e7b292, type: 3}
   _interaction: {fileID: 8882970482794418080}
   UsageType: 0
+  Highlighting: 0
   Dropped: 0
   Used: 0
+  HasKitten: 0
 --- !u!114 &8882970482794418080 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1218436209528261018, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}

@@ -16,12 +16,14 @@ public class Item : MonoBehaviour
     public ItemUsageType UsageType;
     public virtual bool IsInteractable => _interaction.Interactable;
 
+    public bool Highlighting;
     public bool Dropped;
     public bool Used;
 
     public event Action OnItemOutOfRange;
     private void OnItemOutOfRangeInvoke()
     {
+        Unhighlight();
         OnItemOutOfRange?.Invoke();
     }
 
@@ -29,6 +31,7 @@ public class Item : MonoBehaviour
     {
         _strategy = _strategyFactory.CreateStrategy(Stats.ItemType);
         _spriteRenderer.sprite = Stats.Sprite;
+        Unhighlight();
     }
 
     protected virtual void OnEnable()
@@ -65,12 +68,20 @@ public class Item : MonoBehaviour
 
     public void Highlight()
     {
-
+        if (!Highlighting)
+        {
+            Highlighting = true;
+            _spriteRenderer.material.SetInt("_Outlined", 1);
+        }
     }
 
     public void Unhighlight()
     {
-
+        if (Highlighting)
+        {
+            Highlighting = false;
+            _spriteRenderer.material.SetInt("_Outlined", 0);
+        }
     }
 
     public GameObject GetGhostItem()

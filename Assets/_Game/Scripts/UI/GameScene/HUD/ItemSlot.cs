@@ -63,6 +63,7 @@ public class ItemSlot : MonoBehaviour
         if (Item is Laser laser)
         {
             ((Laser)Item).OnBatteryChanged -= OnBatteryChanged;
+            _batteryProgressBar.SetProgress(1);
             _batteryProgressBar.gameObject.SetActive(false);
         }
     }

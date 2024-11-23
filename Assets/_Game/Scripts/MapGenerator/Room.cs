@@ -23,35 +23,64 @@ namespace MapGenerator
             _mapGenerator = mapGenerator;
             _gridCoordinates = new Vector2Int(x, y);
             _spawnChance = _spawnChances[RoomType];
+
             SpawnItems();
+
+            if (RoomType == RoomType.Normal)
+            {
+                SpawnKittens();
+            }
+        }
+
+        private void SpawnKittens()
+        {
+            int kittensSpawned = 0;
+            int randomNumber = Random.Range(0, 6);
+            if (randomNumber == 5)
+            {
+                kittensSpawned = 2;
+            }
+            else if (randomNumber > 3)
+            {
+                kittensSpawned = 1;
+            }
+
+            for (int i = 0; i < kittensSpawned; i++)
+            {
+                
+                KittenManager.Instance.CreateKitten(GetRandomCoords());
+            }
         }
 
         private void SpawnItems()
         {
-            // Instantiate(_kitten, transform.position, Quaternion.identity);
             foreach (KeyValuePair<ItemType, float> spawnChances in _spawnChance.ItemSpawnChances)
             {
                 int randomNumber = Random.Range(0, 6);
                 if (randomNumber < spawnChances.Value * 6)
                 {
-                    Vector3 roomScale = transform.localScale;
-                    Vector3 roomPosition = transform.position;
-
-                    float roomWidth = roomScale.x - 1;
-                    float roomHeight = roomScale.y - 1;
-
-                    float minX = roomPosition.x - roomWidth / 2;
-                    float maxX = roomPosition.x + roomWidth / 2;
-                    float minZ = roomPosition.y - roomHeight / 2;
-                    float maxZ = roomPosition.y + roomHeight / 2;
-
-                    float spawnX = Random.Range(minX, maxX);
-                    float spawnY = Random.Range(minZ, maxZ);
-
-                    Vector2 spawnPosition = new(spawnX, spawnY);
-                    Instantiate(_items[spawnChances.Key], spawnPosition, Quaternion.identity, _mapGenerator.ItemSpawnTransform);
+                    Instantiate(_items[spawnChances.Key], GetRandomCoords(), Quaternion.identity, _mapGenerator.ItemSpawnTransform);
                 }
             }
+        }
+
+        private Vector2 GetRandomCoords()
+        {
+            Vector3 roomScale = transform.localScale;
+            Vector3 roomPosition = transform.position;
+
+            float roomWidth = roomScale.x - 1;
+            float roomHeight = roomScale.y - 1;
+
+            float minX = roomPosition.x - roomWidth / 2;
+            float maxX = roomPosition.x + roomWidth / 2;
+            float minZ = roomPosition.y - roomHeight / 2;
+            float maxZ = roomPosition.y + roomHeight / 2;
+
+            float spawnX = Random.Range(minX, maxX);
+            float spawnY = Random.Range(minZ, maxZ);
+
+            return new Vector2(spawnX, spawnY);
         }
     }
 }

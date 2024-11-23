@@ -63,6 +63,7 @@ Transform:
   m_Children:
   - {fileID: 487278909421563397}
   - {fileID: 2334653116645979180}
+  - {fileID: 3248074050322447322}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9173698360740386955
@@ -81,8 +82,43 @@ MonoBehaviour:
   _floorPrefab: {fileID: 8036577293349226481, guid: 86ba6d77c804eee4ba5e5f099715238c, type: 3}
   _hallwayPrefab: {fileID: 8036577293349226481, guid: 9e74293750d3ad24b83419f314a931a7, type: 3}
   _hallwayFloorPrefab: {fileID: 8036577293349226481, guid: 7d1c418d98a154448b83052af6e10d39, type: 3}
+  _dungeonSizeX: 50
+  _dungeonSizeY: 50
+  _numberOfRooms: 50
   LayoutSpawnTransform: {fileID: 2334653116645979180}
   ItemSpawnTransform: {fileID: 487278909421563397}
+  KittenSpawnTransform: {fileID: 3248074050322447322}
+--- !u!1 &3582523178729056446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3248074050322447322}
+  m_Layer: 0
+  m_Name: KittenParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3248074050322447322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3582523178729056446}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2942126219682882800}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5131573071738981202
 GameObject:
   m_ObjectHideFlags: 0

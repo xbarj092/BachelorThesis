@@ -43,9 +43,9 @@ public class TowelItemStrategy : ItemStrategyBase
 
     private IEnumerator SetKittenTrapped()
     {
-        _kitten.IsTrapped = true;
+        _kitten.Trap();
         yield return new WaitForSeconds(5f);
-        _kitten.IsTrapped = false;
+        _kitten.Untrap();
     }
 
     public override void PickUp(Item item)

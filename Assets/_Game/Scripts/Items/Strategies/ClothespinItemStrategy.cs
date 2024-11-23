@@ -35,7 +35,7 @@ public class ClothespinItemStrategy : ItemStrategyBase
 
     public override void Use(Item item)
     {
-        _kitten.IsTrapped = true;
+        _kitten.Trap();
         LocalDataStorage.Instance.PlayerData.InventoryData.RemoveItemFromInventory(item);
         Debug.Log("[ClothespinItemStrategy] - Used clothespin!");
     }

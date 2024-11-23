@@ -326,6 +326,9 @@ MonoBehaviour:
   _timeToLive: 5
   _renderer: {fileID: 1696414746421632992}
   _deadSprite: {fileID: 21300000, guid: ee461e503eda73c4b9114b06ffe246da, type: 3}
+  _defaultSprite: {fileID: 21300000, guid: dd079a4152f072e4c8854bb38de9892e, type: 3}
+  _focusedSprite: {fileID: 21300000, guid: 31aa76cc86ba52848a7869342918cc15, type: 3}
+  _trappedSprite: {fileID: 21300000, guid: 4e417e82b861a554ab98ccf355247ed8, type: 3}
   _viewRange: 5
   _viewAngle: 60
   Rigidbody: {fileID: 1606511128137652074}

@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,6 +15,7 @@ public class PlayerInteraction : MonoBehaviour
     private GameObject _ghostItem;
     private SpriteRenderer _ghostRenderer;
 
+    private KeyboardInputHandler _keyboardInputHandler = new();
     private MouseInputHandler _mouseInputHandler;
     private InputAction _leftClickAction;
     private InputAction _rightClickAction;
@@ -26,6 +25,7 @@ public class PlayerInteraction : MonoBehaviour
     private void Awake()
     {
         _mouseInputHandler = new MouseInputHandler(this, _interactLayer);
+
         InitializeInputActions();
     }
 
@@ -77,6 +77,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            _keyboardInputHandler.HandleInteraction();
+        }
+
         if (Camera.main != null)
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
