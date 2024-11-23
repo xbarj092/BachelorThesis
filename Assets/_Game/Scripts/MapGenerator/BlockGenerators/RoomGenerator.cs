@@ -48,8 +48,8 @@ namespace MapGenerator
                         break;
                     }
 
-                    positionX = UnityEngine.Random.Range(5, dungeonSizeX + 5);
-                    positionY = UnityEngine.Random.Range(5, dungeonSizeY + 5);
+                    positionX = Random.Range(5, dungeonSizeX + 5);
+                    positionY = Random.Range(5, dungeonSizeY + 5);
                     transform = new Vector2(positionX, positionY);
                 } while (Physics2D.OverlapBox(transform, newRoom.transform.localScale, 0f));
 
@@ -59,8 +59,8 @@ namespace MapGenerator
 
         private void GenerateBaseRooms(AStar aStar, Room roomPrefab, GameObject roomFloorPrefab)
         {
-            GenerateRoom(aStar, roomPrefab, roomFloorPrefab, 10, 10, RoomType.Start);
-            GenerateRoom(aStar, roomPrefab, roomFloorPrefab, 60, 60, RoomType.End);
+            GenerateRoom(aStar, roomPrefab, roomFloorPrefab, 25, 25, RoomType.Start);
+            GenerateRoom(aStar, roomPrefab, roomFloorPrefab, 50, 50, RoomType.End);
         }
 
         private void GenerateRoom(AStar aStar, Room roomPrefab, GameObject roomFloorPrefab, int x, int y, RoomType roomType)

@@ -50,6 +50,10 @@ public class HUD : MonoBehaviour
             {
                 _itemSlots[i].Init(inventoryData.ItemsInInventory[i]);
             }
+            else
+            {
+                _itemSlots[i].Disable();
+            }
         }
 
         if (_itemSlots.Count > 0)

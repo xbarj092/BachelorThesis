@@ -13,7 +13,7 @@ public class Laser : Item
         set
         {
             _battery = value;
-            OnBatteryChanged?.Invoke(value);
+            OnBatteryChanged?.Invoke(value / ((LaserItem)Stats).Battery);
         }
     }
 
