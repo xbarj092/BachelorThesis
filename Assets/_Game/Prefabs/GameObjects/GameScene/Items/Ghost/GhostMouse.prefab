@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 677551a6d78258a489fd1aa6d7ebc9ff, type: 3}
     - target: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
       propertyPath: m_Color.a
-      value: 0.39215687
+      value: 0.43137255
       objectReference: {fileID: 0}
     - target: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
       propertyPath: m_Color.b
@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: -876546973899608171, guid: 59d12df00206918479df5b51a5ae2630, type: 3}
     - target: {fileID: 5635671606158594644, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.2

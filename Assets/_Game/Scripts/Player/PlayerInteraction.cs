@@ -90,15 +90,13 @@ public class PlayerInteraction : MonoBehaviour
             if (_ghostItem != null)
             {
                 SnapGhostToMousePosition();
-                _ghostRenderer.material.SetInt("_Outlined", CanItemBePlaced() ? 0 : 1);
+                _ghostRenderer.material.SetInt("_Outlined", CanItemBePlaced() ? 1 : 0);
+                _ghostRenderer.color = new Color(_ghostRenderer.color.r, _ghostRenderer.color.g, _ghostRenderer.color.b, CanItemBePlaced() ? 1 : 0.4f);
+                _ghostItem.transform.rotation = Quaternion.identity;
             }
         }
 
         HandleMouseWheelInput();
-        if (_ghostItem != null)
-        {
-            _ghostItem.transform.rotation = Quaternion.identity;
-        }
     }
 
     private void HandleMouseWheelInput()
@@ -421,8 +419,14 @@ public class PlayerInteraction : MonoBehaviour
 
     private bool CanItemBePlaced()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(_ghostItem.transform.position, _placementRadius, _interactLayer);
-        return colliders.Length == 0;
+        if (_ghostItem.CompareTag(GlobalConstants.Tags.InteractableGhost.ToString()))
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 2f, LayerMask.GetMask(GlobalConstants.Layers.Kitten.ToString()));
+            return hit.collider != null;
+        }
+
+        return false;
     }
 
     private void DestroyGhostItem()

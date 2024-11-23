@@ -18,6 +18,7 @@ public class Laser : Item
     }
 
     private Transform _playerTransform;
+    private LineRenderer _lineRenderer;
 
     public event Action<float> OnBatteryChanged;
 
@@ -26,12 +27,14 @@ public class Laser : Item
         base.Awake();
         Battery = ((LaserItem)Stats).Battery;
         _playerTransform = FindFirstObjectByType<Player>().transform;
+        _lineRenderer = GetComponent<LineRenderer>();
     }
 
     private void Update()
     {
         if (!_pickedUp)
         {
+            _lineRenderer.enabled = false;
             return;
         }
 
@@ -45,6 +48,16 @@ public class Laser : Item
 
         Vector3 validPosition = GetValidPlacementPosition(_playerTransform.position, mousePosition);
         transform.position = validPosition;
+
+        UpdateLineRenderer(_playerTransform.position, validPosition);
+    }
+
+    private void UpdateLineRenderer(Vector3 startPosition, Vector3 endPosition)
+    {
+        _lineRenderer.enabled = true;
+        _lineRenderer.positionCount = 2;
+        _lineRenderer.SetPosition(0, startPosition);
+        _lineRenderer.SetPosition(1, endPosition);
     }
 
     public Vector3 GetValidPlacementPosition(Vector3 playerPosition, Vector3 mousePosition)
@@ -69,6 +82,7 @@ public class Laser : Item
     {
         _spriteRenderer.enabled = true;
         _laserDot.SetActive(false);
+        _lineRenderer.enabled = false;
         gameObject.SetActive(false);
         base.UseStop();
     }

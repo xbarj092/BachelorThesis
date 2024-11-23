@@ -70,6 +70,7 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
         Time.timeScale = 1;
         MapGenerator.MapGenerator generator = FindObjectOfType<MapGenerator.MapGenerator>();
         KittenManager.Instance.SpawnTransform = generator.KittenSpawnTransform;
+        KittenManager.Instance.AStar = generator.AStar;
         yield return StartCoroutine(generator.GenerateMap());
         SpawnEntities();
         LocalDataStorage.Instance.InitPlayerData();

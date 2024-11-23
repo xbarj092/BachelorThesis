@@ -16,7 +16,8 @@ public static class GlobalConstants
         Enemy,
         Food,
         Item,
-        Player
+        Player,
+        InteractableGhost
     }
 
     public enum Layers
