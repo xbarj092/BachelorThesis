@@ -88,10 +88,18 @@ public class Kitten : MonoBehaviour
         }
     }
 
-    public void Trap()
+    public void Trap(bool box = false)
     {
         IsTrapped = true;
-        _renderer.sprite = _trappedSprite;
+        
+        if (box)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            _renderer.sprite = _trappedSprite;
+        }
     }
 
     public void Untrap()

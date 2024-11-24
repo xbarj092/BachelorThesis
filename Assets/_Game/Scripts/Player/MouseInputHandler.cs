@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class MouseInputHandler
 {
@@ -63,9 +62,9 @@ public class MouseInputHandler
             Item item = hit.collider.gameObject.GetComponent<Item>();
             if (item != null)
             {
-                item.IsHovered = true;
                 if (item.IsInteractable)
                 {
+                    item.IsHovered = true;
                     OnItemHighlighted?.Invoke(item);
                 }
             }

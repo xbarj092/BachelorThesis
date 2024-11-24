@@ -44,8 +44,8 @@ public class ItemInteractions : MonoBehaviour
 
             if (_item != null && _item is CardboardBox box && !box.HasKitten && !kitten.IsTrapped && !kitten.IsDead && gameObject.CompareTag(GlobalConstants.Tags.Item.ToString()))
             {
-                box.HasKitten = true;
-                kitten.Trap();
+                box.SetHasKitten(true);
+                kitten.Trap(true);
             }
         }
 

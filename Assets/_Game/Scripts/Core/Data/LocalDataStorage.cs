@@ -14,7 +14,7 @@ public class LocalDataStorage : MonoSingleton<LocalDataStorage>
 
     public void InitPlayerData()
     {
-        PlayerData.PlayerStats = new(0, 2, 2, 5, 10);
+        PlayerData.PlayerStats = new(0, 15, 15, 5, 10);
         PlayerData.InventoryData = new(new List<Item> { null, null, null, null, null, null });
     }
 }

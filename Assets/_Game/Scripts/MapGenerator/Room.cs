@@ -7,6 +7,7 @@ namespace MapGenerator
     public class Room : MonoBehaviour
     {
         [SerializeField] private SerializedDictionary<ItemType, Item> _items = new();
+        [SerializeField] private GameObject _food;
         [SerializeField] private Kitten _kitten;
 
         public RoomType RoomType;
@@ -29,6 +30,7 @@ namespace MapGenerator
             if (RoomType == RoomType.Normal)
             {
                 SpawnKittens();
+                SpawnFood();
             }
         }
 
@@ -44,6 +46,29 @@ namespace MapGenerator
             for (int i = 0; i < kittensSpawned; i++)
             {
                 KittenManager.Instance.CreateKitten(GetRandomCoords());
+            }
+        }
+
+        private void SpawnFood()
+        {
+            int foodSpawned = 0;
+            int randomNumber = Random.Range(0, 10);
+            if (randomNumber > 8)
+            {
+                foodSpawned = 3;
+            }
+            else if (randomNumber > 5)
+            {
+                foodSpawned = 2;
+            }
+            else if (randomNumber > 2)
+            {
+                foodSpawned = 1;
+            }
+
+            for (int i = 0; i < foodSpawned; i++)
+            {
+                Instantiate(_food, GetRandomCoords(), Quaternion.identity, _mapGenerator.FoodSpawnTransform);
             }
         }
 

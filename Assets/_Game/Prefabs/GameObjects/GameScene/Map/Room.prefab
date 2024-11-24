@@ -112,6 +112,7 @@ MonoBehaviour:
       Value: {fileID: 3013150036535382391, guid: 2050bf487a5895a4cab4e2bf988feb8f, type: 3}
     - Key: 6
       Value: {fileID: 5906434041033461365, guid: b509a83eb2b369e4db9b2823e7ed224a, type: 3}
+  _food: {fileID: 7764001886973069735, guid: 5c18dea745b38b14fab6de8ef8faf81a, type: 3}
   _kitten: {fileID: 5434703141080909983, guid: 7f5ce41964dae14499f39870e0fccff1, type: 3}
   RoomType: 0
   _spawnChances:

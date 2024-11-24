@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 487278909421563397}
   m_Layer: 0
-  m_Name: Items
+  m_Name: ItemParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,6 +64,7 @@ Transform:
   - {fileID: 487278909421563397}
   - {fileID: 2334653116645979180}
   - {fileID: 3248074050322447322}
+  - {fileID: 2936405808283917921}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9173698360740386955
@@ -88,6 +89,7 @@ MonoBehaviour:
   LayoutSpawnTransform: {fileID: 2334653116645979180}
   ItemSpawnTransform: {fileID: 487278909421563397}
   KittenSpawnTransform: {fileID: 3248074050322447322}
+  FoodSpawnTransform: {fileID: 2936405808283917921}
 --- !u!1 &3582523178729056446
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,6 +121,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2942126219682882800}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4369062189689833099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2936405808283917921}
+  m_Layer: 0
+  m_Name: FoodParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2936405808283917921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4369062189689833099}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2942126219682882800}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5131573071738981202
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,7 +162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2334653116645979180}
   m_Layer: 0
-  m_Name: Layout
+  m_Name: LayoutParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

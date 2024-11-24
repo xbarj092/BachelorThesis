@@ -22,6 +22,7 @@ namespace MapGenerator
         public Transform LayoutSpawnTransform;
         public Transform ItemSpawnTransform;
         public Transform KittenSpawnTransform;
+        public Transform FoodSpawnTransform;
 
         private AStar _aStar;
         public AStar AStar => _aStar;
