@@ -14,6 +14,10 @@ public class InteractionControler : MonoBehaviour
             {
                 OnItemOutOfRangeInvoke();
             }
+            else
+            {
+                OnItemInRangeInvoke();
+            }
         }
     }
 
@@ -22,6 +26,13 @@ public class InteractionControler : MonoBehaviour
     private void OnItemOutOfRangeInvoke()
     {
         OnItemOutOfRange?.Invoke();
+    }
+
+    public event Action OnItemInRange;
+
+    private void OnItemInRangeInvoke()
+    {
+        OnItemInRange?.Invoke();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

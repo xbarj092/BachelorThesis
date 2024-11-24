@@ -16,9 +16,19 @@ public class Item : MonoBehaviour
     public ItemUsageType UsageType;
     public virtual bool IsInteractable => _interaction.Interactable;
 
+    public bool IsHovered;
     public bool Highlighting;
     public bool Dropped;
     public bool Used;
+
+    private void OnItemInRangeInvoke()
+    {
+        if (IsHovered && IsInteractable)
+        {
+            Highlight();
+            IsHovered = false;
+        }
+    }
 
     public event Action OnItemOutOfRange;
     private void OnItemOutOfRangeInvoke()
@@ -37,11 +47,13 @@ public class Item : MonoBehaviour
     protected virtual void OnEnable()
     {
         _interaction.OnItemOutOfRange += OnItemOutOfRangeInvoke;
+        _interaction.OnItemInRange += OnItemInRangeInvoke;
     }
 
     protected virtual void OnDisable()
     {
         _interaction.OnItemOutOfRange -= OnItemOutOfRangeInvoke;
+        _interaction.OnItemInRange -= OnItemInRangeInvoke;
     }
 
     public virtual bool CanUse()
@@ -77,6 +89,7 @@ public class Item : MonoBehaviour
 
     public void Unhighlight()
     {
+        IsHovered = false;
         if (Highlighting)
         {
             Highlighting = false;

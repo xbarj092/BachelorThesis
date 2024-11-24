@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Kitten : MonoBehaviour
@@ -279,5 +280,16 @@ public class Kitten : MonoBehaviour
     public bool CanMate()
     {
         return CanPerformActions() && !CanSeeTarget && !IsInRangeOfPlayer && !AlreadyMated;
+    }
+
+    public void IsInRange(bool inRange)
+    {
+        IsInRangeOfPlayer = inRange;
+        if (inRange && IsHigherPriority(FocusTargetType.Player, _currentFocusType))
+        {
+            _currentTarget = _playerTransform;
+            _currentFocusType = FocusTargetType.Player;
+            UpdateFocusState();
+        }
     }
 }

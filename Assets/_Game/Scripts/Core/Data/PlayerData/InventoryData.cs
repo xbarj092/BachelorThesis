@@ -13,6 +13,11 @@ public class InventoryData
         ItemsInInventory = items;
     }
 
+    public bool IsInventoryEmpty()
+    {
+        return !ItemsInInventory.Where(item => item != null).Any();
+    }
+
     public bool HasRoomInInventory()
     {
         return ItemsInInventory.Any(item => item == null);

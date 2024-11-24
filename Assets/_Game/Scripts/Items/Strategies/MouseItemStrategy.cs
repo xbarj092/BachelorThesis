@@ -54,7 +54,7 @@ public class MouseItemStrategy : ItemStrategyBase
                 yield return null;
             }
 
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.fixedDeltaTime;
 
             RaycastHit2D hit = Physics2D.Raycast(item.transform.position, direction, 0.2f, wallLayerMask);
 
@@ -65,7 +65,7 @@ public class MouseItemStrategy : ItemStrategyBase
                 perpendicularDirection = new Vector3(-direction.y, direction.x, 0).normalized;
             }
 
-            Vector3 linearOffset = speed * Time.deltaTime * direction;
+            Vector3 linearOffset = speed * Time.fixedDeltaTime * direction;
 
             float sineOffset = Mathf.Sin(elapsedTime * frequency) * amplitude;
             Vector3 sineWave = perpendicularDirection * sineOffset;
@@ -81,7 +81,7 @@ public class MouseItemStrategy : ItemStrategyBase
                 item.transform.rotation = Quaternion.Lerp(
                     item.transform.rotation,
                     targetRotation,
-                    Time.deltaTime * 10f
+                    Time.fixedDeltaTime * 10f
                 );
             }
 

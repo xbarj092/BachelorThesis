@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,7 +7,6 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private LayerMask _interactLayer;
     [SerializeField] private LayerMask _mapLayer;
     [SerializeField] private float _maxRange = 5f;
-    [SerializeField] private float _placementRadius = 0.35f;
     [SerializeField] private SpriteRenderer _interactionZone;
     [SerializeField] private Player _player;
 
@@ -317,16 +317,15 @@ public class PlayerInteraction : MonoBehaviour
             return;
         }
 
+        _carryingItem.UseStart();
+
         switch (_carryingItem.UsageType)
         {
             case ItemUsageType.SingleUse:
-                _carryingItem.UseStart();
                 DestroyGhostItem();
                 break;
-
             case ItemUsageType.HoldToUse:
                 _isUsingItem = true;
-                _carryingItem.UseStart();
                 break;
         }
     }
@@ -395,11 +394,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnBatteryChanged(float battery)
     {
-        if (battery > 0)
-        {
-            // update some UI?
-        }
-        else
+        if (battery <= 0)
         {
             StopUsingItem();
             ((Laser)_carryingItem).OnBatteryChanged -= OnBatteryChanged;
@@ -438,15 +433,15 @@ public class PlayerInteraction : MonoBehaviour
 
         Vector3 validPosition = GetValidPlacementPosition(transform.position, mousePosition);
         _ghostItem.transform.position = validPosition;
+        _carryingItem.transform.position = validPosition;
     }
 
     private bool CanItemBePlaced()
     {
         if (_ghostItem.CompareTag(GlobalConstants.Tags.InteractableGhost.ToString()))
         {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 2f, LayerMask.GetMask(GlobalConstants.Layers.Kitten.ToString()));
-            return hit.collider != null;
+            RaycastHit2D hit = Physics2D.Raycast(_ghostItem.transform.position, Vector2.zero, 2f, LayerMask.GetMask(GlobalConstants.Layers.Kitten.ToString()));
+            return hit.collider != null && !hit.collider.GetComponent<Kitten>().IsTrapped;
         }
 
         return false;

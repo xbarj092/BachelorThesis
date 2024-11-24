@@ -42,6 +42,11 @@ public class Player : MonoBehaviour
             {
                 if (inventoryData.ItemsInInventory[i] == null)
                 {
+                    if (inventoryData.IsInventoryEmpty())
+                    {
+                        inventoryData.CurrentHighlightIndex = 0;
+                    }
+
                     inventoryData.ItemsInInventory[i] = item;
                     item.PickUp();
                     LocalDataStorage.Instance.PlayerData.InventoryData = inventoryData;

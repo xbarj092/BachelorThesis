@@ -27,7 +27,7 @@ public class PlayerNoise : MonoBehaviour
             float distance = Vector2.Distance(transform.position, kitten.transform.position);
 
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, LayerMask.GetMask(GlobalConstants.Layers.Map.ToString()));
-            kitten.IsInRangeOfPlayer = hit.collider == null;
+            kitten.IsInRange(hit.collider == null);
         }
     }
 
@@ -35,7 +35,7 @@ public class PlayerNoise : MonoBehaviour
     {
         if (collision.TryGetComponent(out Kitten kitten))
         {
-            kitten.IsInRangeOfPlayer = false;
+            kitten.IsInRange(false);
         }
     }
 }
