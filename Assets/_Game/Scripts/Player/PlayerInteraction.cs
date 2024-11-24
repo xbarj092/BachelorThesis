@@ -75,7 +75,7 @@ public class PlayerInteraction : MonoBehaviour
         _rightClickAction.Disable();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
