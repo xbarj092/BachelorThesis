@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,8 +8,14 @@ public class HUD : MonoBehaviour
 {
     [SerializeField] private List<Image> _foodUnits;
     [SerializeField] private List<ItemSlot> _itemSlots;
+    [SerializeField] private TMP_Text _timer;
 
     private int _currentHighlightIndex;
+
+    private void Start()
+    {
+        InvokeRepeating(nameof(UpdateTimer), 0, 1);
+    }
 
     private void OnEnable()
     {
@@ -24,6 +32,11 @@ public class HUD : MonoBehaviour
     {
         DataEvents.OnPlayerStatsChanged -= ChangeFoodAmount;
         DataEvents.OnInventoryDataChanged -= ChangeInventoryItems;
+    }
+
+    private void UpdateTimer()
+    {
+        _timer.text = TimeUtils.GetFormattedTimeFromSeconds(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
     }
 
     private void ChangeFoodAmount(PlayerStats playerStats)
