@@ -49,6 +49,11 @@ public class MouseItemStrategy : ItemStrategyBase
 
         while (elapsedTime < duration)
         {
+            while (Time.timeScale == 0)
+            {
+                yield return null;
+            }
+
             elapsedTime += Time.deltaTime;
 
             RaycastHit2D hit = Physics2D.Raycast(item.transform.position, direction, 0.2f, wallLayerMask);

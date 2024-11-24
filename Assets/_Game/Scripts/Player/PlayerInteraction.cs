@@ -75,11 +75,19 @@ public class PlayerInteraction : MonoBehaviour
         _rightClickAction.Disable();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             _keyboardInputHandler.HandleInteraction();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (ScreenManager.Instance.ActiveGameScreen != null)
+        {
+            return;
         }
 
         if (Camera.main != null)
@@ -195,6 +203,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void PickUpFromGroundOrUse()
     {
+        if (ScreenManager.Instance.ActiveGameScreen != null)
+        {
+            return;
+        }
+
         if (_carryingItem == null)
         {
             _mouseInputHandler.HandleInteraction();
@@ -207,6 +220,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void PlaceInInventoryOrPickUpFromInventory()
     {
+        if (ScreenManager.Instance.ActiveGameScreen != null)
+        {
+            return;
+        }
+
         if (_carryingItem != null)
         {
             PlaceInInventory();
@@ -315,6 +333,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void StopUsingItem()
     {
+        if (ScreenManager.Instance.ActiveGameScreen != null)
+        {
+            return;
+        }
+
         if (_carryingItem == null || !_isUsingItem)
         {
             return;
