@@ -95,6 +95,11 @@ public class PlayerInteraction : MonoBehaviour
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             _mouseInputHandler.HandleMouseHover(mousePosition);
 
+            if (_highlightedItem != null && !CanSeeItem(_highlightedItem.gameObject))
+            {
+                UnhighlightItem();
+            }
+
             if (_ghostItem != null)
             {
                 SnapGhostToMousePosition();
@@ -405,7 +410,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void HighlightItem(Item item)
     {
-        if (_highlightedItem == null)
+        if (_highlightedItem == null && CanSeeItem(item.gameObject))
         {
             _highlightedItem = item;
             _highlightedItem.Highlight();
@@ -434,6 +439,18 @@ public class PlayerInteraction : MonoBehaviour
         Vector3 validPosition = GetValidPlacementPosition(transform.position, mousePosition);
         _ghostItem.transform.position = validPosition;
         _carryingItem.transform.position = validPosition;
+    }
+
+    private bool CanSeeItem(GameObject item)
+    {
+        Vector2 itemPosition = item.transform.position;
+        Vector2 playerPosition = transform.position;
+        Vector2 direction = itemPosition - playerPosition;
+
+        float distance = Vector2.Distance(transform.position, itemPosition);
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, _mapLayer);
+        return hit.collider == null;
     }
 
     private bool CanItemBePlaced()

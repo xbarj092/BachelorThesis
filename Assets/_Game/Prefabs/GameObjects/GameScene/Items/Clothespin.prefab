@@ -34,11 +34,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5635671606158594644, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 526.2184
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5635671606158594644, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1133.607
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5635671606158594644, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -113,6 +113,7 @@ MonoBehaviour:
   _ghostItem: {fileID: 3196723916548866455, guid: fe27c40ee4ba7684fa0f7ffac775b8a5, type: 3}
   _interaction: {fileID: 2109649841185238277}
   UsageType: 0
+  IsHovered: 0
   Highlighting: 0
   Dropped: 0
   Used: 0

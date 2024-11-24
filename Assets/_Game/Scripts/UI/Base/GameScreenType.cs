@@ -5,4 +5,5 @@ public enum GameScreenType
     Death = 2,
     Pause = 3,
     HUD = 4,
+    Loading = 5,
 }

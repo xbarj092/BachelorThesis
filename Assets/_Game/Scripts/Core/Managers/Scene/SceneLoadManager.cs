@@ -75,6 +75,8 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
         SpawnEntities();
         LocalDataStorage.Instance.InitPlayerData();
         PlayAmbience();
+        yield return new WaitForSeconds(1);
+        GameEvents.OnMapLoadedInvoke();
     }
 
     private void SpawnEntities()
