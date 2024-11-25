@@ -127,9 +127,42 @@ namespace MapGenerator
             {
                 _edgeNodes.AddRange(new List<PathNode>() { path.ElementAt(path.Count - 2), path.ElementAt(1) });
 
-                foreach (PathNode pathNode in path)
+                for (int i = 0; i < path.Count; i++)
                 {
+                    PathNode pathNode = path[i];
                     InstantiateHallwayWalls(pathNode);
+
+                    foreach (Room room in placedRooms)
+                    {
+                        Vector2 roomPosition = room.transform.position;
+                        Vector2 roomSize = room.transform.localScale / 2;
+
+                        bool isAdjacent = Mathf.Abs(pathNode.X - roomPosition.x) <= roomSize.x + 1 &&
+                                          Mathf.Abs(pathNode.Y - roomPosition.y) <= roomSize.y + 1 &&
+                                          (Mathf.Abs(pathNode.X - roomPosition.x) > roomSize.x || Mathf.Abs(pathNode.Y - roomPosition.y) > roomSize.y);
+
+                        bool previousNodeInRoom = false;
+                        bool nextNodeInRoom = false;
+
+                        if (i > 0)
+                        {
+                            PathNode prevNode = path[i - 1];
+                            previousNodeInRoom = Mathf.Abs(prevNode.X - roomPosition.x) <= roomSize.x &&
+                                                 Mathf.Abs(prevNode.Y - roomPosition.y) <= roomSize.y;
+                        }
+
+                        if (i < path.Count - 1)
+                        {
+                            PathNode nextNode = path[i + 1];
+                            nextNodeInRoom = Mathf.Abs(nextNode.X - roomPosition.x) <= roomSize.x &&
+                                             Mathf.Abs(nextNode.Y - roomPosition.y) <= roomSize.y;
+                        }
+
+                        if (isAdjacent && (previousNodeInRoom || nextNodeInRoom))
+                        {
+                            _edgeNodes.Add(pathNode);
+                        }
+                    }
                 }
 
                 foreach (Room room in placedRooms)
@@ -248,7 +281,7 @@ namespace MapGenerator
         /// <param name="direction">Direction of the hallway.</param>
         private void DestroyAdjacentRoom(Vector2 position, Vector2 direction)
         {
-            RaycastHit2D[] hits = Physics2D.RaycastAll(position, direction, 0.5f);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(position, direction, 0.49f);
             foreach (RaycastHit2D hit in hits)
             {
                 if (hit.collider != null && hit.collider.gameObject.CompareTag(GlobalConstants.Tags.Room.ToString()))
