@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -164,18 +165,17 @@ namespace MapGenerator
                         }
                     }
                 }
+            }
 
-                foreach (Room room in placedRooms)
+            foreach (Room room in placedRooms)
+            {
+                Vector2 boxSize = new Vector2(room.transform.localScale.x, room.transform.localScale.y) / 1.1f;
+
+                foreach (Collider2D collider in Physics2D.OverlapBoxAll(room.transform.position, boxSize, 360))
                 {
-                    Vector2 boxSize = new Vector2(room.transform.localScale.x, room.transform.localScale.y) / 1.1f;
-                    Debug.DrawLine(room.transform.position - (Vector3)(boxSize / 2), room.transform.position + (Vector3)(boxSize / 2), Color.red, 50f);
-
-                    foreach (Collider2D collider in Physics2D.OverlapBoxAll(room.transform.position, boxSize, 360))
+                    if (collider.gameObject.CompareTag(GlobalConstants.Tags.Hallway.ToString()))
                     {
-                        if (collider.gameObject.CompareTag(GlobalConstants.Tags.Hallway.ToString()))
-                        {
-                            UnityEngine.Object.Destroy(collider.gameObject);
-                        }
+                        UnityEngine.Object.Destroy(collider.gameObject);
                     }
                 }
             }
@@ -281,14 +281,37 @@ namespace MapGenerator
         /// <param name="direction">Direction of the hallway.</param>
         private void DestroyAdjacentRoom(Vector2 position, Vector2 direction)
         {
-            RaycastHit2D[] hits = Physics2D.RaycastAll(position, direction, 0.49f);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(position, direction, 0.5f);
             foreach (RaycastHit2D hit in hits)
             {
                 if (hit.collider != null && hit.collider.gameObject.CompareTag(GlobalConstants.Tags.Room.ToString()))
                 {
-                    UnityEngine.Object.Destroy(hit.collider.gameObject);
+                    PathNode node = _aStar.Grid.GetGridObject(position + direction);
+                    if (node.NodeType != NodeType.None)
+                    {
+                        node.RemoveWall(GetOppositeDirection(direction));
+                        UnityEngine.Object.Destroy(hit.collider.gameObject);
+                    }
                 }
             }
+        }
+
+        private WallDirection GetOppositeDirection(Vector2 direction)
+        {
+            if (direction == Vector2.up) return WallDirection.South;
+            if (direction == Vector2.down) return WallDirection.North;
+            if (direction == Vector2.left) return WallDirection.East;
+            if (direction == Vector2.right) return WallDirection.West;
+            throw new ArgumentException("Invalid direction: " + direction);
+        }
+
+        private WallDirection GetDirection(Vector2 direction)
+        {
+            if (direction == Vector2.up) return WallDirection.North;
+            if (direction == Vector2.down) return WallDirection.South;
+            if (direction == Vector2.left) return WallDirection.West;
+            if (direction == Vector2.right) return WallDirection.East;
+            throw new ArgumentException("Invalid direction: " + direction);
         }
 
         /// <summary>

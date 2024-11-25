@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +15,26 @@ public class StateMachineBrain : MonoBehaviour
     public Transform MouseTransform;
     public Transform LaserTransform;
 
+    private bool _canInitialize = false;
+
+    private void OnEnable()
+    {
+        GameEvents.OnMapLoaded += OnMapLoaded;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnMapLoaded -= OnMapLoaded;
+    }
+
+    private void OnMapLoaded()
+    {
+        _canInitialize = true;
+    }
+
     public IEnumerator SetUpBrain(Kitten kittenToControl)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => _canInitialize);
         AStar aStar = FindFirstObjectByType<MapGenerator.MapGenerator>().AStar;
         AStar = new(aStar.Grid);
 

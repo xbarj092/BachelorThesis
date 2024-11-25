@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MapGenerator
 {
@@ -10,6 +11,14 @@ namespace MapGenerator
         None = 0,
         Room = 1,
         Hallway = 2
+    }
+
+    internal enum WallDirection
+    {
+        North,
+        East,
+        South,
+        West
     }
 
     /// <summary>
@@ -55,6 +64,8 @@ namespace MapGenerator
         /// </summary>
         internal PathNode CameFromNode;
 
+        internal List<WallDirection> Walls { get; private set; } = new();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PathNode"/> class with the specified grid and coordinates.
         /// </summary>
@@ -66,6 +77,22 @@ namespace MapGenerator
             _grid = grid;
             X = x;
             Y = y;
+        }
+
+        public void AddWall(WallDirection direction)
+        {
+            if (!Walls.Contains(direction))
+            {
+                Walls.Add(direction);
+            }
+        }
+
+        public void RemoveWall(WallDirection direction)
+        {
+            if (Walls.Contains(direction))
+            {
+                Walls.Remove(direction);
+            }
         }
 
         /// <summary>

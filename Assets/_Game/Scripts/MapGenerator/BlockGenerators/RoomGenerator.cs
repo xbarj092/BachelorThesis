@@ -184,6 +184,24 @@ namespace MapGenerator
             if (roomNode != null && IsOuterNode(x, y, startXMin, startXMax, startYMin, startYMax))
             {
                 Vector2 tilePosition = new(x, y);
+                if (x == startXMin)
+                {
+                    roomNode.AddWall(WallDirection.West);
+                }
+                if (x == startXMax)
+                {
+                    roomNode.AddWall(WallDirection.East);
+                }
+                if (y == startYMin)
+                {
+                    roomNode.AddWall(WallDirection.South);
+                }
+                if (y == startYMax)
+                {
+                    roomNode.AddWall(WallDirection.North);
+                }
+
+                // Existing wall placement logic remains unchanged
                 if (x == startXMin || x == startXMax || y == startYMin || y == startYMax)
                 {
                     if (x == startXMin && y == startYMin) // Bottom-left corner

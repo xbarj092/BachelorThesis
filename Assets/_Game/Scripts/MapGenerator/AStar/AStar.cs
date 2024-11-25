@@ -115,7 +115,7 @@ public class AStar
     /// </summary>
     /// <param name="currentNode">The node for which to find neighbors.</param>
     /// <returns>The list of neighboring nodes.</returns>
-    internal List<PathNode> GetNeighbourList(PathNode currentNode)
+    internal virtual List<PathNode> GetNeighbourList(PathNode currentNode)
     {
         List<PathNode> neighbourList = new();
         if (currentNode.X - 1 >= 0) neighbourList.Add(GetNode(currentNode.X - 1, currentNode.Y));
@@ -131,7 +131,7 @@ public class AStar
     /// <param name="x">The X coordinate of the node.</param>
     /// <param name="y">The Y coordinate of the node.</param>
     /// <returns>The path node at the specified coordinates.</returns>
-    private PathNode GetNode(int x, int y)
+    internal PathNode GetNode(int x, int y)
     {
         return Grid.GetGridObject(x, y);
     }
