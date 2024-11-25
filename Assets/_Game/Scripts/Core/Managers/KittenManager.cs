@@ -38,6 +38,7 @@ public class KittenManager : MonoSingleton<KittenManager>
             kitten.Male = DetermineKittenGender();
         }
 
+        kitten.IsApproaching = false;
         Kittens.Add(kitten);
     }
 

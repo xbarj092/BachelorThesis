@@ -31,7 +31,7 @@ public class Kitten : MonoBehaviour
     public bool CanSeeTarget;
     public bool IsApproaching;
     public bool IsMating;
-    public bool AlreadyMated;
+    public bool AlreadyMated = true;
     public bool IsTrapped;
     public bool IsRunningAway;
 

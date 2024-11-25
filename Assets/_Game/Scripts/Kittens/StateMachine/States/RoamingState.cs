@@ -13,16 +13,57 @@ public class RoamingState : BaseState
     public override void OnStateEnter()
     {
         Debug.Log("[RoamingState] - entered roaming state");
+        _brain.AStar.GetGrid().GetXY(_kitten.transform.localPosition, out int kittenX, out int kittenY);
+
+        PathNode currentNode = _brain.AStar.Grid.GetGridObject(kittenX, kittenY);
+
+        if (currentNode.NodeType == NodeType.None)
+        {
+            List<Vector2Int> neighborOffsets = new()
+            {
+                new(1, 0),
+                new(-1, 0),
+                new(0, 1),
+                new(0, -1)
+            };
+
+            PathNode closestNode = null;
+            float closestDistance = float.MaxValue;
+
+            foreach (Vector2Int offset in neighborOffsets)
+            {
+                int neighborX = kittenX + offset.x;
+                int neighborY = kittenY + offset.y;
+
+                PathNode neighborNode = _brain.AStar.Grid.GetGridObject(neighborX, neighborY);
+
+                if (_brain.AStar.IsNodeWalkable(neighborNode))
+                {
+                    Vector3 neighborWorldPos = _brain.AStar.Grid.GetWorldPosition(neighborX, neighborY);
+                    float distance = Vector3.Distance(_kitten.transform.localPosition, neighborWorldPos);
+
+                    if (distance < closestDistance)
+                    {
+                        closestNode = neighborNode;
+                        closestDistance = distance;
+                    }
+                }
+            }
+
+            if (closestNode != null)
+            {
+                kittenX = closestNode.X;
+                kittenY = closestNode.Y;
+            }
+        }
 
         List<PathNode> potentialNodes = _brain.AStar.GetAllWalkableNodes();
         int nodeIndex = Random.Range(0, potentialNodes.Count);
         PathNode nextNode = potentialNodes[nodeIndex];
         Vector3 targetPosition = _brain.AStar.Grid.GetWorldPosition(nextNode.X, nextNode.Y);
-
-        _brain.AStar.GetGrid().GetXY(_kitten.transform.localPosition, out int kittenX, out int kittenY);
         _brain.AStar.GetGrid().GetXY(targetPosition, out int targetX, out int targetY);
 
-        _path = _brain.AStar.FindPath(kittenX, kittenY, targetX, targetY);
+        _path = _brain.AStar.FindPath(kittenX, kittenY, kittenX, targetY);
 
         if (_path == null || _path.Count == 0)
         {

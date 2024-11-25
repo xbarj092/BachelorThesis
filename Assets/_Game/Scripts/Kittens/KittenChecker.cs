@@ -19,7 +19,7 @@ public class KittenChecker : MonoBehaviour
             return;
         }
 
-        if (otherKitten.CanMate() && _kitten.CanMate())
+        if (otherKitten.CanMate() && _kitten.CanMate() && !_kitten.IsApproaching && (!otherKitten.IsApproaching || otherKitten.PotentialPartner == _kitten))
         {
             _kitten.PotentialPartner = otherKitten;
             _kitten.IsApproaching = true;

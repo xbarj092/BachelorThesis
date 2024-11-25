@@ -15,26 +15,9 @@ public class StateMachineBrain : MonoBehaviour
     public Transform MouseTransform;
     public Transform LaserTransform;
 
-    private bool _canInitialize = false;
-
-    private void OnEnable()
-    {
-        GameEvents.OnMapLoaded += OnMapLoaded;
-    }
-
-    private void OnDisable()
-    {
-        GameEvents.OnMapLoaded -= OnMapLoaded;
-    }
-
-    private void OnMapLoaded()
-    {
-        _canInitialize = true;
-    }
-
     public IEnumerator SetUpBrain(Kitten kittenToControl)
     {
-        yield return new WaitUntil(() => _canInitialize);
+        yield return new WaitUntil(() => GameManager.Instance.MapInitialized);
         AStar aStar = FindFirstObjectByType<MapGenerator.MapGenerator>().AStar;
         AStar = new(aStar.Grid);
 

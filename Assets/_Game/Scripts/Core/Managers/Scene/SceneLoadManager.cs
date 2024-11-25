@@ -67,6 +67,7 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
 
     private IEnumerator InitGame()
     {
+        GameManager.Instance.MapInitialized = false;
         Time.timeScale = 1;
         MapGenerator.MapGenerator generator = FindObjectOfType<MapGenerator.MapGenerator>();
         KittenManager.Instance.SpawnTransform = generator.KittenSpawnTransform;
@@ -76,6 +77,7 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
         LocalDataStorage.Instance.InitPlayerData();
         PlayAmbience();
         yield return new WaitForSeconds(1);
+        GameManager.Instance.MapInitialized = true;
         GameEvents.OnMapLoadedInvoke();
     }
 
