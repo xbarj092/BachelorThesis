@@ -133,20 +133,81 @@ public class FocusedState : BaseState
 
             _path = _brain.AStar.FindPath(kittenX, kittenY, targetX, targetY);
 
+            if (_path != null)
+            {
+                CorrectInvalidNodesInPath(_path);
+            }
+
             if (_path == null || _path.Count == 0)
             {
+                List<Vector2Int> neighborOffsets = new()
+            {
+                new(-1, -1), new(1, -1),
+                new(-1, 1), new(1, 1),
+                new(1, 0), new(-1, 0),
+                new(0, 1), new(0, -1)
+            };
+
+                Vector2Int closestNeighbor = Vector2Int.zero;
+                float closestDistance = float.MaxValue;
+
+                foreach (Vector2Int offset in neighborOffsets)
+                {
+                    int neighborX = targetX + offset.x;
+                    int neighborY = targetY + offset.y;
+
+                    if (_brain.AStar.IsNodeWalkable(_brain.AStar.GetGrid().GetGridObject(neighborX, neighborY)))
+                    {
+                        float distanceToTarget = Vector3.Distance(
+                            _brain.AStar.Grid.GetWorldPosition(neighborX, neighborY),
+                            targetPosition
+                        );
+
+                        if (distanceToTarget < closestDistance)
+                        {
+                            closestDistance = distanceToTarget;
+                            closestNeighbor = new Vector2Int(neighborX, neighborY);
+                        }
+                    }
+                }
+
+                if (closestDistance < float.MaxValue)
+                {
+                    _path = _brain.AStar.FindPath(kittenX, kittenY, closestNeighbor.x, closestNeighbor.y);
+
+                    if (_path != null)
+                    {
+                        CorrectInvalidNodesInPath(_path);
+                    }
+
+                    if (_path != null && _path.Count > 0)
+                    {
+                        _currentPathIndex = 0;
+                        _isPathSet = true;
+                        UpdateClosestPathIndex();
+                        return;
+                    }
+                }
+
                 _path = new();
                 _isPathSet = false;
                 return;
             }
 
-            _currentPathIndex = _path.Count > 1 ? 1 : 0;
+            _currentPathIndex = 0;
             _isPathSet = true;
+            UpdateClosestPathIndex();
         }
 
         if (_isPathSet)
         {
             PathNode currentNode = _path[_currentPathIndex];
+
+            if (!_brain.AStar.IsNodeWalkable(currentNode))
+            {
+                ReplaceWithClosestWalkableNeighbor(_currentPathIndex);
+            }
+
             Vector3 nodePosition = _brain.AStar.Grid.GetWorldPosition(currentNode.X, currentNode.Y);
             MoveDirectlyToTarget(nodePosition);
 
@@ -157,12 +218,145 @@ public class FocusedState : BaseState
         }
     }
 
+    private void CorrectInvalidNodesInPath(List<PathNode> path)
+    {
+        for (int i = 0; i < path.Count; i++)
+        {
+            if (!_brain.AStar.IsNodeWalkable(path[i]))
+            {
+                ReplaceWithClosestWalkableNeighbor(i);
+            }
+        }
+    }
+
+    private void ReplaceWithClosestWalkableNeighbor(int pathIndex)
+    {
+        PathNode node = _path[pathIndex];
+
+        List<Vector2Int> neighborOffsets = new()
+        {
+            new(-1, -1), new(1, -1),
+            new(-1, 1), new(1, 1),
+            new(1, 0), new(-1, 0),
+            new(0, 1), new(0, -1)
+        };
+
+        float closestDistance = float.MaxValue;
+        PathNode closestNode = null;
+
+        foreach (Vector2Int offset in neighborOffsets)
+        {
+            int neighborX = node.X + offset.x;
+            int neighborY = node.Y + offset.y;
+
+            PathNode neighborNode = _brain.AStar.GetGrid().GetGridObject(neighborX, neighborY);
+
+            if (_brain.AStar.IsNodeWalkable(neighborNode))
+            {
+                float distance = Vector3.Distance(
+                    _brain.AStar.Grid.GetWorldPosition(neighborNode.X, neighborNode.Y),
+                    _brain.AStar.Grid.GetWorldPosition(node.X, node.Y)
+                );
+
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestNode = neighborNode;
+                }
+            }
+        }
+
+        if (closestNode != null)
+        {
+            _path[pathIndex] = closestNode;
+        }
+    }
+
+    private void UpdateClosestPathIndex()
+    {
+        int maxNodesToCheck = Mathf.Min(3, _path.Count);
+        float closestDistance = float.MaxValue;
+
+        for (int i = 0; i < maxNodesToCheck; i++)
+        {
+            PathNode pathNode = _path[i];
+            if (!_brain.AStar.IsNodeWalkable(pathNode))
+            {
+                continue;
+            }
+
+            Vector3 nodeWorldPosition = _brain.AStar.Grid.GetWorldPosition(pathNode.X, pathNode.Y);
+            float distanceToPlayer = Vector3.Distance(_kitten.transform.localPosition, nodeWorldPosition);
+
+            if (distanceToPlayer < closestDistance)
+            {
+                closestDistance = distanceToPlayer;
+                _currentPathIndex = i;
+            }
+        }
+    }
+
     private void MoveDirectlyToTarget(Vector3 targetPosition)
     {
+        _brain.AStar.GetGrid().GetXY(targetPosition, out int targetX, out int targetY);
+
+        if (!_brain.AStar.IsNodeWalkable(_brain.AStar.GetGrid().GetGridObject(targetX, targetY)))
+        {
+            PathNode closestWalkableNode = FindClosestWalkableNeighbor(targetX, targetY);
+
+            if (closestWalkableNode != null)
+            {
+                targetPosition = _brain.AStar.Grid.GetWorldPosition(closestWalkableNode.X, closestWalkableNode.Y);
+            }
+            else
+            {
+                _targetLost = true;
+                return;
+            }
+        }
+
         Vector3 direction = (targetPosition - _kitten.transform.position).normalized;
         _kitten.transform.position += (_chaseSpeed * Time.deltaTime * direction);
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         _kitten.transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    private PathNode FindClosestWalkableNeighbor(int nodeX, int nodeY)
+    {
+        List<Vector2Int> neighborOffsets = new()
+        {
+            new(-1, -1), new(1, -1),
+            new(-1, 1), new(1, 1),
+            new(1, 0), new(-1, 0),
+            new(0, 1), new(0, -1)
+        };
+
+        PathNode closestNode = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (Vector2Int offset in neighborOffsets)
+        {
+            int neighborX = nodeX + offset.x;
+            int neighborY = nodeY + offset.y;
+
+            PathNode neighborNode = _brain.AStar.GetGrid().GetGridObject(neighborX, neighborY);
+
+            if (_brain.AStar.IsNodeWalkable(neighborNode))
+            {
+                float distance = Vector3.Distance(
+                    _brain.AStar.Grid.GetWorldPosition(neighborNode.X, neighborNode.Y),
+                    _brain.AStar.Grid.GetWorldPosition(nodeX, nodeY)
+                );
+
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestNode = neighborNode;
+                }
+            }
+        }
+
+        return closestNode;
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Kitten : MonoBehaviour
@@ -6,7 +5,9 @@ public class Kitten : MonoBehaviour
     [SerializeField] private StateMachineBrain _stateMachineBrain;
 
     // change it to scriptable
-    [SerializeField] private float _timeToLive = 120f;
+    [SerializeField] private float _minTimeToLive = 120f;
+    [SerializeField] private float _maxTimeToLive = 240f;
+    private float _timeToLive = 120f;
     private float _currentTimeToLive;
 
     [Header("Death Settings")]
@@ -37,6 +38,7 @@ public class Kitten : MonoBehaviour
 
     private float _matingTimeout = 20f;
     private float _currentMatingTimeout = 0f;
+    private int _frameCounter = 0;
 
     private Transform _playerTransform;
 
@@ -47,6 +49,7 @@ public class Kitten : MonoBehaviour
     private void Start()
     {
         StartCoroutine(_stateMachineBrain.SetUpBrain(this));
+        _timeToLive = Random.Range(_minTimeToLive, _maxTimeToLive);
         _currentTimeToLive = _timeToLive;
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -60,6 +63,13 @@ public class Kitten : MonoBehaviour
 
     private void Update()
     {
+        _frameCounter++;
+
+        if (_frameCounter % 5 != 0)
+        {
+            return;
+        }
+
         if (AlreadyMated)
         {
             _currentMatingTimeout += Time.deltaTime;

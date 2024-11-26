@@ -1,13 +1,10 @@
 using MapGenerator;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class RunningAwayWithFoodState : BaseState
 {
     [SerializeField] private float _moveSpeed = 0.5f;
-
-    private Vector3 _targetPosition;
 
     private List<PathNode> _path;
     private int _currentPathIndex;
@@ -15,31 +12,96 @@ public class RunningAwayWithFoodState : BaseState
 
     public override void OnStateEnter()
     {
-        List<PathNode> validNodes = new();
-        for (int i = 0; i < _brain.AStar.Grid.GetWidth(); i++)
+        Debug.Log("[RunningAwayWithFoodState] - entered running state");
+        _brain.AStar.GetGrid().GetXY(_kitten.transform.localPosition, out int kittenX, out int kittenY);
+
+        PathNode currentNode = _brain.AStar.Grid.GetGridObject(kittenX, kittenY);
+
+        if (currentNode.NodeType == NodeType.None)
         {
-            for (int j = 0; j < _brain.AStar.Grid.GetHeight(); j++)
+            List<Vector2Int> neighborOffsets = new()
             {
-                PathNode node = _brain.AStar.Grid.GetGridObject(i, j);
-                if (_brain.AStar.IsNodeWalkable(node))
+                new(1, 0),
+                new(-1, 0),
+                new(0, 1),
+                new(0, -1)
+            };
+
+            PathNode closestNode = null;
+            float closestDistance = float.MaxValue;
+
+            foreach (Vector2Int offset in neighborOffsets)
+            {
+                int neighborX = kittenX + offset.x;
+                int neighborY = kittenY + offset.y;
+
+                PathNode neighborNode = _brain.AStar.Grid.GetGridObject(neighborX, neighborY);
+
+                if (_brain.AStar.IsNodeWalkable(neighborNode))
                 {
-                    validNodes.Add(node);
+                    Vector3 neighborWorldPos = _brain.AStar.Grid.GetWorldPosition(neighborX, neighborY);
+                    float distance = Vector3.Distance(_kitten.transform.localPosition, neighborWorldPos);
+
+                    if (distance < closestDistance)
+                    {
+                        closestNode = neighborNode;
+                        closestDistance = distance;
+                    }
                 }
+            }
+
+            if (closestNode != null)
+            {
+                kittenX = closestNode.X;
+                kittenY = closestNode.Y;
             }
         }
 
-        int randomDistance = Random.Range(10, 30);
+        List<PathNode> potentialNodes = _brain.AStar.GetAllWalkableNodes();
+        int nodeIndex = Random.Range(0, potentialNodes.Count);
+        PathNode nextNode = potentialNodes[nodeIndex];
+        Vector3 targetPosition = _brain.AStar.Grid.GetWorldPosition(nextNode.X, nextNode.Y);
+        _brain.AStar.GetGrid().GetXY(targetPosition, out int targetX, out int targetY);
 
-        PathNode targetNode = validNodes.First(node => Mathf.RoundToInt(Vector2.Distance(_brain.AStar.Grid.GetWorldPosition(node.X, node.Y), _kitten.transform.position)) == randomDistance);
+        _path = _brain.AStar.FindPath(kittenX, kittenY, kittenX, targetY);
 
-        _targetPosition = _brain.AStar.Grid.GetWorldPosition(targetNode.X, targetNode.Y);
-        _brain.AStar.GetGrid().GetXY(_kitten.transform.localPosition, out int kittenX, out int kittenY);
-        _brain.AStar.GetGrid().GetXY(_targetPosition, out int targetX, out int targetY);
-        _path = _brain.AStar.FindPath(kittenX, kittenY, targetX, targetY);
+        if (_path == null || _path.Count == 0)
+        {
+            _isPathSet = false;
 
-        _isPathSet = _path != null && _path.Count > 0;
+            List<Vector2Int> neighborOffsets = new()
+            {
+                new(-1, -1),
+                new(1, -1),
+                new(-1, 1),
+                new(1, 1),
+                new(1, 0),
+                new(-1, 0),
+                new(0, 1),
+                new(0, -1)
+            };
+            
+            foreach (Vector2Int offset in neighborOffsets)
+            {
+                int neighborX = targetX + offset.x;
+                int neighborY = targetY + offset.y;
 
-        Debug.Log("[RunningAwayWithFoodState] - entered running state");
+                if (_brain.AStar.IsNodeWalkable(_brain.AStar.GetGrid().GetGridObject(neighborX, neighborY)))
+                {
+                    _path = _brain.AStar.FindPath(kittenX, kittenY, neighborX, neighborY);
+
+                    if (_path != null && _path.Count > 0)
+                    {
+                        UpdateClosestPathIndex();
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            UpdateClosestPathIndex();
+        }
     }
 
     public override BaseState ExecuteState()
@@ -54,7 +116,7 @@ public class RunningAwayWithFoodState : BaseState
             return trappedState;
         }
 
-        if (IsOnTargetPosition() && _brain.GetState(StateType.Idle, out BaseState idleState))
+        if (HasReachedTarget() && _brain.GetState(StateType.Idle, out BaseState idleState))
         {
             return idleState;
         }
@@ -94,8 +156,30 @@ public class RunningAwayWithFoodState : BaseState
         }
     }
 
-    private bool IsOnTargetPosition()
+    private void UpdateClosestPathIndex()
     {
-        return Vector3.Distance(_kitten.transform.position, _targetPosition) <= 0.1f;
+        _currentPathIndex = 0;
+        _isPathSet = true;
+
+        int maxNodesToCheck = Mathf.Min(3, _path.Count);
+        float closestDistance = float.MaxValue;
+
+        for (int i = 0; i < maxNodesToCheck; i++)
+        {
+            PathNode pathNode = _path[i];
+            Vector3 nodeWorldPosition = _brain.AStar.Grid.GetWorldPosition(pathNode.X, pathNode.Y);
+            float distanceToPlayer = Vector3.Distance(_kitten.transform.localPosition, nodeWorldPosition);
+
+            if (distanceToPlayer < closestDistance)
+            {
+                closestDistance = distanceToPlayer;
+                _currentPathIndex = i;
+            }
+        }
+    }
+
+    private bool HasReachedTarget()
+    {
+        return _currentPathIndex >= _path.Count;
     }
 }

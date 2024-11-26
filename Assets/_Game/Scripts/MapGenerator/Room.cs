@@ -40,6 +40,10 @@ namespace MapGenerator
             int randomNumber = Random.Range(0, 6);
             if (randomNumber > 3)
             {
+                kittensSpawned = 2;
+            }
+            if (randomNumber > 1)
+            {
                 kittensSpawned = 1;
             }
 

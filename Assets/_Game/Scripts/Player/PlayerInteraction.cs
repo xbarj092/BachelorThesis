@@ -393,7 +393,7 @@ public class PlayerInteraction : MonoBehaviour
             ((Laser)item).OnBatteryChanged += OnBatteryChanged;
         }
 
-        _ghostItem = Instantiate(item.GetGhostItem(), transform);
+        _ghostItem = Instantiate(item.GetGhostItem(), transform.parent);
         _ghostRenderer = _ghostItem.GetComponent<SpriteRenderer>();
     }
 
