@@ -1,5 +1,7 @@
 using MapGenerator;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class KittenManager : MonoSingleton<KittenManager>
@@ -10,25 +12,158 @@ public class KittenManager : MonoSingleton<KittenManager>
     public Transform SpawnTransform;
     public AStar AStar;
 
+    private List<int> _kittenIDs = new();
+
     private Transform _playerTransform;
 
-    private const float GenderBalanceThreshold = 0.15f;
-    private const int MinimumKittensToSpawn = 3;
-    private const float CheckInterval = 5f;
+    private float _genderBalanceThreshold = 0.15f;
+    private int _minimumKittensToSpawn = 3;
+    private float _checkInterval = 5f;
+
+    private float[,] _influenceMap;
+    private int _coarseWidth, _coarseHeight;
+    private int _gridDivisionSize = 10;
+
+    private float _decayRate = 0.5f;
+    private float _randomWeight = 0.5f;
 
     private void Awake()
     {
         _playerTransform = FindFirstObjectByType<Player>()?.transform;
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        InvokeRepeating(nameof(CheckGenderBalance), CheckInterval, CheckInterval);
+        DataEvents.OnDataSaved += OnDataSaved;
     }
+
+    private void OnDisable()
+    {
+        DataEvents.OnDataSaved -= OnDataSaved;
+    }
+
+    private void OnDataSaved()
+    {
+        LocalDataStorage.Instance.GameData.KittenData.SavedKittens.Clear();
+
+        foreach (Kitten kitten in Kittens)
+        {
+            SavedKitten savedKitten = kitten.Save();
+            LocalDataStorage.Instance.GameData.KittenData.SavedKittens.Add(savedKitten);
+        }
+    }
+
+    public void LoadKittens()
+    {
+        Kittens.Clear();
+
+        foreach (SavedKitten savedKitten in LocalDataStorage.Instance.GameData.KittenData.SavedKittens)
+        {
+            Kitten kitten = Instantiate(_kittenPrefab);
+            savedKitten.ApplyToKitten(kitten);
+            Kittens.Add(kitten);
+        }
+
+        foreach (Kitten kitten in Kittens)
+        {
+            kitten.PotentialPartner = GetKittenFromUID(kitten.PartnerUID);
+        }
+    }
+
+    public void Initialize()
+    {
+        InvokeRepeating(nameof(CheckGenderBalance), _checkInterval, _checkInterval);
+        StartCoroutine(InitializeCoarseInfluenceMap());
+        InvokeRepeating(nameof(DecayInfluenceMap), 1f, 1f);
+    }
+
+    private IEnumerator InitializeCoarseInfluenceMap()
+    {
+        yield return new WaitUntil(() => GameManager.Instance.MapInitialized);
+        _coarseWidth = Mathf.CeilToInt(AStar.Grid.GetWidth() / (float)_gridDivisionSize);
+        _coarseHeight = Mathf.CeilToInt(AStar.Grid.GetHeight() / (float)_gridDivisionSize);
+        _influenceMap = new float[_coarseWidth, _coarseHeight];
+    }
+
+    private void UpdateInfluenceMap(int x, int y, float delta)
+    {
+        int coarseX = x / _gridDivisionSize;
+        int coarseY = y / _gridDivisionSize;
+
+        if (coarseX >= 0 && coarseX < _coarseWidth && coarseY >= 0 && coarseY < _coarseHeight)
+        {
+            _influenceMap[coarseX, coarseY] += delta;
+        }
+    }
+
+    private float GetInfluence(int x, int y)
+    {
+        int coarseX = x / _gridDivisionSize;
+        int coarseY = y / _gridDivisionSize;
+
+        if (coarseX < 0 || coarseX >= _coarseWidth || coarseY < 0 || coarseY >= _coarseHeight)
+        {
+            return float.MaxValue;
+        }
+
+        return _influenceMap[coarseX, coarseY];
+    }
+
+    internal PathNode GetNextPosition(Vector2 currentPosition)
+    { 
+        List<PathNode> walkableNodes = AStar.GetAllWalkableNodes();
+        PathNode currentNode = AStar.Grid.GetGridObject(currentPosition);
+        if (currentNode == null || walkableNodes.Count == 0)
+        {
+            return null;
+        }
+
+        PathNode bestNode = null;
+        float bestScore = float.MaxValue;
+
+        foreach (PathNode node in walkableNodes)
+        {
+            if (node == currentNode)
+            {
+                continue;
+            }
+
+            float influence = GetInfluence(node.X, node.Y);
+            float score = influence + _randomWeight * Random.Range(0f, 1f);
+
+            if (score < bestScore)
+            {
+                bestScore = score;
+                bestNode = node;
+            }
+        }
+
+        if (bestNode != null)
+        {
+            UpdateInfluenceMap(bestNode.X, bestNode.Y, 1f);
+        }
+
+        return bestNode;
+    }
+
+    private void DecayInfluenceMap()
+    {
+        for (int x = 0; x < _coarseWidth; x++)
+        {
+            for (int y = 0; y < _coarseHeight; y++)
+            {
+                _influenceMap[x, y] *= _decayRate;
+            }
+        }
+    }
+
+    #region kitten spawning
 
     public void CreateKitten(Vector3 position, bool? male = null)
     {
         Kitten kitten = Instantiate(_kittenPrefab, position, Quaternion.identity, SpawnTransform);
+        kitten.UID = SetKittenUID();
+        kitten.Init();
         if (male != null)
         {
             kitten.Male = male.Value;
@@ -42,10 +177,30 @@ public class KittenManager : MonoSingleton<KittenManager>
         Kittens.Add(kitten);
     }
 
+    private int SetKittenUID()
+    {
+        int uid = 0;
+        do
+        {
+            uid = Random.Range(0, 100000);
+        }
+        while (_kittenIDs.Contains(uid));
+        return uid;
+    }
+
+    public Kitten GetKittenFromUID(int uid)
+    {
+        return Kittens.FirstOrDefault(kitten => kitten.UID == uid);
+    }
+
     private bool DetermineKittenGender()
     {
         return Random.Range(0, 2) == 0;
     }
+
+    #endregion
+
+    #region gender balancer
 
     private void CheckGenderBalance()
     {
@@ -60,13 +215,13 @@ public class KittenManager : MonoSingleton<KittenManager>
         float maleRatio = (float)maleCount / Kittens.Count;
         float femaleRatio = (float)femaleCount / Kittens.Count;
 
-        if (maleRatio < GenderBalanceThreshold)
+        if (maleRatio < _genderBalanceThreshold)
         {
-            SpawnAdditionalKittens(false, MinimumKittensToSpawn);
+            SpawnAdditionalKittens(false, _minimumKittensToSpawn);
         }
-        else if (femaleRatio < GenderBalanceThreshold)
+        else if (femaleRatio < _genderBalanceThreshold)
         {
-            SpawnAdditionalKittens(true, MinimumKittensToSpawn);
+            SpawnAdditionalKittens(true, _minimumKittensToSpawn);
         }
     }
 
@@ -113,4 +268,6 @@ public class KittenManager : MonoSingleton<KittenManager>
 
         return filteredNodes;
     }
+
+    #endregion
 }

@@ -1,10 +1,22 @@
 using UnityEngine;
 
-public class MenuMainButtons : GameScreen
+public class MenuMainButtons : BaseScreen
 {
     public void PlayTheGame()
     {
         SceneLoadManager.Instance.GoMenuToGame();
+    }
+
+    public void LoadGame()
+    {
+        Destroy(gameObject);
+        ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.LoadGame);
+    }
+
+    public void Options()
+    {
+        Destroy(gameObject);
+        ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.Options);
     }
 
     public void ExitGame()

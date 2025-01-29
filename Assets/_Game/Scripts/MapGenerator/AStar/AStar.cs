@@ -223,7 +223,7 @@ public class AStar
             for (int y = 0; y < Grid.GetHeight(); y++)
             {
                 PathNode node = Grid.GetGridObject(x, y);
-                if (IsNodeWalkable(node))
+                if (node?.NodeType == NodeType.Room || node?.NodeType == NodeType.Hallway)
                 {
                     walkableNodes.Add(node);
                 }

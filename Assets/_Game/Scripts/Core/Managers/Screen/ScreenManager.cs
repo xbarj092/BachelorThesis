@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class ScreenManager : MonoSingleton<ScreenManager>
 {
-    [field: SerializeField] public GameScreen ActiveGameScreen { get; private set; }
+    [field: SerializeField] public BaseScreen ActiveGameScreen { get; private set; }
 
-    public void SetActiveGameScreen(GameScreen screen)
+    public void SetActiveGameScreen(BaseScreen screen)
     {
         ActiveGameScreen = screen;
     }

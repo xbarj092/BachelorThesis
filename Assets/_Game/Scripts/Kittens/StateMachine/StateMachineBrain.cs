@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StateMachineBrain : MonoBehaviour
@@ -15,7 +16,7 @@ public class StateMachineBrain : MonoBehaviour
     public Transform MouseTransform;
     public Transform LaserTransform;
 
-    public IEnumerator SetUpBrain(Kitten kittenToControl)
+    public IEnumerator SetUpBrain(Kitten kittenToControl, StateType currentStateType = StateType.Idle)
     {
         yield return new WaitUntil(() => GameManager.Instance.MapInitialized);
         AStar aStar = FindFirstObjectByType<MapGenerator.MapGenerator>().AStar;
@@ -26,7 +27,7 @@ public class StateMachineBrain : MonoBehaviour
             state.Init(kittenToControl, brain: this);
         }
 
-        _kittenStateMachine.ChangeState(_allValidStates[_initState]);
+        _kittenStateMachine.ChangeState(_allValidStates.First(state => state.StateType == currentStateType));
     }
 
     public void SetBrainActivity(bool value)
@@ -48,5 +49,10 @@ public class StateMachineBrain : MonoBehaviour
         }
 
         return false;
+    }
+
+    public int GetCurrentStateId()
+    {
+        return (int)_kittenStateMachine.CurrentState.StateType;
     }
 }

@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MapGenerator
@@ -11,6 +13,8 @@ namespace MapGenerator
         [Space]
         [SerializeField] private GameObject _hallwayPrefab;
         [SerializeField] private GameObject _hallwayFloorPrefab;
+        [Space]
+        [SerializeField] private GameObject _foodPrefab;
 
         [Header("Map Parameters")]
         [SerializeField] private int _dungeonSizeX;
@@ -19,7 +23,10 @@ namespace MapGenerator
         [SerializeField] private int _numberOfRooms;
 
         [Header("Spawn Transforms")]
-        public Transform LayoutSpawnTransform;
+        public Transform RoomFloorLayoutSpawnTransform;
+        public Transform RoomLayoutSpawnTransform;
+        public Transform HallwayFloorLayoutSpawnTransform;
+        public Transform HallwayLayoutSpawnTransform;
         public Transform ItemSpawnTransform;
         public Transform KittenSpawnTransform;
         public Transform FoodSpawnTransform;
@@ -31,6 +38,8 @@ namespace MapGenerator
         private HallwayGenerator _hallwayGenerator;
         private BowyerWatson _bowyerWatson;
 
+        public bool LoadedData = false;
+
         private void Awake()
         {
             _primsAlg = new PrimsAlg();
@@ -40,13 +49,124 @@ namespace MapGenerator
             _hallwayGenerator = new HallwayGenerator(this);
         }
 
+        private void OnEnable()
+        {
+            DataEvents.OnDataSaved += SaveData;
+        }
+
+        private void OnDisable()
+        {
+            DataEvents.OnDataSaved -= SaveData;
+        }
+
+        private void LoadTransforms(List<TransformData> transforms, Transform spawnTransform, GameObject prefab)
+        {
+            foreach (TransformData transform in transforms)
+            {
+                GameObject gameObject = Instantiate(prefab, spawnTransform);
+                transform.ApplyToTransform(gameObject.transform);
+            }
+        }
+
+        private void LoadTransforms(List<TransformData> roomFloorTransforms, Transform roomFloorLayoutSpawnTransform, Room _roomPrefab)
+        {
+            foreach (TransformData transform in roomFloorTransforms)
+            {
+                Room room = Instantiate(_roomPrefab, roomFloorLayoutSpawnTransform);
+                transform.ApplyToTransform(room.transform);
+            }
+        }
+
+        private void SaveData()
+        {
+            SaveMapLayout();
+            SaveFoodLayout();
+            SaveItemLayout();
+        }
+
+        private void SaveMapLayout()
+        {
+            List<TransformData> roomWallTransforms = GatherChildTransforms(RoomLayoutSpawnTransform);
+            List<TransformData> hallwayWallTransforms = GatherChildTransforms(HallwayLayoutSpawnTransform);
+            List<TransformData> roomFloorTransforms = GatherChildTransforms(RoomFloorLayoutSpawnTransform);
+            List<TransformData> hallwayFloorTransforms = GatherChildTransforms(HallwayFloorLayoutSpawnTransform);
+
+            LocalDataStorage.Instance.GameData.MapLayout = new MapLayout(
+                roomWallTransforms,
+                hallwayWallTransforms,
+                roomFloorTransforms,
+                hallwayFloorTransforms
+            );
+        }
+
+        private void SaveFoodLayout()
+        {
+            List<TransformData> foodTransforms = GatherChildTransforms(FoodSpawnTransform);
+            LocalDataStorage.Instance.GameData.FoodData = new FoodData(foodTransforms);
+        }
+
+        private void SaveItemLayout()
+        {
+            ItemManager.Instance.SaveItems();
+        }
+
+        private List<TransformData> GatherChildTransforms(Transform parentTransform)
+        {
+            List<TransformData> transformDataList = new List<TransformData>();
+
+            foreach (Transform child in parentTransform)
+            {
+                transformDataList.Add(new TransformData(child));
+            }
+
+            return transformDataList;
+        }
+
         public IEnumerator GenerateMap()
         {
-            _roomGenerator.GenerateRooms(_dungeonSizeX, _dungeonSizeY, _numberOfRooms, _aStar, _roomPrefab, _floorPrefab);
-            _hallwayGenerator.GenerateHallways(_bowyerWatson.GenerateTriangularMesh(_roomGenerator.PlacedRooms), 
-                _roomGenerator.PlacedRooms, _aStar, _primsAlg, _hallwayPrefab, _hallwayFloorPrefab);
-            _roomGenerator.BuildRooms(_aStar);
-            yield return StartCoroutine(WaitForHallways());
+            if (!LoadedData)
+            {
+                _roomGenerator.GenerateRooms(_dungeonSizeX, _dungeonSizeY, _numberOfRooms, _aStar, _roomPrefab, _floorPrefab);
+                _hallwayGenerator.GenerateHallways(_bowyerWatson.GenerateTriangularMesh(_roomGenerator.PlacedRooms),
+                    _roomGenerator.PlacedRooms, _aStar, _primsAlg, _hallwayPrefab, _hallwayFloorPrefab);
+                _roomGenerator.BuildRooms(_aStar);
+                yield return StartCoroutine(WaitForHallways());
+            }
+            else
+            {
+                GameData gameData = LocalDataStorage.Instance.GameData;
+
+                LoadTransforms(gameData.MapLayout.RoomFloorTransforms, RoomFloorLayoutSpawnTransform, _floorPrefab);
+                LoadTransforms(gameData.MapLayout.RoomWallTransforms, RoomLayoutSpawnTransform, _roomPrefab);
+                LoadTransforms(gameData.MapLayout.HallwayFloorTransforms, HallwayFloorLayoutSpawnTransform, _hallwayFloorPrefab);
+                LoadTransforms(gameData.MapLayout.HallwayWallTransforms, HallwayLayoutSpawnTransform, _hallwayPrefab);
+
+                LoadTransforms(gameData.FoodData.FoodTransforms, FoodSpawnTransform, _foodPrefab);
+
+                LoadItems();
+
+                LoadKittens();
+            }
+        }
+
+        private void LoadItems()
+        {
+            ItemManager.Instance.LoadItems();
+
+            foreach (Item item in ItemManager.Instance.SpawnedItems)
+            {
+                item.transform.SetParent(ItemSpawnTransform);
+            }
+        }
+
+        private void LoadKittens()
+        {
+            KittenManager.Instance.LoadKittens();
+
+            foreach (Kitten kitten in KittenManager.Instance.Kittens)
+            {
+                kitten.transform.SetParent(KittenSpawnTransform);
+            }
         }
 
         private IEnumerator WaitForHallways()

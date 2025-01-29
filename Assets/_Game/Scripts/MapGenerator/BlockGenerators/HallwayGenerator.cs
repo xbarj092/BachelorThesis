@@ -196,31 +196,31 @@ namespace MapGenerator
             {
                 if (leftNode != null && rightNode == null)
                 {
-                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0.5f, 0), new Vector2(0.05f, 1));
+                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0.5f, 0), new Vector2(0.05f, 1.05f));
                 }
                 else if (leftNode == null && rightNode != null)
                 {
-                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(-0.5f, 0), new Vector2(0.05f, 1));
+                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(-0.5f, 0), new Vector2(0.05f, 1.05f));
                 }
 
-                InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0, -0.5f), new Vector2(1, 0.05f));
-                InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0, 0.5f), new Vector2(1, 0.05f));
+                InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0, -0.5f), new Vector2(1.05f, 0.05f));
+                InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0, 0.5f), new Vector2(1.05f, 0.05f));
             }
             else
             {
                 if (topNode == null)
                 {
-                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0, 0.5f), new Vector2(1, 0.05f));
+                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0, 0.5f), new Vector2(1.05f, 0.05f));
                 }
                 if (bottomNode == null)
                 {
-                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0, -0.5f), new Vector2(1, 0.05f));
+                    InstantiateHallway(_hallwayPrefab, pathNode, new Vector3(0, -0.5f), new Vector2(1.05f, 0.05f));
                 }
 
                 InstantiateHallwayChunk(pathNode, leftNode, rightNode);
             }
 
-            InstantiateHallway(_hallwayFloorPrefab, pathNode, new Vector3(0, 0f, 0.05f), new Vector2(1, 1));
+            InstantiateHallway(_hallwayFloorPrefab, pathNode, new Vector3(0, 0f, 0.05f), new Vector2(1, 1), true);
         }
 
         /// <summary>
@@ -245,16 +245,16 @@ namespace MapGenerator
         {
             if (firstNode == null && secondNode != null)
             {
-                InstantiateHallway(_hallwayPrefab, currentNode, new Vector3(-0.5f, 0), new Vector2(0.05f, 1));
+                InstantiateHallway(_hallwayPrefab, currentNode, new Vector3(-0.5f, 0), new Vector2(0.05f, 1.05f));
             }
             else if (firstNode != null && secondNode == null)
             {
-                InstantiateHallway(_hallwayPrefab, currentNode, new Vector3(0.5f, 0), new Vector2(0.05f, 1));
+                InstantiateHallway(_hallwayPrefab, currentNode, new Vector3(0.5f, 0), new Vector2(0.05f, 1.05f));
             }
             else if (firstNode == null && secondNode == null)
             {
-                InstantiateHallway(_hallwayPrefab, currentNode, new Vector3(0.5f, 0), new Vector2(0.05f, 1));
-                InstantiateHallway(_hallwayPrefab, currentNode, new Vector3(-0.5f, 0), new Vector2(0.05f, 1));
+                InstantiateHallway(_hallwayPrefab, currentNode, new Vector3(0.5f, 0), new Vector2(0.05f, 1.05f));
+                InstantiateHallway(_hallwayPrefab, currentNode, new Vector3(-0.5f, 0), new Vector2(0.05f, 1.05f));
             }
         }
 
@@ -321,10 +321,10 @@ namespace MapGenerator
         /// <param name="pathNode">Current path node.</param>
         /// <param name="hallwayOffset">Offset for the hallway wall.</param>
         /// <param name="hallwayScale">Scale for the hallway wall.</param>
-        private void InstantiateHallway(GameObject prefab, PathNode pathNode, Vector3 hallwayOffset, Vector2 hallwayScale)
+        private void InstantiateHallway(GameObject prefab, PathNode pathNode, Vector3 hallwayOffset, Vector2 hallwayScale, bool floor = false)
         {
             Vector3 wallPosition = new Vector3(pathNode.X, pathNode.Y) + hallwayOffset;
-            UnityEngine.Object.Instantiate(prefab, wallPosition, Quaternion.identity, _mapGenerator.LayoutSpawnTransform).transform.localScale = hallwayScale;
+            UnityEngine.Object.Instantiate(prefab, wallPosition, Quaternion.identity, floor ? _mapGenerator.HallwayFloorLayoutSpawnTransform : _mapGenerator.HallwayLayoutSpawnTransform).transform.localScale = hallwayScale;
         }
     }
 }

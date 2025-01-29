@@ -1,4 +1,4 @@
-public class LoadingScreen : GameScreen
+public class LoadingScreen : BaseScreen
 {
     private void OnEnable()
     {
@@ -12,6 +12,6 @@ public class LoadingScreen : GameScreen
 
     private void OnMapLoaded()
     {
-        Close();
+        Destroy(gameObject);
     }
 }

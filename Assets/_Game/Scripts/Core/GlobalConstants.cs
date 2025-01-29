@@ -1,13 +1,7 @@
 using UnityEngine;
 
-/// <summary>
-/// Contains global constants used throughout the application.
-/// </summary>
 public static class GlobalConstants
 {
-    /// <summary>
-    /// Contains tag constants used to identify game objects.
-    /// </summary>
     public enum Tags
     {
         Room,
@@ -22,26 +16,19 @@ public static class GlobalConstants
 
     public enum Layers
     {
+        Player = 7,
         Map = 8,
         Kitten = 11,
-        Player = 7
+        Interact = 13,
+        KittenInteraction = 18
     }
 
-    public class SavedDataPaths
+    public static class SavedDataPaths
     {
-        public class SavedPlayerData
-        {
-            public static string DATA_PATH_PLAYER_LEVELLING = Application.persistentDataPath + "/levelling.gg";
-            public static string DATA_PATH_PLAYER_TRANSFORM = Application.persistentDataPath + "/transform.gg";
-            public static string DATA_PATH_PLAYER_STATISTICS = Application.persistentDataPath + "/statistics.gg";
-            public static string DATA_PATH_PLAYER_EQUIPPED = Application.persistentDataPath + "/equipped.gg";
-            public static string DATA_PATH_PLAYER_EFFECTS = Application.persistentDataPath + "/effects.gg";
-            public static string DATA_PATH_PLAYER_INVENTORY = Application.persistentDataPath + "/inventory.gg";
-        }
-
-        public class SavedGameData
-        {
-            public static string DATA_PATH_GAME_MAP = Application.persistentDataPath + "/map.gg";
-        }
+#if UNITY_EDITOR
+        public static readonly string BASE_PATH = Application.dataPath + "/Data";
+#else
+        public static readonly string BASE_PATH = Application.persistentDataPath;
+#endif
     }
 }

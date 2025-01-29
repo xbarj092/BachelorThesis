@@ -6,11 +6,15 @@ public class CastrationKitItemStrategy : ItemStrategyBase
 
     public override bool CanUse(Item item)
     {
-        RaycastHit2D hit = Physics2D.Raycast(item.transform.position, Vector2.zero);
-        if (hit.collider != null && hit.collider.TryGetComponent(out Kitten kitten) && !kitten.IsCastrated)
+        RaycastHit2D hit = Physics2D.Raycast(item.transform.position, Vector2.zero, float.MaxValue, LayerMask.GetMask(GlobalConstants.Layers.KittenInteraction.ToString()));
+        if (hit.collider != null)
         {
-            _kitten = kitten;
-            return true;
+            Kitten kitten = hit.collider.GetComponentInParent<Kitten>();
+            if (kitten != null && !kitten.IsCastrated)
+            {
+                _kitten = kitten;
+                return true;
+            }
         }
 
         return false;
@@ -19,6 +23,7 @@ public class CastrationKitItemStrategy : ItemStrategyBase
     public override void Use(Item item)
     {
         _kitten.IsCastrated = true;
+        _kitten.FocusOnPlayer();
         LocalDataStorage.Instance.PlayerData.InventoryData.RemoveItemFromInventory(item);
         Debug.Log("[CastrationKitItemStrategy] - Used castration kit");
     }

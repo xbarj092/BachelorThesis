@@ -1,4 +1,4 @@
-using System.Linq;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,6 +20,7 @@ public class PlayerInteraction : MonoBehaviour
     private InputAction _leftClickAction;
     private InputAction _rightClickAction;
 
+    private float _mouseScroll;
     private bool _isUsingItem = false;
 
     private void Awake()
@@ -81,6 +82,13 @@ public class PlayerInteraction : MonoBehaviour
         {
             _keyboardInputHandler.HandleInteraction();
         }
+
+        if (ScreenManager.Instance.ActiveGameScreen != null)
+        {
+            return;
+        }
+
+        HandleMouseWheelInput();
     }
 
     private void FixedUpdate()
@@ -108,17 +116,20 @@ public class PlayerInteraction : MonoBehaviour
                 _ghostItem.transform.rotation = Quaternion.identity;
             }
         }
+    }
 
-        HandleMouseWheelInput();
+    public void OnMouseScroll(InputValue inputValue)
+    {
+        _mouseScroll = inputValue.Get<float>();
     }
 
     private void HandleMouseWheelInput()
     {
-        if (UnityEngine.InputSystem.Mouse.current.scroll.y.ReadValue() > 0)
+        if (_mouseScroll > 0)
         {
             ChangeSelectedItem(-1);
         }
-        else if (UnityEngine.InputSystem.Mouse.current.scroll.y.ReadValue() < 0)
+        else if (_mouseScroll < 0)
         {
             ChangeSelectedItem(1);
         }
@@ -130,6 +141,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (inventoryData.ItemsInInventory.Count == 0)
         {
+            Debug.LogWarning("[PlayerInteraction] - inventory items are empty");
             return;
         }
 
@@ -145,6 +157,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (inventoryData.ItemsInInventory[nextHighlight] == null)
         {
+            Debug.LogWarning("[PlayerInteraction] - next highlight is null");
             return;
         }
 
@@ -302,17 +315,17 @@ public class PlayerInteraction : MonoBehaviour
         item.IsPickedUp(false);
         item.Dropped = true;
 
-        if (_carryingItem != null)
-        {
-            DestroyGhostItem();
-        }
-
         if (inventoryData.ItemsInInventory.Contains(item))
         {
             inventoryData.ItemsInInventory[inventoryData.CurrentHighlightIndex] = null;
         }
 
         LocalDataStorage.Instance.PlayerData.InventoryData = inventoryData;
+        if (_carryingItem != null)
+        {
+            DestroyGhostItem();
+            PickUpFromInventory();
+        }
     }
 
     private void UseItem()
@@ -328,9 +341,11 @@ public class PlayerInteraction : MonoBehaviour
         {
             case ItemUsageType.SingleUse:
                 DestroyGhostItem();
+                PickUpFromInventory();
                 break;
             case ItemUsageType.HoldToUse:
                 _isUsingItem = true;
+                _ghostItem.SetActive(false);
                 break;
         }
     }
@@ -349,6 +364,7 @@ public class PlayerInteraction : MonoBehaviour
 
         _isUsingItem = false;
         _carryingItem.UseStop();
+        _ghostItem.SetActive(true);
     }
 
     private void PlaceItem()
@@ -405,6 +421,7 @@ public class PlayerInteraction : MonoBehaviour
             ((Laser)_carryingItem).OnBatteryChanged -= OnBatteryChanged;
             LocalDataStorage.Instance.PlayerData.InventoryData.RemoveItemFromInventory(_carryingItem);
             DestroyGhostItem();
+            PickUpFromInventory();
         }
     }
 
@@ -457,8 +474,24 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (_ghostItem.CompareTag(GlobalConstants.Tags.InteractableGhost.ToString()))
         {
-            RaycastHit2D hit = Physics2D.Raycast(_ghostItem.transform.position, Vector2.zero, 2f, LayerMask.GetMask(GlobalConstants.Layers.Kitten.ToString()));
-            return hit.collider != null && !hit.collider.GetComponent<Kitten>().IsTrapped;
+            RaycastHit2D hit = Physics2D.Raycast(_ghostItem.transform.position, Vector2.zero, 2f, LayerMask.GetMask(GlobalConstants.Layers.KittenInteraction.ToString()));
+            if (hit.collider != null)
+            {
+                Kitten kitten = hit.collider.GetComponentInParent<Kitten>();
+                if (kitten != null)
+                {
+                    if (_carryingItem.Stats.ItemType == ItemType.Towel || _carryingItem.Stats.ItemType == ItemType.Clothespin)
+                    {
+                        return !kitten.IsTrapped;
+                    }
+                    else if (_carryingItem.Stats.ItemType == ItemType.CastrationKit)
+                    {
+                        return !kitten.IsCastrated;
+                    }
+
+                    return true;
+                }
+            }
         }
 
         return false;

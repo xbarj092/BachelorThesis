@@ -24,6 +24,13 @@ public class Kitten : MonoBehaviour
     public Rigidbody2D Rigidbody;
     public Kitten PotentialPartner;
 
+    private Vector3 _movementDirection;
+    public Vector3 MovementDirection => _movementDirection;
+    private Vector3 _lastPosition;
+
+    public int PartnerUID;
+    public int UID;
+
     public bool IsCastrated;
     public bool Male;
 
@@ -46,26 +53,15 @@ public class Kitten : MonoBehaviour
 
     private FocusTargetType _currentFocusType;
 
-    private void Start()
-    {
-        StartCoroutine(_stateMachineBrain.SetUpBrain(this));
-        _timeToLive = Random.Range(_minTimeToLive, _maxTimeToLive);
-        _currentTimeToLive = _timeToLive;
-
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            _playerTransform = player.transform;
-        }
-
-        InvokeRepeating(nameof(Starve), 1, 1);
-    }
-
     private void Update()
     {
+        Vector3 currentPosition = transform.position;
+        _movementDirection = (currentPosition - _lastPosition).normalized;
+        _lastPosition = currentPosition;
+
         _frameCounter++;
 
-        if (_frameCounter % 5 != 0)
+        if (_frameCounter % 5 != 0 || IsTrapped)
         {
             return;
         }
@@ -84,6 +80,43 @@ public class Kitten : MonoBehaviour
         {
             CheckFieldOfView();
         }
+    }
+
+    public void Init()
+    {
+        StartCoroutine(_stateMachineBrain.SetUpBrain(this));
+        _timeToLive = Random.Range(_minTimeToLive, _maxTimeToLive);
+        _currentTimeToLive = _timeToLive;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            _playerTransform = player.transform;
+        }
+
+        InvokeRepeating(nameof(Starve), 1, 1);
+    }
+
+    public void Init(StateType stateType)
+    {
+        StartCoroutine(_stateMachineBrain.SetUpBrain(this, stateType));
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            _playerTransform = player.transform;
+        }
+
+        InvokeRepeating(nameof(Starve), 1, 1);
+        _renderer.sprite = GetSprite();
+    }
+
+    private Sprite GetSprite()
+    {
+        if (IsDead) return _deadSprite;
+        if (IsTrapped) return _trappedSprite;
+        if (CanSeeTarget) return _focusedSprite;
+        return _defaultSprite;
     }
 
     private void Starve()
@@ -114,13 +147,21 @@ public class Kitten : MonoBehaviour
 
     public void Untrap()
     {
+        Collider2D overlap = Physics2D.OverlapCircle(transform.position, 0.5f, LayerMask.GetMask(GlobalConstants.Layers.Interact.ToString()));
+        if (overlap != null && overlap.TryGetComponent(out CardboardBox box) && box.Used)
+        {
+            box.SetHasKitten(true);
+            Trap(true);
+            return;
+        }
+
         IsTrapped = false;
         _renderer.sprite = _defaultSprite;
     }
 
     private void CheckFieldOfView()
     {
-        if (!CanPerformActions())
+        if (!CanPerformActions() || IsApproaching)
         {
             ResetFocus();
             return;
@@ -258,6 +299,20 @@ public class Kitten : MonoBehaviour
         }
     }
 
+    public void FocusOnPlayer()
+    {
+        if (IsTrapped)
+        {
+            return;
+        }
+
+        _stateMachineBrain.MouseTransform = null;
+        _stateMachineBrain.PlayerTransform = _playerTransform;
+        _stateMachineBrain.LaserTransform = null;
+        _renderer.sprite = _focusedSprite;
+        CanSeeTarget = true;
+    }
+
     private void ResetFocus()
     {
         _currentTarget = null;
@@ -309,5 +364,26 @@ public class Kitten : MonoBehaviour
             _currentFocusType = FocusTargetType.Player;
             UpdateFocusState();
         }
+    }
+
+    public SavedKitten Save()
+    {
+        return new(new(transform), new(_currentTarget), new(MovementDirection), new(_lastPosition),
+            _currentTimeToLive, _currentMatingTimeout, PotentialPartner == null ? 0 : PotentialPartner.UID, _stateMachineBrain.GetCurrentStateId(), (int)_currentFocusType,
+            Male, IsCastrated, IsDead, IsInRangeOfPlayer, CanSeeTarget, IsApproaching,
+            IsMating, AlreadyMated, IsTrapped, IsRunningAway, gameObject.activeInHierarchy);
+    }
+
+    public void Load(SavedKitten savedKitten)
+    {
+        savedKitten.CurrentTarget.ApplyToTransform(_currentTarget);
+
+        _movementDirection = savedKitten.MovementDirection.ToVector3();
+        _lastPosition = savedKitten.LastPosition.ToVector3();
+
+        _currentTimeToLive = savedKitten.TimeToLive;
+        _matingTimeout = savedKitten.MatingTimeout;
+
+        Init((StateType)savedKitten.CurrentState);
     }
 }

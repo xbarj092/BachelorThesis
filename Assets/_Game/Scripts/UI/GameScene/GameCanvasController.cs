@@ -5,7 +5,7 @@ public class GameCanvasController : BaseCanvasController
     [SerializeField] private DeathScreen _deathScreenPrefab;
     [SerializeField] private PauseScreen _pauseScreenPrefab;
 
-    protected override GameScreen GetRelevantScreen(GameScreenType gameScreenType)
+    protected override BaseScreen GetRelevantScreen(GameScreenType gameScreenType)
     {
         return gameScreenType switch
         {

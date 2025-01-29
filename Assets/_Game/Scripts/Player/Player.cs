@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +7,16 @@ public class Player : MonoBehaviour
     [SerializeField] private Rigidbody2D _rigidbody;
 
     private Vector2 _moveInput;
+
+    private void OnEnable()
+    {
+        DataEvents.OnDataSaved += SaveData;
+    }
+
+    private void OnDisable()
+    {
+        DataEvents.OnDataSaved -= SaveData;
+    }
 
     private void Update()
     {
@@ -21,6 +32,27 @@ public class Player : MonoBehaviour
             float targetAngle = Mathf.Atan2(_moveInput.y, _moveInput.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, targetAngle + 90);
         }
+    }
+
+    private void SaveData()
+    {
+        LocalDataStorage.Instance.PlayerData.PlayerTransform = new(transform);
+        SaveInventoryItems();
+    }
+
+    public void SaveInventoryItems()
+    {
+        LocalDataStorage.Instance.PlayerData.SavedInventoryData.SavedItems.Clear();
+
+        foreach (Item item in LocalDataStorage.Instance.PlayerData.InventoryData.ItemsInInventory)
+        {
+            if (item != null)
+            {
+                item.SaveInventoryItem();
+            }
+        }
+
+        LocalDataStorage.Instance.PlayerData.SavedInventoryData.CurrentHighlightIndex = LocalDataStorage.Instance.PlayerData.InventoryData.CurrentHighlightIndex;
     }
 
     private void OnMove(InputValue inputValue)
@@ -74,6 +106,11 @@ public class Player : MonoBehaviour
 
     private void DepleteFood()
     {
+        if (!GameManager.Instance.MapInitialized)
+        {
+            return;
+        }
+
         PlayerStats stats = LocalDataStorage.Instance.PlayerData.PlayerStats;
         stats.CurrentTimeToEatFood -= Time.deltaTime;
 

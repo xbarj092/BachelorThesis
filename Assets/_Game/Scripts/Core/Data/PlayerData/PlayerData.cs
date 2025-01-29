@@ -4,6 +4,16 @@ using UnityEngine;
 [Serializable]
 public class PlayerData
 {
+    [SerializeField] private TransformData _playerTransform;
+    public TransformData PlayerTransform
+    {
+        get => _playerTransform;
+        set
+        {
+            _playerTransform = value;
+        }
+    }
+
     [SerializeField] private PlayerStats _playerStats;
     public PlayerStats PlayerStats
     {
@@ -23,6 +33,17 @@ public class PlayerData
         {
             _inventoryData = value;
             DataEvents.OnInventoryDataChangedInvoke(_inventoryData);
+        }
+    }
+
+    [SerializeField] private SavedInventoryData _savedInventoryData;
+    public SavedInventoryData SavedInventoryData
+    {
+        get => _savedInventoryData;
+        set
+        {
+            _savedInventoryData = value;
+            DataEvents.OnSavedInventoryDataChangedInvoke(_savedInventoryData);
         }
     }
 }

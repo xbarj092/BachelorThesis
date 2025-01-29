@@ -1,5 +1,6 @@
 using MapGenerator;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RunningAwayWithFoodState : BaseState
@@ -58,12 +59,11 @@ public class RunningAwayWithFoodState : BaseState
         }
 
         List<PathNode> potentialNodes = _brain.AStar.GetAllWalkableNodes();
-        int nodeIndex = Random.Range(0, potentialNodes.Count);
-        PathNode nextNode = potentialNodes[nodeIndex];
+        PathNode nextNode = potentialNodes.First(node => Mathf.RoundToInt(Vector2.Distance(new(node.X, node.Y), new(kittenX, kittenY))) >= 10);
         Vector3 targetPosition = _brain.AStar.Grid.GetWorldPosition(nextNode.X, nextNode.Y);
         _brain.AStar.GetGrid().GetXY(targetPosition, out int targetX, out int targetY);
 
-        _path = _brain.AStar.FindPath(kittenX, kittenY, kittenX, targetY);
+        _path = _brain.AStar.FindPath(kittenX, kittenY, targetX, targetY);
 
         if (_path == null || _path.Count == 0)
         {

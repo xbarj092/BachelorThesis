@@ -24,7 +24,7 @@ public class ItemInteractions : MonoBehaviour
             {
                 if (collider.TryGetComponent(out Player player))
                 {
-                    if (gameObject.CompareTag(GlobalConstants.Tags.Item.ToString()))
+                    if (gameObject.CompareTag(GlobalConstants.Tags.Item.ToString()) && _item.IsInteractable)
                     {
                         player.PickupItem(gameObject);
                     }

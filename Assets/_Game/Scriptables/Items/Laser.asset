@@ -15,4 +15,4 @@ MonoBehaviour:
   SpawnChance: 0
   Sprite: {fileID: 21300000, guid: 33c649978d0f0e74cbafd1ad4e2913e6, type: 3}
   ItemType: 1
-  Battery: 5
+  Battery: 3

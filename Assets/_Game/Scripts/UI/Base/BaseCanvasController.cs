@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class BaseCanvasController : MonoBehaviour
 {
-    protected Dictionary<GameScreenType, GameScreen> _instantiatedScreens = new();
+    [HideInInspector] public BaseScreen ActiveGameScreen;
+
+    protected Dictionary<GameScreenType, BaseScreen> _instantiatedScreens = new();
 
     private void OnEnable()
     {
@@ -17,7 +19,7 @@ public class BaseCanvasController : MonoBehaviour
         ScreenEvents.OnGameScreenClosed -= CloseGameScreen;
     }
 
-    private void ShowGameScreen(GameScreenType gameScreenType)
+    protected void ShowGameScreen(GameScreenType gameScreenType)
     {
         if ((_instantiatedScreens.ContainsKey(gameScreenType) && _instantiatedScreens[gameScreenType] == null) ||
             !_instantiatedScreens.ContainsKey(gameScreenType))
@@ -28,33 +30,53 @@ public class BaseCanvasController : MonoBehaviour
         _instantiatedScreens[gameScreenType].Open();
     }
 
-    private void CloseGameScreen(GameScreenType gameScreenType)
+    protected void CloseGameScreen(GameScreenType gameScreenType)
     {
         if (_instantiatedScreens.ContainsKey(gameScreenType))
         {
-            GameScreen screenInstance = GetActiveGameScreen(gameScreenType);
-            InstantiateScreen(screenInstance);
-            _instantiatedScreens[gameScreenType].Close();
+            GameScreenType nextScreenType = GetActiveGameScreen(gameScreenType);
+            if (nextScreenType != GameScreenType.None)
+            {
+                if (_instantiatedScreens.TryGetValue(nextScreenType, out BaseScreen existingScreen) && existingScreen != null)
+                {
+                    existingScreen.Open();
+                }
+                else
+                {
+                    InstantiateScreen(nextScreenType);
+                }
+            }
+
+            Destroy(_instantiatedScreens[gameScreenType].gameObject);
+            _instantiatedScreens.Remove(gameScreenType);
+        }
+    }
+
+    protected void DestroyGameScreen(GameScreenType gameScreenType)
+    {
+        if (_instantiatedScreens.ContainsKey(gameScreenType))
+        {
+            Destroy(_instantiatedScreens[gameScreenType].gameObject);
             _instantiatedScreens.Remove(gameScreenType);
         }
     }
 
     private void InstantiateScreen(GameScreenType gameScreenType)
     {
-        GameScreen screenInstance = GetRelevantScreen(gameScreenType);
+        BaseScreen screenInstance = GetRelevantScreen(gameScreenType);
         InstantiateScreen(screenInstance);
     }
 
-    private void InstantiateScreen(GameScreen screenInstance)
+    private void InstantiateScreen(BaseScreen screenInstance)
     {
         if (screenInstance != null)
         {
             _instantiatedScreens[screenInstance.GameScreenType] = screenInstance;
-            ScreenManager.Instance.SetActiveGameScreen(screenInstance);
+            ActiveGameScreen = screenInstance;
         }
     }
 
-    protected virtual GameScreen GetRelevantScreen(GameScreenType gameScreenType)
+    protected virtual BaseScreen GetRelevantScreen(GameScreenType gameScreenType)
     {
         return gameScreenType switch
         {
@@ -62,11 +84,11 @@ public class BaseCanvasController : MonoBehaviour
         };
     }
 
-    protected virtual GameScreen GetActiveGameScreen(GameScreenType gameScreenType)
+    protected virtual GameScreenType GetActiveGameScreen(GameScreenType gameScreenType)
     {
         return gameScreenType switch
         {
-            _ => null
+            _ => GameScreenType.None
         };
     }
 }

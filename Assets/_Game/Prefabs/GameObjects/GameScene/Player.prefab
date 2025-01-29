@@ -179,6 +179,20 @@ MonoBehaviour:
   _maxRange: 3
   _interactionZone: {fileID: 0}
   _player: {fileID: 5670428107928283071}
+  _ghostItems:
+    _serializedList:
+    - Key: {fileID: 5358534490309780274, guid: 6f6d7fe031bba0644872ac6314e7b292, type: 3}
+      Value: {fileID: 5906434041033461365, guid: b509a83eb2b369e4db9b2823e7ed224a, type: 3}
+    - Key: {fileID: 2797450546706936104, guid: 8012bf0d87c9fb04ab4fc6294f14c000, type: 3}
+      Value: {fileID: 633159553556765650, guid: f942a2b75cb52e44dbbc064f040e185f, type: 3}
+    - Key: {fileID: 3196723916548866455, guid: fe27c40ee4ba7684fa0f7ffac775b8a5, type: 3}
+      Value: {fileID: 3013150036535382391, guid: 2050bf487a5895a4cab4e2bf988feb8f, type: 3}
+    - Key: {fileID: 6599099477623242798, guid: 169e4c6a615a71e43b333bc536ba633a, type: 3}
+      Value: {fileID: 3199732880389946512, guid: 8af717ca600c28943bcd74ce097d6a89, type: 3}
+    - Key: {fileID: 8855443163729975009, guid: 15238bb923500ed4c823badb62faa1c3, type: 3}
+      Value: {fileID: 413877706589494400, guid: 58f430c458207fb4f9028ee7154e70ca, type: 3}
+    - Key: {fileID: 2451321224657017484, guid: 984d230d34f24e34ca4c8e75846f8898, type: 3}
+      Value: {fileID: 8555095110012774048, guid: 75e55fa0359d1214394586feb08fe550, type: 3}
 --- !u!114 &5670428107928283071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,7 +259,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4

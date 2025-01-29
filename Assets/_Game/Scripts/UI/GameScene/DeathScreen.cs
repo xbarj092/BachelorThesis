@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class DeathScreen : GameScreen
+public class DeathScreen : BaseScreen
 {
     [SerializeField] private TMP_Text _survivalTimeText;
 

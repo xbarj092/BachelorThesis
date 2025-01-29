@@ -35,7 +35,7 @@ public class RoamingState : BaseState
             FindClosestValidNode(ref kittenX, ref kittenY);
         }
 
-        PathNode nextNode = GetRandomWalkableNode();
+        PathNode nextNode = KittenManager.Instance.GetNextPosition(_kitten.transform.localPosition);
         if (nextNode != null)
         {
             _path = _brain.AStar.FindPath(kittenX, kittenY, nextNode.X, nextNode.Y);

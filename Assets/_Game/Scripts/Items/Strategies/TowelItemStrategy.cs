@@ -22,11 +22,15 @@ public class TowelItemStrategy : ItemStrategyBase
 
     public override bool CanUse(Item item)
     {
-        RaycastHit2D hit = Physics2D.Raycast(item.transform.position, Vector2.zero);
-        if (hit.collider != null && hit.collider.TryGetComponent(out Kitten kitten) && !kitten.IsTrapped)
+        RaycastHit2D hit = Physics2D.Raycast(item.transform.position, Vector2.zero, float.MaxValue, LayerMask.GetMask(GlobalConstants.Layers.KittenInteraction.ToString()));
+        if (hit.collider != null)
         {
-            _kitten = kitten;
-            return true;
+            Kitten kitten = hit.collider.GetComponentInParent<Kitten>();
+            if (kitten != null && !kitten.IsTrapped)
+            {
+                _kitten = kitten;
+                return true;
+            }
         }
 
         return false;

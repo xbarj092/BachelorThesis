@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public abstract class Item : MonoBehaviour
 {
     [SerializeField] protected SpriteRenderer _spriteRenderer;
     [field: SerializeField] public UseableItem Stats { get; private set; }
@@ -20,6 +20,8 @@ public class Item : MonoBehaviour
     public bool Highlighting;
     public bool Dropped;
     public bool Used;
+
+    public int UID;
 
     private void OnItemInRangeInvoke()
     {
@@ -106,4 +108,8 @@ public class Item : MonoBehaviour
     {
         _pickedUp = pickedUp;
     }
+
+    public abstract void SaveItem();
+    public abstract void SaveInventoryItem();
+    public abstract void LoadItem(SavedItem item);
 }

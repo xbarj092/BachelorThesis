@@ -86,4 +86,24 @@ public class Laser : Item
         gameObject.SetActive(false);
         base.UseStop();
     }
+
+    public override void SaveItem()
+    {
+        SavedLaserItem savedItem = new(new(transform), (int)Stats.ItemType, UID, Dropped, Used, gameObject.activeInHierarchy, Battery);
+        LocalDataStorage.Instance.GameData.ItemData.SavedItems.Add(savedItem);
+    }
+
+    public override void SaveInventoryItem()
+    {
+        SavedLaserItem savedItem = new(new(transform), (int)Stats.ItemType, UID, Dropped, Used, gameObject.activeInHierarchy, Battery);
+        LocalDataStorage.Instance.PlayerData.SavedInventoryData.SavedItems.Add(savedItem);
+    }
+
+    public override void LoadItem(SavedItem item)
+    {
+        if ((ItemType)item.ItemType == Stats.ItemType)
+        {
+            ((SavedLaserItem)item).ApplyToItem(this);
+        }
+    }
 }

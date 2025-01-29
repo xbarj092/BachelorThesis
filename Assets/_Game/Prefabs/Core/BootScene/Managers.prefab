@@ -33,6 +33,7 @@ Transform:
   - {fileID: 5903454079373260518}
   - {fileID: 61220583512331465}
   - {fileID: 6627668184351085637}
+  - {fileID: 4667403748993630162}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3218876386703594225
@@ -123,6 +124,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e2b6db04d77cc40be63d889af68568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MapInitialized: 0
+--- !u!1 &6297308481549680904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4667403748993630162}
+  - component: {fileID: 4351296397141309653}
+  m_Layer: 0
+  m_Name: ItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4667403748993630162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6297308481549680904}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7460344270319024745}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4351296397141309653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6297308481549680904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42c2528613946ed4a8795e1a27ab046a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _items:
+    _serializedList:
+    - Key: 1
+      Value: {fileID: 3199732880389946512, guid: 8af717ca600c28943bcd74ce097d6a89, type: 3}
+    - Key: 2
+      Value: {fileID: 413877706589494400, guid: 58f430c458207fb4f9028ee7154e70ca, type: 3}
+    - Key: 3
+      Value: {fileID: 633159553556765650, guid: f942a2b75cb52e44dbbc064f040e185f, type: 3}
+    - Key: 4
+      Value: {fileID: 8555095110012774048, guid: 75e55fa0359d1214394586feb08fe550, type: 3}
+    - Key: 5
+      Value: {fileID: 3013150036535382391, guid: 2050bf487a5895a4cab4e2bf988feb8f, type: 3}
+    - Key: 6
+      Value: {fileID: 5906434041033461365, guid: b509a83eb2b369e4db9b2823e7ed224a, type: 3}
+  SpawnedItems: []
+  SavedItems: []
 --- !u!1 &7162964343962402006
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,6 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _kittenPrefab: {fileID: 5434703141080909983, guid: 7f5ce41964dae14499f39870e0fccff1, type: 3}
   Kittens: []
+  FocusedKittens: []
   SpawnTransform: {fileID: 0}
 --- !u!1 &7531105811605514934
 GameObject:

@@ -32,3 +32,10 @@ public class InventoryData
         }
     }
 }
+
+[Serializable]
+public class SavedInventoryData
+{
+    public List<SavedItem> SavedItems;
+    public int CurrentHighlightIndex;
+}

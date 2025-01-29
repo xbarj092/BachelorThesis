@@ -29,4 +29,24 @@ public class CardboardBox : Item
         HasKitten = true;
         _spriteRenderer.sprite = _occupiedBox;
     }
+
+    public override void SaveItem()
+    {
+        SavedCardboardBoxItem savedItem = new(new(transform), (int)Stats.ItemType, UID, Dropped, Used, gameObject.activeInHierarchy, HasKitten);
+        LocalDataStorage.Instance.GameData.ItemData.SavedItems.Add(savedItem);
+    }
+
+    public override void SaveInventoryItem()
+    {
+        SavedCardboardBoxItem savedItem = new(new(transform), (int)Stats.ItemType, UID, Dropped, Used, gameObject.activeInHierarchy, HasKitten);
+        LocalDataStorage.Instance.PlayerData.SavedInventoryData.SavedItems.Add(savedItem);
+    }
+
+    public override void LoadItem(SavedItem item)
+    {
+        if ((ItemType)item.ItemType == Stats.ItemType)
+        {
+            ((SavedCardboardBoxItem)item).ApplyToItem(this);
+        }
+    }
 }

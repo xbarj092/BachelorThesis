@@ -4,6 +4,31 @@ using UnityEngine;
 
 public class SceneLoadManager : MonoSingleton<SceneLoadManager>
 {
+    private bool _loaded = false;
+
+    private void OnEnable()
+    {
+        DataEvents.OnDataLoaded += OnDataLoaded;
+    }
+
+    private void OnDisable()
+    {
+        DataEvents.OnDataLoaded -= OnDataLoaded;
+    }
+
+    private void OnDataLoaded()
+    {
+        _loaded = true;
+        if (IsSceneLoaded(SceneLoader.Scenes.MenuScene))
+        {
+            GoMenuToGame();
+        }
+        else if (IsSceneLoaded(SceneLoader.Scenes.GameScene))
+        {
+            RestartGame();
+        }
+    }
+
     protected override void Init()
     {
         base.Init();
@@ -12,6 +37,7 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
 
     public void GoBootToMenu()
     {
+        _loaded = false;
         SceneLoader.OnSceneLoadDone += OnBootToMenuLoadDone;
         SceneLoader.LoadScene(SceneLoader.Scenes.MenuScene);
     }
@@ -37,6 +63,7 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
 
     public void GoGameToMenu()
     {
+        _loaded = false;
         SceneLoader.OnSceneLoadDone += OnGameToMenuLoadDone;
         SceneLoader.LoadScene(SceneLoader.Scenes.MenuScene, toUnload: SceneLoader.Scenes.GameScene);
     }
@@ -70,27 +97,41 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
         GameManager.Instance.MapInitialized = false;
         Time.timeScale = 1;
         MapGenerator.MapGenerator generator = FindObjectOfType<MapGenerator.MapGenerator>();
+        KittenManager.Instance.StopAllCoroutines();
+        KittenManager.Instance.CancelInvoke();
         KittenManager.Instance.SpawnTransform = generator.KittenSpawnTransform;
         KittenManager.Instance.AStar = generator.AStar;
+        generator.LoadedData = _loaded;
         yield return StartCoroutine(generator.GenerateMap());
+
         SpawnEntities();
-        LocalDataStorage.Instance.InitPlayerData();
+        LocalDataStorage.Instance.InitPlayerData(_loaded);
+
         PlayAmbience();
         yield return new WaitForSeconds(1);
         GameManager.Instance.MapInitialized = true;
         GameEvents.OnMapLoadedInvoke();
+        KittenManager.Instance.Initialize();
     }
 
     private void SpawnEntities()
     {
         Player player = FindObjectOfType<Player>();
-        if (player != null)
-        {
-            player.transform.position = new(24, 24);
-        }
 
-        KittenManager.Instance.CreateKitten(new(26, 26, 0), true);
-        KittenManager.Instance.CreateKitten(new(50, 50, 0), false);
+        if (_loaded)
+        {
+            LocalDataStorage.Instance.PlayerData.PlayerTransform.ApplyToTransform(player.transform);
+            // kittens
+        }
+        else
+        {
+            if (player != null)
+            {
+                player.transform.position = new(14, 14);
+            }
+
+            KittenManager.Instance.CreateKitten(new(50, 50, 0), false);
+        }
     }
 
     private void PlayMenuMusic()

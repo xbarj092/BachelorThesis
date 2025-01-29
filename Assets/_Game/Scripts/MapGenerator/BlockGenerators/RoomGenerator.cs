@@ -59,7 +59,7 @@ namespace MapGenerator
 
         private void GenerateBaseRooms(AStar aStar, Room roomPrefab, GameObject roomFloorPrefab)
         {
-            GenerateRoom(aStar, roomPrefab, roomFloorPrefab, 25, 25, RoomType.Start);
+            GenerateRoom(aStar, roomPrefab, roomFloorPrefab, 15, 15, RoomType.Start);
             GenerateRoom(aStar, roomPrefab, roomFloorPrefab, 50, 50, RoomType.End);
         }
 
@@ -93,13 +93,13 @@ namespace MapGenerator
         {
             if (numberOfTries <= 100)
             {
-                Room instantiatedRoom = Object.Instantiate(newRoom, transform, Quaternion.identity, _mapGenerator.LayoutSpawnTransform);
+                Room instantiatedRoom = Object.Instantiate(newRoom, transform, Quaternion.identity, _mapGenerator.RoomLayoutSpawnTransform);
                 instantiatedRoom.RoomType = roomType;
                 aStar.GetGrid().GetXY(transform, out int x, out int y);
                 instantiatedRoom.Init(x, y, _mapGenerator);
                 PlacedRooms.Add(instantiatedRoom);
                 roomFloorPrefab.transform.localScale = new Vector2(newRoom.transform.localScale.x, newRoom.transform.localScale.y);
-                GameObject roomObject = Object.Instantiate(roomFloorPrefab, new Vector2(transform.x, transform.y), Quaternion.identity, _mapGenerator.LayoutSpawnTransform);
+                GameObject roomObject = Object.Instantiate(roomFloorPrefab, new Vector2(transform.x, transform.y), Quaternion.identity, _mapGenerator.RoomFloorLayoutSpawnTransform);
                 SetRoomNodes(roomObject, aStar);
             }
         }
@@ -223,12 +223,12 @@ namespace MapGenerator
                     else if (x == startXMin || x == startXMax) // Left or Right side
                     {
                         BuildSideWall(room, tilePosition, (x == startXMin) ? new Vector2(-0.5f, 0) :
-                            new Vector2(0.5f, 0), new Vector2(0.05f, 1));
+                            new Vector2(0.5f, 0), new Vector2(0.05f, 1.05f));
                     }
                     else if (y == startYMin || y == startYMax) // Bottom or Top side
                     {
                         BuildSideWall(room, tilePosition, (y == startYMin) ? new Vector2(0, -0.5f) :
-                            new Vector2(0, 0.5f), new Vector2(1, 0.05f));
+                            new Vector2(0, 0.5f), new Vector2(1.05f, 0.05f));
                     }
                 }
             }
@@ -243,8 +243,8 @@ namespace MapGenerator
         /// <param name="offset2">The second offset for the corner walls.</param>
         private void BuildCornerWalls(Room room, Vector2 position, Vector2 offset1, Vector2 offset2)
         {
-            BuildSideWall(room, position, offset1, new Vector2(0.05f, 1));
-            BuildSideWall(room, position, offset2, new Vector2(1, 0.05f));
+            BuildSideWall(room, position, offset1, new Vector2(0.05f, 1.05f));
+            BuildSideWall(room, position, offset2, new Vector2(1.05f, 0.05f));
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace MapGenerator
         private void BuildSideWall(Room room, Vector2 tilePosition, Vector2 wallOffset, Vector2 wallScale)
         {
             Vector2 wallPosition = tilePosition + wallOffset;
-            Object.Instantiate(room, wallPosition, Quaternion.identity, _mapGenerator.LayoutSpawnTransform).transform.localScale = wallScale;
+            Object.Instantiate(room, wallPosition, Quaternion.identity, _mapGenerator.RoomLayoutSpawnTransform).transform.localScale = wallScale;
         }
     }
 }

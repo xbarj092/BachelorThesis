@@ -6,9 +6,7 @@ namespace MapGenerator
 {
     public class Room : MonoBehaviour
     {
-        [SerializeField] private SerializedDictionary<ItemType, Item> _items = new();
         [SerializeField] private GameObject _food;
-        [SerializeField] private Kitten _kitten;
 
         public RoomType RoomType;
 
@@ -83,7 +81,7 @@ namespace MapGenerator
                 int randomNumber = Random.Range(0, 6);
                 if (randomNumber < spawnChances.Value * 6)
                 {
-                    Instantiate(_items[spawnChances.Key], GetRandomCoords(), Quaternion.identity, _mapGenerator.ItemSpawnTransform);
+                    ItemManager.Instance.SpawnItem(spawnChances.Key, GetRandomCoords(), Quaternion.identity, _mapGenerator.ItemSpawnTransform);
                 }
             }
         }
