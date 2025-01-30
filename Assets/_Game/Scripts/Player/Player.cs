@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -132,9 +133,15 @@ public class Player : MonoBehaviour
         }
         else
         {
-            ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.Death);
-
-            // TODO: death
+            StartCoroutine(Death());
         }
+    }
+
+    private IEnumerator Death()
+    {
+        yield return StartCoroutine(LootLockerManager.Instance.SubmitScore(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive));
+        ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.Death);
+
+        // TODO: death
     }
 }

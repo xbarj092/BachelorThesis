@@ -34,6 +34,7 @@ Transform:
   - {fileID: 61220583512331465}
   - {fileID: 6627668184351085637}
   - {fileID: 4667403748993630162}
+  - {fileID: 1314676202179721232}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3218876386703594225
@@ -185,6 +186,51 @@ MonoBehaviour:
       Value: {fileID: 5906434041033461365, guid: b509a83eb2b369e4db9b2823e7ed224a, type: 3}
   SpawnedItems: []
   SavedItems: []
+--- !u!1 &6546885819914672363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1314676202179721232}
+  - component: {fileID: 1029445116551657432}
+  m_Layer: 0
+  m_Name: LootLockerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1314676202179721232
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6546885819914672363}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7460344270319024745}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1029445116551657432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6546885819914672363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10b31eb0d3ad9d4458785c6c2bfa64a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _settings: {fileID: 11400000, guid: 72246677af1cd494c8a0cf1a1cd2b50d, type: 2}
 --- !u!1 &7162964343962402006
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,7 +277,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _kittenPrefab: {fileID: 5434703141080909983, guid: 7f5ce41964dae14499f39870e0fccff1, type: 3}
   Kittens: []
-  FocusedKittens: []
   SpawnTransform: {fileID: 0}
 --- !u!1 &7531105811605514934
 GameObject:

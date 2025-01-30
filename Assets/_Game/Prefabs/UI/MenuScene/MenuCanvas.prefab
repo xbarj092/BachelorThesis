@@ -118,3 +118,4 @@ MonoBehaviour:
   _menuMainButtonsPrefab: {fileID: 8218231722339557788, guid: 147b227dd4ce9b7468b15543cc897f71, type: 3}
   _optionsScreenPrefab: {fileID: 501426191692918833, guid: 5520c853c11b95c4ba2fc2c4a992985e, type: 3}
   _loadGameScreenPrefab: {fileID: 7802855490814252160, guid: c7021497ebfd131469ce978532a28954, type: 3}
+  _leaderboardScreenPrefab: {fileID: 7997279348232354295, guid: 34667028e7082b04db7328982523c4ab, type: 3}

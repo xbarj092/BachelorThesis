@@ -9,6 +9,7 @@ public class DeathScreen : BaseScreen
 
     private void Start()
     {
+        Time.timeScale = 0;
         _survivalTimeText.text = SURVIVAL_TIME_TEXT_PREFIX + TimeUtils.GetFormattedTimeFromSeconds(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
     }
 

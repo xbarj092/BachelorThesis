@@ -19,6 +19,12 @@ public class MenuMainButtons : BaseScreen
         ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.Options);
     }
 
+    public void Leaderboard()
+    {
+        Destroy(gameObject);
+        ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.Leaderboard);
+    }
+
     public void ExitGame()
     {
         Application.Quit();

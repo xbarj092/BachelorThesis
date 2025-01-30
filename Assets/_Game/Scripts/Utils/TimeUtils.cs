@@ -4,7 +4,7 @@ public static class TimeUtils
 {
     public static string GetFormattedTimeFromSeconds(int seconds)
     {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive++);
+        TimeSpan timeSpan = TimeSpan.FromSeconds(seconds);
 
         string timeText = "";
 

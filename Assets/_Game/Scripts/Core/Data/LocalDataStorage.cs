@@ -7,6 +7,7 @@ public class LocalDataStorage : MonoSingleton<LocalDataStorage>
 {
     [field: SerializeField] public PlayerData PlayerData;
     [field: SerializeField] public GameData GameData;
+    [field: SerializeField] public PlayerPrefsWrapper PlayerPrefs;
 
     private DataSaver _dataSaver = new();
     private DataLoader _dataLoader = new();

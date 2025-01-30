@@ -36,7 +36,7 @@ public class HUD : MonoBehaviour
 
     private void UpdateTimer()
     {
-        _timer.text = TimeUtils.GetFormattedTimeFromSeconds(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
+        _timer.text = TimeUtils.GetFormattedTimeFromSeconds(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive++);
     }
 
     private void ChangeFoodAmount(PlayerStats playerStats)
