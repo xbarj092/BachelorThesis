@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MenuMainButtons : BaseScreen
+public class MainMenuScreen : BaseScreen
 {
     public void PlayTheGame()
     {

@@ -1,4 +1,5 @@
 using LootLocker.Requests;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,8 @@ using UnityEngine;
 public class LootLockerManager : MonoSingleton<LootLockerManager>
 {
     [SerializeField] private SystemSettings _settings;
+
+    [HideInInspector] public bool IsInitialized = false;
 
     private void Start()
     {
@@ -28,6 +31,7 @@ public class LootLockerManager : MonoSingleton<LootLockerManager>
                 Debug.Log("Player was logged in");
                 LocalDataStorage.Instance.PlayerPrefs.SavePlayerId(response.player_id.ToString());
                 done = true;
+                IsInitialized = true;
             }
             else
             {
@@ -60,7 +64,7 @@ public class LootLockerManager : MonoSingleton<LootLockerManager>
         yield return new WaitWhile(() => done == false);
     }
 
-    public IEnumerator FetchTopHighscoresRoutine(System.Action<List<LootLockerLeaderboardMember>> callback)
+    public IEnumerator FetchTopHighscoresRoutine(Action<List<LootLockerLeaderboardMember>> callback)
     {
         bool done = false;
         List<LootLockerLeaderboardMember> leaderboardMembers = new();
@@ -70,7 +74,10 @@ public class LootLockerManager : MonoSingleton<LootLockerManager>
             if (response.success)
             {
                 Debug.Log("Successfully fetched leaderboard data");
-                leaderboardMembers = response.items.ToList();
+                if (response.items != null)
+                {
+                    leaderboardMembers = response.items.ToList();
+                }
             }
             else
             {
@@ -96,5 +103,27 @@ public class LootLockerManager : MonoSingleton<LootLockerManager>
                 Debug.Log("Could not set player name - " + response.errorData);
             }
         });
+    }
+
+    public IEnumerator GetPlayerName(Action<string> onSuccess)
+    {
+        bool done = false;
+        LootLockerSDKManager.GetPlayerName((response) =>
+        {
+            if (response.success)
+            {
+                Debug.Log("Successfully get player name - " + response.name);
+                onSuccess?.Invoke(response.name);
+                LocalDataStorage.Instance.PlayerPrefs.SavePlayerName(response.name);
+                done = true;
+            }
+            else
+            {
+                Debug.Log("Could not set player name - " + response.errorData);
+                done = true;
+            }
+        });
+
+        yield return new WaitWhile(() => !done);
     }
 }

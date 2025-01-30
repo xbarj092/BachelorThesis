@@ -42,6 +42,13 @@ public class KittenManager : MonoSingleton<KittenManager>
         DataEvents.OnDataSaved -= OnDataSaved;
     }
 
+    public void ResetManager()
+    {
+        StopAllCoroutines();
+        CancelInvoke();
+        Kittens.Clear();
+    }
+
     private void OnDataSaved()
     {
         LocalDataStorage.Instance.GameData.KittenData.SavedKittens.Clear();

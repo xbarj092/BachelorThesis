@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -97,10 +96,10 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
         GameManager.Instance.MapInitialized = false;
         Time.timeScale = 1;
         MapGenerator.MapGenerator generator = FindObjectOfType<MapGenerator.MapGenerator>();
-        KittenManager.Instance.StopAllCoroutines();
-        KittenManager.Instance.CancelInvoke();
+        KittenManager.Instance.ResetManager();
         KittenManager.Instance.SpawnTransform = generator.KittenSpawnTransform;
         KittenManager.Instance.AStar = generator.AStar;
+        ItemManager.Instance.ResetManager();
         generator.LoadedData = _loaded;
         yield return StartCoroutine(generator.GenerateMap());
 

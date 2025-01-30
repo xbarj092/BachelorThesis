@@ -68,4 +68,11 @@ public class ItemManager : MonoSingleton<ItemManager>
     {
         return SpawnedItems.FirstOrDefault(item => item.UID == uid);
     }
+
+    public void ResetManager()
+    {
+        SpawnedItems.Clear();
+        SavedItems.Clear();
+        _spawnedItemUIDs.Clear();
+    }
 }

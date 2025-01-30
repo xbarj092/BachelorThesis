@@ -1,13 +1,22 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Rigidbody2D _rigidbody;
 
+    [SerializeField] private List<Sprite> _characterSprites;
+
     private Vector2 _moveInput;
+
+    private void Awake()
+    {
+        _spriteRenderer.sprite = _characterSprites[LocalDataStorage.Instance.PlayerData.PlayerStats.SpriteIndex];
+    }
 
     private void OnEnable()
     {

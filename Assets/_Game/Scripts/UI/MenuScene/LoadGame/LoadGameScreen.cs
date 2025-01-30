@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class LoadGameScreen : BaseScreen
 {
     [SerializeField] private RectTransform _spawnTransform;
     [SerializeField] private GameSaveUI _gameSavePrefab;
+    [SerializeField] private TMP_Text _noSaveFiles;
 
     private Vector3 _defaultSize;
 
@@ -19,6 +21,7 @@ public class LoadGameScreen : BaseScreen
     private void SetUpGameSaves()
     {
         List<string> saveFiles = GetAllSaveFiles();
+        _noSaveFiles.gameObject.SetActive(saveFiles.Count == 0);
         float prefabHeight = _gameSavePrefab.GetComponent<RectTransform>().sizeDelta.y;
         float spacing = 25f;
         float initialOffsetY = -150;
