@@ -138,7 +138,7 @@ public class RebindActionUI : MonoBehaviour
 
     public void ResetToDefault()
     {
-        if (!ResolveActionAndBinding(out var action, out var bindingIndex))
+        if (!ResolveActionAndBinding(out InputAction action, out int bindingIndex))
         {
             return;
         }
@@ -156,6 +156,7 @@ public class RebindActionUI : MonoBehaviour
         }
 
         UpdateBindingDisplay();
+        SaveActionBinding();
     }
 
     public void StartInteractiveRebind()
@@ -262,14 +263,14 @@ public class RebindActionUI : MonoBehaviour
 
     public bool HasBinding(string bindingPath)
     {
-        if (_action?.action == null) return false;
-
-        foreach (var binding in _action.action.bindings)
+        if (!ResolveActionAndBinding(out InputAction action, out int bindingIndex))
         {
-            if (binding.effectivePath == bindingPath)
-            {
-                return true;
-            }
+            return false;
+        }
+
+        if (action.bindings[bindingIndex].effectivePath == bindingPath)
+        {
+            return true;
         }
 
         return false;
@@ -314,7 +315,7 @@ public class RebindActionUI : MonoBehaviour
         }
     }
 
-    private void SaveActionBinding()
+    public void SaveActionBinding()
     {
         string currentBindings = ActionReference.action.actionMap.SaveBindingOverridesAsJson();
         LocalDataStorage.Instance.PlayerPrefs.SaveActionBinding(currentBindings);

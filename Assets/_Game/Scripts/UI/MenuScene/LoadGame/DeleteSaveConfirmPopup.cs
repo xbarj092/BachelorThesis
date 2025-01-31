@@ -7,6 +7,7 @@ public class DeleteSaveConfirmPopup : MonoBehaviour
 {
     [SerializeField] private TMP_Text _confirmText;
 
+    private GameSave _gameSave;
     private string _saveName;
 
     public event Action<DeleteSaveConfirmPopup> OnSaveFileDeleted;
@@ -14,10 +15,12 @@ public class DeleteSaveConfirmPopup : MonoBehaviour
     private const string CONFIRM_TEXT_PREFIX = "ARE YOU SURE THAT YOU WANT TO DELETE ";
     private const string CONFIRM_TEXT_SUFFIX = "? THIS ACTION IS IRREVERSIBLE.";
 
-    public void Init(string saveName)
+    public void Init(GameSave gameSave, string saveName)
     {
+        _gameSave = gameSave;
         _saveName = saveName;
-        _confirmText.text = CONFIRM_TEXT_PREFIX + saveName + CONFIRM_TEXT_SUFFIX;
+
+        _confirmText.text = CONFIRM_TEXT_PREFIX + _gameSave.Name + CONFIRM_TEXT_SUFFIX;
     }
 
     public void Delete()

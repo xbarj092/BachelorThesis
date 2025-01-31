@@ -57,19 +57,6 @@ public class PauseScreen : BaseScreen
         renderTexture.Release();
         Destroy(screenshotCamObject);
 
-        return FlipTextureVertically(screenshot);
-    }
-
-    private Texture2D FlipTextureVertically(Texture2D originalTexture)
-    {
-        Texture2D flippedTexture = new(originalTexture.width, originalTexture.height);
-
-        for (int y = 0; y < originalTexture.height; y++)
-        {
-            flippedTexture.SetPixels(0, y, originalTexture.width, 1, originalTexture.GetPixels(0, originalTexture.height - y - 1, originalTexture.width, 1));
-        }
-
-        flippedTexture.Apply();
-        return flippedTexture;
+        return screenshot;
     }
 }

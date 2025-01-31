@@ -170,6 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46353fd915223e6469e03f03d1376bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _leftClick: {fileID: 3286424555785894770, guid: 6b0da74587745304aadb207cff6d1abd, type: 3}
+  _rightClick: {fileID: 275522587122548883, guid: 6b0da74587745304aadb207cff6d1abd, type: 3}
   _interactLayer:
     serializedVersion: 2
     m_Bits: 8192

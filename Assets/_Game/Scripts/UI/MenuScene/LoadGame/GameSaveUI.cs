@@ -53,7 +53,7 @@ public class GameSaveUI : MonoBehaviour
     {
         DeleteSaveConfirmPopup popup = Instantiate(_deleteSaveConfirmPopup, transform.parent.parent.parent.parent);
         popup.OnSaveFileDeleted += OnDelete;
-        popup.Init(_gameSave.Name);
+        popup.Init(_gameSave, _saveFileName);
     }
 
     private void OnDelete(DeleteSaveConfirmPopup popup)

@@ -347,18 +347,6 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 2238933227015933592}
-    - target: {fileID: 2879410450813168188, guid: 70951ce3699ad5a4d83e0367aaba4788, type: 3}
-      propertyPath: m_LookAt
-      value: 
-      objectReference: {fileID: 2238933227015933592}
-    - target: {fileID: 2879410450813168188, guid: 70951ce3699ad5a4d83e0367aaba4788, type: 3}
-      propertyPath: m_Lens.OrthographicSize
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 2998142034764755917, guid: 70951ce3699ad5a4d83e0367aaba4788, type: 3}
-      propertyPath: orthographic size
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 5682456567113085884, guid: 70951ce3699ad5a4d83e0367aaba4788, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

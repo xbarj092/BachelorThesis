@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    [SerializeField] private InputActionReference _leftClick;
+    [SerializeField] private InputActionReference _rightClick;
     [SerializeField] private LayerMask _interactLayer;
     [SerializeField] private LayerMask _mapLayer;
     [SerializeField] private float _maxRange = 5f;
@@ -31,8 +33,10 @@ public class PlayerInteraction : MonoBehaviour
 
     private void InitializeInputActions()
     {
-        _leftClickAction = new InputAction(type: InputActionType.Button, binding: "<Mouse>/leftButton");
-        _rightClickAction = new InputAction(type: InputActionType.Button, binding: "<Mouse>/rightButton");
+        _leftClickAction = _leftClick.action;
+        _rightClickAction = _rightClick.action;
+        /*_leftClickAction = new InputAction(type: InputActionType.Button, binding: "<Mouse>/leftButton");
+        _rightClickAction = new InputAction(type: InputActionType.Button, binding: "<Mouse>/rightButton");*/
     }
 
     private void OnEnable()

@@ -1,11 +1,12 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class KeyBindingPanel : OptionPanel
 {
     [SerializeField] private List<RebindActionUI> _keyBinds = new();
+    [SerializeField] private Popup _bindConflictPopup;
 
     private List<RebindActionUI> _invalidBinds = new();
 
@@ -29,14 +30,29 @@ public class KeyBindingPanel : OptionPanel
 
     private void OnRebind(RebindActionUI rebindActionUI)
     {
-        /*foreach (RebindActionUI action in _keyBinds)
+        bool hasBinding = false;
+        RebindActionUI unblockedAction = null;
+        rebindActionUI.ResolveActionAndBinding(out InputAction inputAction, out int bindingIndex);
+
+        foreach (RebindActionUI action in _invalidBinds.Where(invalidAction => invalidAction != rebindActionUI))
         {
-            if (!action.HasBinding(rebindActionUI.))
+            if (action.HasBinding(inputAction.bindings[bindingIndex].effectivePath))
             {
-                _invalidBinds.Add(action);
+                hasBinding = true;
                 action.SetInvalidBind();
             }
-        }*/
+            else
+            {
+                unblockedAction = action;
+            }
+        }
+
+        if (!hasBinding && unblockedAction != null)
+        {
+            _invalidBinds.Remove(unblockedAction);
+            unblockedAction.SetValidBind();
+            unblockedAction.SaveActionBinding();
+        }
     }
 
     public void OnConflict(string bindingPath)
@@ -48,6 +64,16 @@ public class KeyBindingPanel : OptionPanel
                 _invalidBinds.Add(action);
                 action.SetInvalidBind();
             }
+        }
+
+        Instantiate(_bindConflictPopup, transform);
+    }
+
+    public void ResetBinding()
+    {
+        foreach (RebindActionUI action in _keyBinds)
+        {
+            action.ResetToDefault();
         }
     }
 }
