@@ -26,7 +26,7 @@ public class ItemInteractions : MonoBehaviour
                 {
                     if (gameObject.CompareTag(GlobalConstants.Tags.Item.ToString()) && _item.IsInteractable)
                     {
-                        player.PickupItem(gameObject);
+                        player.PickupItem(gameObject, true);
                     }
                 }
             }
@@ -58,7 +58,7 @@ public class ItemInteractions : MonoBehaviour
                     return;
                 }
 
-                player.PickupItem(gameObject);
+                player.PickupItem(gameObject, true);
             }
             else if (gameObject.CompareTag(GlobalConstants.Tags.Food.ToString()))
             {

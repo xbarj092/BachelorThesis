@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
         _moveInput = inputValue.Get<Vector2>();
     }
 
-    public void PickupItem(GameObject gameObject)
+    public void PickupItem(GameObject gameObject, bool recordNewItemPickup = false)
     {
         if (gameObject.TryGetComponent(out Item item))
         {
@@ -91,6 +91,10 @@ public class Player : MonoBehaviour
 
                     inventoryData.ItemsInInventory[i] = item;
                     item.PickUp();
+                    if (recordNewItemPickup)
+                    {
+                        UGSAnalyticsManager.Instance.RecordItemPickedUp(item.Stats.ItemType.ToString(), LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
+                    }
                     LocalDataStorage.Instance.PlayerData.InventoryData = inventoryData;
                     break;
                 }
@@ -101,15 +105,20 @@ public class Player : MonoBehaviour
     public void PickupFood(GameObject foodObject)
     {
         PlayerStats stats = LocalDataStorage.Instance.PlayerData.PlayerStats;
+        int secondsAdded;
         if (stats.CurrentFood < stats.MaxFood)
         {
             stats.CurrentFood++;
+            secondsAdded = Mathf.RoundToInt(stats.TimeToEatFood);
         }
         else
         {
+            secondsAdded = Mathf.RoundToInt(stats.CurrentTimeToEatFood);
             stats.CurrentTimeToEatFood = stats.TimeToEatFood;
         }
         LocalDataStorage.Instance.PlayerData.PlayerStats = stats;
+
+        UGSAnalyticsManager.Instance.RecordFoodPickedUp(stats.TimeAlive, secondsAdded);
 
         Destroy(foodObject);
     }
@@ -148,7 +157,9 @@ public class Player : MonoBehaviour
 
     private IEnumerator Death()
     {
-        yield return StartCoroutine(LootLockerManager.Instance.SubmitScore(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive));
+        int timeAlive = LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive;
+        UGSAnalyticsManager.Instance.RecordPlayerDeath(timeAlive);
+        yield return StartCoroutine(LootLockerManager.Instance.SubmitScore(timeAlive));
         ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.Death);
 
         // TODO: death

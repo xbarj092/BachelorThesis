@@ -13,6 +13,9 @@ public class SystemSettings : ScriptableObject
 
     public Environment CurrentEnvironment;
 
-    [Header("APIEndpoints")]
+    [Header("LootLocker API Endpoints")]
     public SerializedDictionary<Environment, string> LootLockerLeaderboardIDs = new();
+
+    [Header("Services Environments")]
+    public SerializedDictionary<Environment, string> ServiceEnvironmentIDs = new();
 }

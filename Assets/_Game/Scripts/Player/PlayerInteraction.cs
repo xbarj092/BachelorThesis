@@ -338,6 +338,7 @@ public class PlayerInteraction : MonoBehaviour
             return;
         }
 
+        UGSAnalyticsManager.Instance.RecordItemUsed(_carryingItem.Stats.ItemType.ToString(), LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
         _carryingItem.UseStart();
 
         switch (_carryingItem.UsageType)
