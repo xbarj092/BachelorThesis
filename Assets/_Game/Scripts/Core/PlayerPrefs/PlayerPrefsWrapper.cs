@@ -7,6 +7,7 @@ public class PlayerPrefsWrapper
 
     private const string KEY_PLAYER_ID = "PlayerID";
     private const string KEY_PLAYER_NAME = "PlayerName";
+    private const string KEY_BINDING = "Binding";
 
     public void SavePlayerId(string playerId)
     {
@@ -36,5 +37,15 @@ public class PlayerPrefsWrapper
     public void DeletePlayerName()
     {
         _playerPrefsHandler.DeleteData(KEY_PLAYER_NAME);
+    }
+
+    public void SaveActionBinding(string currentBindings)
+    {
+        _playerPrefsHandler.SaveData(KEY_BINDING, currentBindings);
+    }
+
+    public string LoadActionBinding()
+    {
+        return _playerPrefsHandler.LoadData<string>(KEY_BINDING);
     }
 }
