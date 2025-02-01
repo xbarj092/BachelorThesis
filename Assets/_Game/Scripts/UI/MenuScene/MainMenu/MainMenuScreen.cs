@@ -4,6 +4,7 @@ public class MainMenuScreen : BaseScreen
 {
     public void PlayTheGame()
     {
+        LocalDataStorage.Instance.GameData.GameSeeds = new(Random.Range(1, int.MaxValue));
         SceneLoadManager.Instance.GoMenuToGame();
     }
 

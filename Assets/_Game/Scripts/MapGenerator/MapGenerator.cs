@@ -79,24 +79,8 @@ namespace MapGenerator
 
         private void SaveData()
         {
-            SaveMapLayout();
             SaveFoodLayout();
             SaveItemLayout();
-        }
-
-        private void SaveMapLayout()
-        {
-            List<TransformData> roomWallTransforms = GatherChildTransforms(RoomLayoutSpawnTransform);
-            List<TransformData> hallwayWallTransforms = GatherChildTransforms(HallwayLayoutSpawnTransform);
-            List<TransformData> roomFloorTransforms = GatherChildTransforms(RoomFloorLayoutSpawnTransform);
-            List<TransformData> hallwayFloorTransforms = GatherChildTransforms(HallwayFloorLayoutSpawnTransform);
-
-            LocalDataStorage.Instance.GameData.MapLayout = new MapLayout(
-                roomWallTransforms,
-                hallwayWallTransforms,
-                roomFloorTransforms,
-                hallwayFloorTransforms
-            );
         }
 
         private void SaveFoodLayout()
@@ -126,27 +110,26 @@ namespace MapGenerator
         {
             if (!LoadedData)
             {
-                _roomGenerator.GenerateRooms(_dungeonSizeX, _dungeonSizeY, _numberOfRooms, _aStar, _roomPrefab, _floorPrefab);
-                _hallwayGenerator.GenerateHallways(_bowyerWatson.GenerateTriangularMesh(_roomGenerator.PlacedRooms),
-                    _roomGenerator.PlacedRooms, _aStar, _primsAlg, _hallwayPrefab, _hallwayFloorPrefab);
-                _roomGenerator.BuildRooms(_aStar);
-                yield return StartCoroutine(WaitForHallways());
+                yield return SpawnMap();
             }
             else
             {
+                yield return SpawnMap();
+
                 GameData gameData = LocalDataStorage.Instance.GameData;
-
-                LoadTransforms(gameData.MapLayout.RoomFloorTransforms, RoomFloorLayoutSpawnTransform, _floorPrefab);
-                LoadTransforms(gameData.MapLayout.RoomWallTransforms, RoomLayoutSpawnTransform, _roomPrefab);
-                LoadTransforms(gameData.MapLayout.HallwayFloorTransforms, HallwayFloorLayoutSpawnTransform, _hallwayFloorPrefab);
-                LoadTransforms(gameData.MapLayout.HallwayWallTransforms, HallwayLayoutSpawnTransform, _hallwayPrefab);
-
                 LoadTransforms(gameData.FoodData.FoodTransforms, FoodSpawnTransform, _foodPrefab);
-
                 LoadItems();
-
                 LoadKittens();
             }
+        }
+
+        private IEnumerator SpawnMap()
+        {
+            _roomGenerator.GenerateRooms(_dungeonSizeX, _dungeonSizeY, _numberOfRooms, _aStar, _roomPrefab, _floorPrefab);
+            _hallwayGenerator.GenerateHallways(_bowyerWatson.GenerateTriangularMesh(_roomGenerator.PlacedRooms),
+                _roomGenerator.PlacedRooms, _aStar, _primsAlg, _hallwayPrefab, _hallwayFloorPrefab);
+            _roomGenerator.BuildRooms(_aStar);
+            yield return StartCoroutine(WaitForHallways());
         }
 
         private void LoadItems()

@@ -4,14 +4,17 @@ using UnityEngine;
 [Serializable]
 public class GameData
 {
-    [SerializeField] private MapLayout _mapLayout;
-    public MapLayout MapLayout
+    public System.Random Random;
+
+    [SerializeField] private GameSeeds _gameSeeds;
+    public GameSeeds GameSeeds
     {
-        get => _mapLayout;
+        get => _gameSeeds;
         set
         {
-            _mapLayout = value;
-            DataEvents.OnMapLayoutChangedInvoke(_mapLayout);
+            _gameSeeds = value;
+            Random = new(_gameSeeds.MapGenerationSeed);
+            DataEvents.OnGameSeedsChangedInvoke(_gameSeeds);
         }
     }
 

@@ -209,7 +209,7 @@ namespace MapGenerator
                 {
                     if (!_roomConnections.Contains(roomConnection) && !_roomConnections.Any(connection => connection.StartRoom == roomConnection.EndRoom && connection.EndRoom == roomConnection.StartRoom))
                     {
-                        if (Random.Range(0, 10) == 1)
+                        if (LocalDataStorage.Instance.GameData.Random.Next(0, 10) == 1)
                         {
                             _roomConnections.Add(roomConnection);
                         }

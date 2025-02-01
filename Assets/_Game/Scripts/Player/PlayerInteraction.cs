@@ -35,8 +35,6 @@ public class PlayerInteraction : MonoBehaviour
     {
         _leftClickAction = _leftClick.action;
         _rightClickAction = _rightClick.action;
-        /*_leftClickAction = new InputAction(type: InputActionType.Button, binding: "<Mouse>/leftButton");
-        _rightClickAction = new InputAction(type: InputActionType.Button, binding: "<Mouse>/rightButton");*/
     }
 
     private void OnEnable()
@@ -49,8 +47,6 @@ public class PlayerInteraction : MonoBehaviour
         _leftClickAction.performed += context => PickUpFromGroundOrUse();
         _leftClickAction.canceled += context => StopUsingItem();
         _rightClickAction.performed += context => PlaceInInventoryOrPickUpFromInventory();
-
-        EnableActions();
     }
 
     private void OnDisable()
@@ -63,20 +59,6 @@ public class PlayerInteraction : MonoBehaviour
         _leftClickAction.performed -= context => PickUpFromGroundOrUse();
         _leftClickAction.canceled -= context => StopUsingItem();
         _rightClickAction.performed -= context => PlaceInInventoryOrPickUpFromInventory();
-
-        DisableActions();
-    }
-
-    private void EnableActions()
-    {
-        _leftClickAction.Enable();
-        _rightClickAction.Enable();
-    }
-
-    private void DisableActions()
-    {
-        _leftClickAction.Disable();
-        _rightClickAction.Disable();
     }
 
     private void Update()

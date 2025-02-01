@@ -48,8 +48,8 @@ namespace MapGenerator
                         break;
                     }
 
-                    positionX = Random.Range(5, dungeonSizeX + 5);
-                    positionY = Random.Range(5, dungeonSizeY + 5);
+                    positionX = LocalDataStorage.Instance.GameData.Random.Next(5, dungeonSizeX + 5);
+                    positionY = LocalDataStorage.Instance.GameData.Random.Next(5, dungeonSizeY + 5);
                     transform = new Vector2(positionX, positionY);
                 } while (Physics2D.OverlapBox(transform, newRoom.transform.localScale, 0f));
 
@@ -77,8 +77,8 @@ namespace MapGenerator
         /// <returns>The scale of the new room.</returns>
         private Vector2 GetRoomScale()
         {
-            int randomEvenX = Random.Range(1, 4) * 2;
-            int randomEvenY = Random.Range(1, 4) * 2;
+            int randomEvenX = LocalDataStorage.Instance.GameData.Random.Next(1, 4) * 2;
+            int randomEvenY = LocalDataStorage.Instance.GameData.Random.Next(1, 4) * 2;
             return new Vector2(randomEvenX + 1, randomEvenY + 1);
         }
 

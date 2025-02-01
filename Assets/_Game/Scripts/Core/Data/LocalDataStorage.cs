@@ -57,7 +57,7 @@ public class LocalDataStorage : MonoSingleton<LocalDataStorage>
         yield return new WaitForSecondsRealtime(0.5f);
 
         GameSave gameSave = new(image, PlayerData.PlayerTransform, PlayerData.PlayerStats, PlayerData.SavedInventoryData, 
-            GameData.MapLayout, GameData.KittenData, GameData.FoodData, GameData.ItemData);
+            GameData.GameSeeds, GameData.KittenData, GameData.FoodData, GameData.ItemData);
 
         string timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss");
         string saveFileName = $"Save_{timestamp}.gg";
@@ -77,7 +77,7 @@ public class LocalDataStorage : MonoSingleton<LocalDataStorage>
         PlayerData.PlayerStats = gameSave.PlayerStats;
         PlayerData.SavedInventoryData = gameSave.SavedInventoryData;
 
-        GameData.MapLayout = gameSave.MapLayout;
+        GameData.GameSeeds = gameSave.GameSeeds;
         GameData.KittenData = gameSave.KittenData;
         GameData.FoodData = gameSave.FoodData;
         GameData.ItemData = gameSave.ItemData;

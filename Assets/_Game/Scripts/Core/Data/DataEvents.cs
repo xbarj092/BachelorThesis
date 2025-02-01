@@ -20,10 +20,10 @@ public static class DataEvents
         OnSavedInventoryDataChanged?.Invoke(savedInventoryData);
     }
 
-    public static event Action<MapLayout> OnMapLayoutChanged;
-    public static void OnMapLayoutChangedInvoke(MapLayout mapLayout)
+    public static event Action<GameSeeds> OnGameSeedsChanged;
+    public static void OnGameSeedsChangedInvoke(GameSeeds gameSeeds)
     {
-        OnMapLayoutChanged?.Invoke(mapLayout);
+        OnGameSeedsChanged?.Invoke(gameSeeds);
     }
 
     public static event Action<KittenData> OnKittenDataChanged;

@@ -10,13 +10,13 @@ public class GameSave
     public PlayerStats PlayerStats;
     public SavedInventoryData SavedInventoryData;
 
-    public MapLayout MapLayout;
+    public GameSeeds GameSeeds;
     public KittenData KittenData;
     public FoodData FoodData;
     public ItemData ItemData;
 
     public GameSave(byte[] image, TransformData playerTransform, PlayerStats playerStats, SavedInventoryData savedInventoryData, 
-        MapLayout mapLayout, KittenData kittenData, FoodData foodData, ItemData itemData)
+        GameSeeds gameSeeds, KittenData kittenData, FoodData foodData, ItemData itemData)
     {
         Name = LocalDataStorage.Instance.PlayerPrefs.LoadPlayerName();
         Image = image;
@@ -25,7 +25,7 @@ public class GameSave
         PlayerStats = playerStats;
         SavedInventoryData = savedInventoryData;
 
-        MapLayout = mapLayout;
+        GameSeeds = gameSeeds;
         KittenData = kittenData;
         FoodData = foodData;
         ItemData = itemData;

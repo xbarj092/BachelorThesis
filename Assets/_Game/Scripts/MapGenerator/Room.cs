@@ -23,12 +23,15 @@ namespace MapGenerator
             _gridCoordinates = new Vector2Int(x, y);
             _spawnChance = _spawnChances[RoomType];
 
-            SpawnItems();
-
-            if (RoomType == RoomType.Normal)
+            if (!_mapGenerator.LoadedData)
             {
-                SpawnKittens();
-                SpawnFood();
+                SpawnItems();
+
+                if (RoomType == RoomType.Normal)
+                {
+                    SpawnKittens();
+                    SpawnFood();
+                }
             }
         }
 
