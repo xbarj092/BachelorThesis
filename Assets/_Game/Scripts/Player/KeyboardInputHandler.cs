@@ -7,6 +7,10 @@ public class KeyboardInputHandler
         if (ScreenManager.Instance.ActiveGameScreen != null && 
             ScreenManager.Instance.ActiveGameScreen.GameScreenType == GameScreenType.Pause)
         {
+            if (GameObject.FindFirstObjectByType<PauseScreen>().IsSaving)
+            {
+                return;
+            }
             Time.timeScale = 1;
             ScreenEvents.OnGameScreenClosedInvoke(GameScreenType.Pause);
         }

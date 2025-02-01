@@ -1,7 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseScreen : BaseScreen
 {
+    [SerializeField] private GameObject _savingVisual;
+    [SerializeField] private List<Button> _buttons = new();
+
+    public bool IsSaving = false;
+
     public void Resume()
     {
         Time.timeScale = 1;
@@ -15,7 +22,18 @@ public class PauseScreen : BaseScreen
 
     public void SaveGame()
     {
-        StartCoroutine(LocalDataStorage.Instance.SaveData(CaptureScreenshot(Screen.width, Screen.height).EncodeToJPG()));
+        SetSaveState(true);
+        StartCoroutine(LocalDataStorage.Instance.SaveData(CaptureScreenshot(Screen.width, Screen.height).EncodeToJPG(), () => { SetSaveState(false); }));
+    }
+
+    public void SetSaveState(bool isSaving)
+    {
+        _savingVisual.SetActive(isSaving);
+        IsSaving = isSaving;
+        foreach (Button button in _buttons)
+        {
+            button.interactable = !isSaving;
+        }
     }
 
     public void GoMenu()

@@ -9,6 +9,7 @@ public class KeyBindingPanel : OptionPanel
     [SerializeField] private Popup _bindConflictPopup;
 
     private List<RebindActionUI> _invalidBinds = new();
+    private Popup _bindConflictPopupInstantiated;
 
     private void OnEnable()
     {
@@ -66,7 +67,12 @@ public class KeyBindingPanel : OptionPanel
             }
         }
 
-        Instantiate(_bindConflictPopup, transform);
+        if (_bindConflictPopupInstantiated != null)
+        {
+            _bindConflictPopupInstantiated.Close();
+        }
+
+        _bindConflictPopupInstantiated = Instantiate(_bindConflictPopup, transform);
     }
 
     public void ResetBinding()

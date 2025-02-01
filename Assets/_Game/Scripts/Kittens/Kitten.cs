@@ -342,6 +342,7 @@ public class Kitten : MonoBehaviour
 
         if (collision.gameObject.TryGetComponent(out Item item) && item.Stats.ItemType == ItemType.Mouse && item.Used)
         {
+            ItemManager.Instance.SpawnedItems.Remove(item);
             Destroy(item.gameObject);
         }
     }

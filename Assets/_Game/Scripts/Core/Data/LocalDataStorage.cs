@@ -51,7 +51,7 @@ public class LocalDataStorage : MonoSingleton<LocalDataStorage>
         }
     }
 
-    public IEnumerator SaveData(byte[] image)
+    public IEnumerator SaveData(byte[] image, Action onSuccess)
     {
         DataEvents.OnDataSavedInvoke();
         yield return new WaitForSecondsRealtime(0.5f);
@@ -64,6 +64,7 @@ public class LocalDataStorage : MonoSingleton<LocalDataStorage>
         string savePath = GlobalConstants.SavedDataPaths.BASE_PATH + "/" + saveFileName;
 
         _dataSaver.SaveData(gameSave, savePath);
+        onSuccess?.Invoke();
     }
 
     public GameSave GetSaveFileFromPath(string path)

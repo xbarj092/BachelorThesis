@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class BaseCanvasController : MonoBehaviour
 {
-    [HideInInspector] public BaseScreen ActiveGameScreen;
-
     protected Dictionary<GameScreenType, BaseScreen> _instantiatedScreens = new();
 
     private void OnEnable()
@@ -72,7 +70,7 @@ public class BaseCanvasController : MonoBehaviour
         if (screenInstance != null)
         {
             _instantiatedScreens[screenInstance.GameScreenType] = screenInstance;
-            ActiveGameScreen = screenInstance;
+            ScreenManager.Instance.ActiveGameScreen = screenInstance;
         }
     }
 

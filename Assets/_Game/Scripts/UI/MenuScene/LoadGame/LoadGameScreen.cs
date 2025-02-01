@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -40,9 +41,20 @@ public class LoadGameScreen : BaseScreen
 
             saveUI.Init(gameSave, filePath);
             saveUI.OnSaveFileDeleted += OnSaveFileDeleted;
+            saveUI.OnPlay += OnPlay;
         }
 
         AdjustContentHeight(prefabHeight, spacing, saveFiles.Count);
+    }
+
+    private void OnPlay(GameSaveUI saveUI)
+    {
+        saveUI.OnPlay += OnPlay;
+
+        foreach (Transform child in _spawnTransform)
+        {
+            child.GetComponent<GameSaveUI>().SetButtonInteractable(false);
+        }
     }
 
     private void OnSaveFileDeleted(GameSaveUI saveUI)

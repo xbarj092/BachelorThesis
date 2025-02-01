@@ -13,11 +13,13 @@ public class GameSaveUI : MonoBehaviour
     [SerializeField] private TMP_Text _timeAlive;
     [SerializeField] private GameSaveInventoryUI _inventory;
     [SerializeField] private Vector3 _highlightedScale;
+    [SerializeField] private Button _button;
 
     private GameSave _gameSave;
     private string _saveFileName;
 
     public event Action<GameSaveUI> OnSaveFileDeleted;
+    public event Action<GameSaveUI> OnPlay;
 
     public void Init(GameSave gameSave, string filePath)
     {
@@ -46,6 +48,8 @@ public class GameSaveUI : MonoBehaviour
 
     public void PlaySave()
     {
+        OnPlay?.Invoke(this);
+        Unhighlight();
         StartCoroutine(LocalDataStorage.Instance.LoadData(_gameSave));
     }
 
@@ -70,5 +74,10 @@ public class GameSaveUI : MonoBehaviour
     public void Unhighlight()
     {
         transform.localScale = Vector3.one;
+    }
+
+    public void SetButtonInteractable(bool enable)
+    {
+        _button.interactable = enable;
     }
 }
