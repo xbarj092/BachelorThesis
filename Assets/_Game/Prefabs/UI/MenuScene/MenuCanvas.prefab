@@ -117,7 +117,7 @@ MonoBehaviour:
   _menuMainButtonsPrefab: {fileID: 4694479910746778420, guid: 147b227dd4ce9b7468b15543cc897f71, type: 3}
   _leaderboardScreenPrefab: {fileID: 7997279348232354295, guid: 34667028e7082b04db7328982523c4ab, type: 3}
   _loadingScreenPrefab: {fileID: 6242077747487777711, guid: 3d0cfde3415da11499fb5dfcf4c1b592, type: 3}
-  _selectGameModeScreen: {fileID: 3705093312869331909, guid: 0eea2ed3817e6aa44bc7a0f1b0f8b453, type: 3}
+  _selectGameModeScreen: {fileID: 8729903331414813023, guid: 0eea2ed3817e6aa44bc7a0f1b0f8b453, type: 3}
   _newGameScreen: {fileID: 4774831391907120596, guid: 350238fd3fbfb4a49aae9be4be56245d, type: 3}
   _loadGameScreenPrefab: {fileID: 7802855490814252160, guid: c7021497ebfd131469ce978532a28954, type: 3}
   _optionsScreenPrefab: {fileID: 501426191692918833, guid: 5520c853c11b95c4ba2fc2c4a992985e, type: 3}

@@ -5,8 +5,8 @@ public class Kitten : MonoBehaviour
     [SerializeField] private StateMachineBrain _stateMachineBrain;
 
     // change it to scriptable
-    [SerializeField] private float _minTimeToLive = 120f;
-    [SerializeField] private float _maxTimeToLive = 240f;
+    [SerializeField] private int _minTimeToLive = 120;
+    [SerializeField] private int _maxTimeToLive = 240;
     private float _timeToLive = 120f;
     private float _currentTimeToLive;
 

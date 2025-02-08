@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class SelectGameModeScreen : BaseScreen
 {
     public void ContinueGame()

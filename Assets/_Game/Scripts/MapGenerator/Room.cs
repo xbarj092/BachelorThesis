@@ -23,22 +23,29 @@ namespace MapGenerator
             _gridCoordinates = new Vector2Int(x, y);
             _spawnChance = _spawnChances[RoomType];
 
-            if (!_mapGenerator.LoadedData)
-            {
-                SpawnItems();
+            SpawnItems();
 
-                if (RoomType == RoomType.Normal)
-                {
-                    SpawnKittens();
-                    SpawnFood();
-                }
+            if (RoomType == RoomType.Normal)
+            {
+                SpawnKittens();
+                SpawnFood();
             }
         }
 
         private void SpawnKittens()
         {
             int kittensSpawned = 0;
-            int randomNumber = Random.Range(0, 6);
+            int randomNumber;
+            if (!_mapGenerator.LoadedData)
+            {
+                randomNumber = LocalDataStorage.Instance.GameData.Random.Next(0, 6);
+            }
+            else
+            {
+                LocalDataStorage.Instance.GameData.Random.Next();
+                return;
+            }
+
             if (randomNumber > 3)
             {
                 kittensSpawned = 2;
@@ -57,7 +64,17 @@ namespace MapGenerator
         private void SpawnFood()
         {
             int foodSpawned = 0;
-            int randomNumber = Random.Range(0, 10);
+            int randomNumber;
+            if (!_mapGenerator.LoadedData)
+            {
+                randomNumber = LocalDataStorage.Instance.GameData.Random.Next(0, 6);
+            }
+            else
+            {
+                LocalDataStorage.Instance.GameData.Random.Next();
+                return;
+            }
+
             if (randomNumber > 8)
             {
                 foodSpawned = 3;
@@ -81,7 +98,17 @@ namespace MapGenerator
         {
             foreach (KeyValuePair<ItemType, float> spawnChances in _spawnChance.ItemSpawnChances)
             {
-                int randomNumber = Random.Range(0, 6);
+                int randomNumber;
+                if (!_mapGenerator.LoadedData)
+                {
+                    randomNumber = LocalDataStorage.Instance.GameData.Random.Next(0, 6);
+                }
+                else
+                {
+                    LocalDataStorage.Instance.GameData.Random.Next();
+                    continue;
+                }
+
                 if (randomNumber < spawnChances.Value * 6)
                 {
                     ItemManager.Instance.SpawnItem(spawnChances.Key, GetRandomCoords(), Quaternion.identity, _mapGenerator.ItemSpawnTransform);
