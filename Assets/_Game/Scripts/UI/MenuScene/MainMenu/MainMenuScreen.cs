@@ -2,16 +2,10 @@ using UnityEngine;
 
 public class MainMenuScreen : BaseScreen
 {
-    public void PlayTheGame()
-    {
-        LocalDataStorage.Instance.GameData.GameSeeds = new(Random.Range(1, int.MaxValue));
-        SceneLoadManager.Instance.GoMenuToGame();
-    }
-
-    public void LoadGame()
+    public void PlayGame()
     {
         Destroy(gameObject);
-        ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.LoadGame);
+        ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.SelectGameMode);
     }
 
     public void Options()

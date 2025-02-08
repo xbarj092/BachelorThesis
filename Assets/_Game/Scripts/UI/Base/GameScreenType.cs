@@ -9,4 +9,9 @@ public enum GameScreenType
     Options = 6,
     LoadGame = 7,
     Leaderboard = 8,
+    SelectGameMode = 9,
+    NewGame = 10,
+    KeyBindings = 11,
+    AudioSettings = 12,
+    AboutGame = 13,
 }

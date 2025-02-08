@@ -23,7 +23,7 @@ public class LootLockerManager : MonoSingleton<LootLockerManager>
 
     private IEnumerator LoginRoutine()
     {
-        bool done = false;
+        /*bool done = false;
         LootLockerSDKManager.StartGuestSession((response) =>
         {
             if (response.success)
@@ -40,12 +40,13 @@ public class LootLockerManager : MonoSingleton<LootLockerManager>
             }
         });
 
-        yield return new WaitWhile(() => done == false);
+        yield return new WaitWhile(() => done == false);*/
+        yield return null;
     }
 
     public IEnumerator SubmitScore(int scoreToUpload)
     {
-        bool done = false;
+        /*bool done = false;
         string playerId = LocalDataStorage.Instance.PlayerPrefs.LoadPlayerId();
         LootLockerSDKManager.SubmitScore(playerId, scoreToUpload, GetLeaderboardID(), (response) =>
         {
@@ -61,12 +62,13 @@ public class LootLockerManager : MonoSingleton<LootLockerManager>
             }
         });
 
-        yield return new WaitWhile(() => done == false);
+        yield return new WaitWhile(() => done == false);*/
+        yield return null;
     }
 
     public IEnumerator FetchTopHighscoresRoutine(Action<List<LootLockerLeaderboardMember>> callback)
     {
-        bool done = false;
+        /*bool done = false;
         List<LootLockerLeaderboardMember> leaderboardMembers = new();
 
         LootLockerSDKManager.GetScoreList(GetLeaderboardID(), 10, 0, (response) =>
@@ -87,12 +89,13 @@ public class LootLockerManager : MonoSingleton<LootLockerManager>
         });
 
         yield return new WaitWhile(() => !done);
-        callback?.Invoke(leaderboardMembers);
+        callback?.Invoke(leaderboardMembers);*/
+        yield return null;
     }
 
     public void SetPlayerName(string playerName)
     {
-        LootLockerSDKManager.SetPlayerName(playerName, (response) =>
+        /*LootLockerSDKManager.SetPlayerName(playerName, (response) =>
         {
             if (response.success)
             {
@@ -102,12 +105,12 @@ public class LootLockerManager : MonoSingleton<LootLockerManager>
             {
                 Debug.Log("Could not set player name - " + response.errorData);
             }
-        });
+        });*/
     }
 
     public IEnumerator GetPlayerName(Action<string> onSuccess)
     {
-        bool done = false;
+        /*bool done = false;
         LootLockerSDKManager.GetPlayerName((response) =>
         {
             if (response.success)
@@ -124,6 +127,7 @@ public class LootLockerManager : MonoSingleton<LootLockerManager>
             }
         });
 
-        yield return new WaitWhile(() => !done);
+        yield return new WaitWhile(() => !done);*/
+        yield return null;
     }
 }

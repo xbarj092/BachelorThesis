@@ -1,18 +1,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterSelection : MonoBehaviour
 {
-    [SerializeField] private TextFieldResizer _textFieldResizer;
+    [SerializeField] private TextFieldResizer _nameFieldResizer;
+    [SerializeField] private TextFieldResizer _seedFieldResizer;
     [SerializeField] private ChangeNamePopup _changeNamePopup;
     [SerializeField] private Image _playerIcon;
     [SerializeField] private List<Sprite> _characterSprites = new();
+    [SerializeField] private TMP_Text _seed;
+    [SerializeField] private ChangeSeedPopup _changeSeedPopup;
 
     private ChangeNamePopup _changeNamePopupInstantiated;
+    private ChangeSeedPopup _changeSeedPopupInstantiated;
+
     private int _currentIconIndex = 0;
+    private string _name;
+
 
     private readonly List<string> _properties = new()
     {
@@ -35,29 +43,29 @@ public class CharacterSelection : MonoBehaviour
 
     private void Awake()
     {
-        StartCoroutine(SetPlayerName());
+        SetPlayerName();
+        _seed.text = UnityEngine.Random.Range(999999, int.MaxValue).ToString();
         _playerIcon.sprite = _characterSprites[LocalDataStorage.Instance.PlayerData.PlayerStats.SpriteIndex];
     }
 
-    private IEnumerator SetPlayerName()
+    private void SetPlayerName()
     {
-        string name = LocalDataStorage.Instance.PlayerPrefs.LoadPlayerName();
-        if (string.IsNullOrEmpty(name))
+        /*yield return StartCoroutine(LootLockerManager.Instance.GetPlayerName((response) =>
         {
-            yield return StartCoroutine(LootLockerManager.Instance.GetPlayerName((response) =>
-            {
-                name = response;
-            }));
+            name = response;
+        }));*/
 
-            if (string.IsNullOrEmpty(name))
-            {
-                name = BuildRandomName();
-                LootLockerManager.Instance.SetPlayerName(name);
-            }
+        _name = BuildRandomName();
 
-        }
+        _nameFieldResizer.UpdateText(_name);
+    }
 
-        _textFieldResizer.UpdateText(name);
+    public void SaveProfile()
+    {
+        LocalDataStorage.Instance.GameData.GameSeeds = new(int.Parse(_seed.text));
+        LocalDataStorage.Instance.PlayerData.PlayerStats.SpriteIndex = _currentIconIndex;
+        LootLockerManager.Instance.SetPlayerName(_name);
+        LocalDataStorage.Instance.PlayerPrefs.SavePlayerName(_name);
     }
 
     public void ChangeName()
@@ -68,9 +76,21 @@ public class CharacterSelection : MonoBehaviour
 
     private void OnNameChanged(string name)
     {
-        _textFieldResizer.UpdateText(name);
-        LocalDataStorage.Instance.PlayerPrefs.SavePlayerName(name);
+        _name = name;
+        _nameFieldResizer.UpdateText(_name);
         _changeNamePopupInstantiated.OnNameChanged -= OnNameChanged;
+    }
+
+    public void ChangeSeed()
+    {
+        _changeSeedPopupInstantiated = Instantiate(_changeSeedPopup, transform.parent);
+        _changeSeedPopupInstantiated.OnSeedChanged += OnSeedChanged;
+    }
+
+    private void OnSeedChanged(string seed)
+    {
+        _seedFieldResizer.UpdateText(seed);
+        _changeSeedPopupInstantiated.OnSeedChanged -= OnNameChanged;
     }
 
     private string BuildRandomName()
@@ -109,6 +129,5 @@ public class CharacterSelection : MonoBehaviour
     private void UpdatePlayerIcon()
     {
         _playerIcon.sprite = _characterSprites[_currentIconIndex];
-        LocalDataStorage.Instance.PlayerData.PlayerStats.SpriteIndex = _currentIconIndex;
     }
 }
