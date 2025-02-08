@@ -8,6 +8,11 @@ public class BaseScreen : MonoBehaviour
     {
         if (IsValidScreen() && Input.GetKeyDown(KeyCode.Escape))
         {
+            if (GameScreenType == GameScreenType.Pause)
+            {
+                Time.timeScale = 1.0f;
+            }
+
             CloseScreen();
         }
     }
