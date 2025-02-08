@@ -74,6 +74,8 @@ public class LocalDataStorage : MonoSingleton<LocalDataStorage>
 
     public IEnumerator LoadData(GameSave gameSave)
     {
+        PlayerPrefs.SavePlayerName(gameSave.Name);
+
         PlayerData.PlayerTransform = gameSave.PlayerTransform;
         PlayerData.PlayerStats = gameSave.PlayerStats;
         PlayerData.SavedInventoryData = gameSave.SavedInventoryData;

@@ -44,9 +44,9 @@ public class PlayerInteraction : MonoBehaviour
         _mouseInputHandler.OnItemHighlighted += HighlightItem;
         _mouseInputHandler.OnItemUnhighlighted += UnhighlightItem;
 
-        _leftClickAction.performed += context => PickUpFromGroundOrUse();
-        _leftClickAction.canceled += context => StopUsingItem();
-        _rightClickAction.performed += context => PlaceInInventoryOrPickUpFromInventory();
+        _leftClickAction.performed += PickUpFromGroundOrUse;
+        _leftClickAction.canceled += StopUsingItem;
+        _rightClickAction.performed += PlaceInInventoryOrPickUpFromInventory;
     }
 
     private void OnDisable()
@@ -56,9 +56,9 @@ public class PlayerInteraction : MonoBehaviour
         _mouseInputHandler.OnItemHighlighted -= HighlightItem;
         _mouseInputHandler.OnItemUnhighlighted -= UnhighlightItem;
 
-        _leftClickAction.performed -= context => PickUpFromGroundOrUse();
-        _leftClickAction.canceled -= context => StopUsingItem();
-        _rightClickAction.performed -= context => PlaceInInventoryOrPickUpFromInventory();
+        _leftClickAction.performed -= PickUpFromGroundOrUse;
+        _leftClickAction.canceled -= StopUsingItem;
+        _rightClickAction.performed -= PlaceInInventoryOrPickUpFromInventory;
     }
 
     private void Update()
@@ -184,7 +184,7 @@ public class PlayerInteraction : MonoBehaviour
 
             if (_isUsingItem)
             {
-                StopUsingItem();
+                StopUsingItem(default);
             }
 
             DestroyGhostItem();
@@ -204,7 +204,7 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void PickUpFromGroundOrUse()
+    private void PickUpFromGroundOrUse(InputAction.CallbackContext context)
     {
         if (ScreenManager.Instance.ActiveGameScreen != null)
         {
@@ -221,7 +221,7 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void PlaceInInventoryOrPickUpFromInventory()
+    private void PlaceInInventoryOrPickUpFromInventory(InputAction.CallbackContext context)
     {
         if (ScreenManager.Instance.ActiveGameScreen != null)
         {
@@ -269,7 +269,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (_isUsingItem)
         {
-            StopUsingItem();
+            StopUsingItem(default);
         }
 
         _carryingItem.IsPickedUp(false);
@@ -287,7 +287,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (_isUsingItem)
         {
-            StopUsingItem();
+            StopUsingItem(default);
         }
 
         if (item is Laser laser)
@@ -336,7 +336,7 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void StopUsingItem()
+    private void StopUsingItem(InputAction.CallbackContext context)
     {
         if (ScreenManager.Instance.ActiveGameScreen != null)
         {
@@ -403,7 +403,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (battery <= 0)
         {
-            StopUsingItem();
+            StopUsingItem(default);
             ((Laser)_carryingItem).OnBatteryChanged -= OnBatteryChanged;
             LocalDataStorage.Instance.PlayerData.InventoryData.RemoveItemFromInventory(_carryingItem);
             DestroyGhostItem();

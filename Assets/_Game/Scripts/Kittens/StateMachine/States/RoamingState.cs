@@ -36,14 +36,11 @@ public class RoamingState : BaseState
         }
 
         PathNode nextNode = KittenManager.Instance.GetNextPosition(_kitten.transform.localPosition);
-        Debug.Log("[RoamingState] - next node");
         if (nextNode != null)
         {
-            Debug.Log("[RoamingState] - next node is not null");
             _path = _brain.AStar.FindPath(kittenX, kittenY, nextNode.X, nextNode.Y);
             if (_path != null && _path.Count > 0)
             {
-                Debug.Log("[RoamingState] - path is not null");
                 UpdateClosestPathIndex();
             }
         }
