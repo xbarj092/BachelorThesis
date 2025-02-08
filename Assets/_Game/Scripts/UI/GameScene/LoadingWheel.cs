@@ -8,7 +8,7 @@ public class LoadingWheel : MonoBehaviour
 
     private void Update()
     {
-        _rectTransform.Rotate(0f, 0f, -_rotationSpeed * Time.deltaTime);
+        _rectTransform.Rotate(0f, 0f, -_rotationSpeed * Time.unscaledDeltaTime);
     }
 
     public void Reset()
