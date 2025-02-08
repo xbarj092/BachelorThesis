@@ -15,6 +15,7 @@ public class SavedKitten
     public int CurrentState;
     public int CurrentFocusType;
 
+    public int UID;
     public int PotentialPartnerId;
 
     public bool Male;
@@ -32,7 +33,7 @@ public class SavedKitten
     public bool Enabled;
 
     public SavedKitten(TransformData transformData, TransformData currentTarget, Vector3Data movementDirection, 
-        Vector3Data lastPosition, float timeToLive, float matingTimeout, int potentialPartnerId, int currentState, int currentFocusType,
+        Vector3Data lastPosition, float timeToLive, float matingTimeout, int Id, int potentialPartnerId, int currentState, int currentFocusType,
         bool male, bool isCastrated, bool isDead, bool isInRangeOfPlayer, bool canSeeTarget, bool isApproaching, 
         bool isMating, bool alreadyMated, bool isTrapped, bool isRunningAway, bool enabled)
     {
@@ -48,6 +49,7 @@ public class SavedKitten
         CurrentState = currentState;
         CurrentFocusType = currentFocusType;
 
+        UID = Id;
         PotentialPartnerId = potentialPartnerId;
 
         Male = male;
@@ -69,6 +71,7 @@ public class SavedKitten
     {
         TransformData.ApplyToTransform(kitten.transform);
 
+        kitten.UID = UID;
         kitten.PartnerUID = PotentialPartnerId;
 
         kitten.Male = Male;

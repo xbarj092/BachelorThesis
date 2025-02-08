@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 7, z: 0}
+  m_LocalScale: {x: 3, y: 5, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -98,22 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff9c56fa8265004fb0d896201b65bd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _items:
-    _serializedList:
-    - Key: 1
-      Value: {fileID: 3199732880389946512, guid: 8af717ca600c28943bcd74ce097d6a89, type: 3}
-    - Key: 2
-      Value: {fileID: 413877706589494400, guid: 58f430c458207fb4f9028ee7154e70ca, type: 3}
-    - Key: 3
-      Value: {fileID: 633159553556765650, guid: f942a2b75cb52e44dbbc064f040e185f, type: 3}
-    - Key: 4
-      Value: {fileID: 8555095110012774048, guid: 75e55fa0359d1214394586feb08fe550, type: 3}
-    - Key: 5
-      Value: {fileID: 3013150036535382391, guid: 2050bf487a5895a4cab4e2bf988feb8f, type: 3}
-    - Key: 6
-      Value: {fileID: 5906434041033461365, guid: b509a83eb2b369e4db9b2823e7ed224a, type: 3}
   _food: {fileID: 7764001886973069735, guid: 5c18dea745b38b14fab6de8ef8faf81a, type: 3}
-  _kitten: {fileID: 5434703141080909983, guid: 7f5ce41964dae14499f39870e0fccff1, type: 3}
   RoomType: 0
   _spawnChances:
     _serializedList:

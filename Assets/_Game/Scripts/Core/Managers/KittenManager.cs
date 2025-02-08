@@ -79,9 +79,9 @@ public class KittenManager : MonoSingleton<KittenManager>
 
     public void Initialize()
     {
-        InvokeRepeating(nameof(CheckGenderBalance), _checkInterval, _checkInterval);
+        InvokeRepeating(nameof(CheckGenderBalance), 0, _checkInterval);
         StartCoroutine(InitializeCoarseInfluenceMap());
-        InvokeRepeating(nameof(DecayInfluenceMap), 1f, 1f);
+        InvokeRepeating(nameof(DecayInfluenceMap), 0, 1f);
     }
 
     private IEnumerator InitializeCoarseInfluenceMap()
@@ -147,6 +147,7 @@ public class KittenManager : MonoSingleton<KittenManager>
 
         if (bestNode != null)
         {
+            Debug.Log("[KittenManager] - bestNode is not null");
             UpdateInfluenceMap(bestNode.X, bestNode.Y, 1f);
         }
 

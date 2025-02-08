@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Kitten : MonoBehaviour
@@ -97,8 +98,10 @@ public class Kitten : MonoBehaviour
         InvokeRepeating(nameof(Starve), 1, 1);
     }
 
-    public void Init(StateType stateType)
+    public IEnumerator Init(StateType stateType)
     {
+        yield return new WaitUntil(() => GameManager.Instance.MapInitialized);
+        yield return null;
         StartCoroutine(_stateMachineBrain.SetUpBrain(this, stateType));
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -371,7 +374,7 @@ public class Kitten : MonoBehaviour
     public SavedKitten Save()
     {
         return new(new(transform), new(_currentTarget), new(MovementDirection), new(_lastPosition),
-            _currentTimeToLive, _currentMatingTimeout, PotentialPartner == null ? 0 : PotentialPartner.UID, _stateMachineBrain.GetCurrentStateId(), (int)_currentFocusType,
+            _currentTimeToLive, _currentMatingTimeout, UID, PotentialPartner == null ? 0 : PotentialPartner.UID, _stateMachineBrain.GetCurrentStateId(), (int)_currentFocusType,
             Male, IsCastrated, IsDead, IsInRangeOfPlayer, CanSeeTarget, IsApproaching,
             IsMating, AlreadyMated, IsTrapped, IsRunningAway, gameObject.activeInHierarchy);
     }
@@ -386,6 +389,6 @@ public class Kitten : MonoBehaviour
         _currentTimeToLive = savedKitten.TimeToLive;
         _matingTimeout = savedKitten.MatingTimeout;
 
-        Init((StateType)savedKitten.CurrentState);
+        StartCoroutine(Init((StateType)savedKitten.CurrentState));
     }
 }
