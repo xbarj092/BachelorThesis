@@ -36,6 +36,12 @@ public class PauseScreen : BaseScreen
         }
     }
 
+    public void Options()
+    {
+        Destroy(gameObject);
+        ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.Options);
+    }
+
     public void GoMenu()
     {
         SceneLoadManager.Instance.GoGameToMenu();

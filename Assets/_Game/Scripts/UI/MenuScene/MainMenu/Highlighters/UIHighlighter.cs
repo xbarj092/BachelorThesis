@@ -8,11 +8,11 @@ public class UIHighlighter : MonoBehaviour
 
     public virtual void Highlight()
     {
-        transform.DOScale(_highlightedScale, _animationTime);
+        transform.DOScale(_highlightedScale, _animationTime).SetUpdate(true);
     }
 
     public virtual void Unhighlight()
     {
-        transform.DOScale(Vector3.one, _animationTime);
+        transform.DOScale(Vector3.one, _animationTime).SetUpdate(true);
     }
 }

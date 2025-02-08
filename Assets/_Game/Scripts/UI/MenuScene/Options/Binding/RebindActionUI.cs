@@ -155,6 +155,7 @@ public class RebindActionUI : MonoBehaviour
             action.RemoveBindingOverride(bindingIndex);
         }
 
+        SetValidBind();
         UpdateBindingDisplay();
         SaveActionBinding();
     }
