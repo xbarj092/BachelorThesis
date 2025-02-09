@@ -7,6 +7,10 @@ public class KeyBindingsScreen : BaseScreen
 {
     [SerializeField] private List<RebindActionUI> _keyBinds = new();
     [SerializeField] private Popup _bindConflictPopup;
+    [SerializeField] private GameObject _raycastPreventer;
+
+    private InputActionRebindingExtensions.RebindingOperation _actionRebinding;
+    private bool _isRebinding = false;
 
     private List<RebindActionUI> _invalidBinds = new();
     private Popup _bindConflictPopupInstantiated;
@@ -15,6 +19,7 @@ public class KeyBindingsScreen : BaseScreen
     {
         foreach (RebindActionUI action in _keyBinds)
         {
+            action.OnRebindStart += OnRebindStart;
             action.OnRebind += OnRebind;
             action.OnConflict += OnConflict;
         }
@@ -24,35 +29,99 @@ public class KeyBindingsScreen : BaseScreen
     {
         foreach (RebindActionUI action in _keyBinds)
         {
+            action.OnRebindStart -= OnRebindStart;
             action.OnRebind -= OnRebind;
             action.OnConflict -= OnConflict;
         }
     }
 
+    protected override void Update()
+    {
+        base.Update();
+
+        if (_isRebinding && Input.GetKeyDown(KeyCode.Escape))
+        {
+            _raycastPreventer.SetActive(false);
+            _isRebinding = false;
+            _actionRebinding?.Cancel();
+        }
+    }
+
+    protected override bool CanClose()
+    {
+        return !_isRebinding && base.CanClose();
+    }
+
+    private void OnRebindStart(InputActionRebindingExtensions.RebindingOperation operation)
+    {
+        _raycastPreventer.SetActive(true);
+        _isRebinding = true;
+        _actionRebinding = operation;
+    }
+
     private void OnRebind(RebindActionUI rebindActionUI)
     {
-        bool hasBinding = false;
-        RebindActionUI unblockedAction = null;
-        rebindActionUI.ResolveActionAndBinding(out InputAction inputAction, out int bindingIndex);
+        _raycastPreventer.SetActive(false);
+        _isRebinding = false;
+        _actionRebinding = null;
 
-        foreach (RebindActionUI action in _invalidBinds.Where(invalidAction => invalidAction != rebindActionUI))
+        rebindActionUI.ResolveActionAndBinding(out InputAction inputAction, out int bindingIndex);
+        ValidateAllBindings();
+
+        if (_invalidBinds.Count == 0)
         {
-            if (action.HasBinding(inputAction.bindings[bindingIndex].effectivePath))
+            rebindActionUI.SaveActionBinding();
+        }
+    }
+
+    private void ValidateAllBindings()
+    {
+        _invalidBinds.Clear();
+
+        Dictionary<RebindActionUI, string> actionPaths = new();
+        foreach (RebindActionUI actionUI in _keyBinds)
+        {
+            actionUI.ResolveActionAndBinding(out InputAction action, out int bindingIndex);
+            string effectivePath = action.bindings[bindingIndex].effectivePath;
+
+            if (!string.IsNullOrEmpty(effectivePath))
             {
-                hasBinding = true;
-                action.SetInvalidBind();
-            }
-            else
-            {
-                unblockedAction = action;
+                actionPaths[actionUI] = effectivePath;
             }
         }
 
-        if (!hasBinding && unblockedAction != null)
+        foreach (KeyValuePair<RebindActionUI, string> actionA in actionPaths)
         {
-            _invalidBinds.Remove(unblockedAction);
-            unblockedAction.SetValidBind();
-            unblockedAction.SaveActionBinding();
+            foreach (KeyValuePair<RebindActionUI, string> actionB in actionPaths)
+            {
+                if (actionA.Key == actionB.Key)
+                { 
+                    continue;
+                }
+
+                if (actionA.Value == actionB.Value)
+                {
+                    if (!_invalidBinds.Contains(actionA.Key))
+                    {
+                        _invalidBinds.Add(actionA.Key);
+                        actionA.Key.SetInvalidBind();
+                    }
+
+                    if (!_invalidBinds.Contains(actionB.Key))
+                    {
+                        _invalidBinds.Add(actionB.Key);
+                        actionB.Key.SetInvalidBind();
+                    }
+                }
+            }
+        }
+
+        foreach (RebindActionUI actionUI in _keyBinds)
+        {
+            if (!_invalidBinds.Contains(actionUI))
+            {
+                actionUI.SetValidBind();
+            }
         }
     }
 
@@ -62,8 +131,12 @@ public class KeyBindingsScreen : BaseScreen
         {
             if (action.HasBinding(bindingPath))
             {
-                _invalidBinds.Add(action);
-                action.SetInvalidBind();
+                if (!_invalidBinds.Contains(action))
+                {
+                    Debug.Log("[KeyBindingsScreen] - adding conflict: " + bindingPath);
+                    _invalidBinds.Add(action);
+                    action.SetInvalidBind();
+                }
             }
         }
 
@@ -81,5 +154,7 @@ public class KeyBindingsScreen : BaseScreen
         {
             action.ResetToDefault();
         }
+
+        _keyBinds.FirstOrDefault().SaveActionBinding();
     }
 }

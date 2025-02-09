@@ -82,6 +82,7 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
 
     private void OnRestartGameDone(SceneLoader.Scenes scenes)
     {
+        LocalDataStorage.Instance.GameData.Random = new(LocalDataStorage.Instance.GameData.GameSeeds.MapGenerationSeed);
         StartCoroutine(InitGame());
         SceneLoader.OnSceneLoadDone -= OnRestartGameDone;
     }

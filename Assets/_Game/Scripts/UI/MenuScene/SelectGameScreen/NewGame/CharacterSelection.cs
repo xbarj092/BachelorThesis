@@ -44,7 +44,7 @@ public class CharacterSelection : MonoBehaviour
     private void Awake()
     {
         SetPlayerName();
-        _seed.text = UnityEngine.Random.Range(999999, int.MaxValue).ToString();
+        _seedFieldResizer.UpdateText(UnityEngine.Random.Range(999999, int.MaxValue).ToString());
         _playerIcon.sprite = _characterSprites[LocalDataStorage.Instance.PlayerData.PlayerStats.SpriteIndex];
     }
 

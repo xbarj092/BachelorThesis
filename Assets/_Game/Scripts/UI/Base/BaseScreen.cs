@@ -4,9 +4,9 @@ public class BaseScreen : MonoBehaviour
 {
     public GameScreenType GameScreenType;
 
-    private void Update()
+    protected virtual void Update()
     {
-        if (IsValidScreen() && Input.GetKeyDown(KeyCode.Escape))
+        if (CanClose() && Input.GetKeyDown(KeyCode.Escape))
         {
             if (GameScreenType == GameScreenType.Pause)
             {
@@ -15,6 +15,11 @@ public class BaseScreen : MonoBehaviour
 
             CloseScreen();
         }
+    }
+
+    protected virtual bool CanClose()
+    {
+        return IsValidScreen();
     }
 
     private bool IsValidScreen()

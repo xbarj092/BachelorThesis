@@ -16,7 +16,8 @@ public class RebindActionUI : MonoBehaviour
     [SerializeField] private InteractiveRebindEvent _rebindStartEvent;
     [SerializeField] private InteractiveRebindEvent _rebindStopEvent;
 
-    private InputActionRebindingExtensions.RebindingOperation _rebindOperation;
+    public InputActionRebindingExtensions.RebindingOperation RebindOperation;
+
     private static List<RebindActionUI> _rebindActionUIs = null;
 
     public InputActionReference ActionReference
@@ -39,6 +40,7 @@ public class RebindActionUI : MonoBehaviour
         }
     }
 
+    public event Action<InputActionRebindingExtensions.RebindingOperation> OnRebindStart;
     public event Action<RebindActionUI> OnRebind;
     public event Action<string> OnConflict;
 
@@ -65,8 +67,8 @@ public class RebindActionUI : MonoBehaviour
 
     protected void OnDisable()
     {
-        _rebindOperation?.Dispose();
-        _rebindOperation = null;
+        RebindOperation?.Dispose();
+        RebindOperation = null;
 
         if (_rebindActionUIs != null)
         {
@@ -157,7 +159,6 @@ public class RebindActionUI : MonoBehaviour
 
         SetValidBind();
         UpdateBindingDisplay();
-        SaveActionBinding();
     }
 
     public void StartInteractiveRebind()
@@ -184,16 +185,16 @@ public class RebindActionUI : MonoBehaviour
 
     private void PerformInteractiveRebind(InputAction action, int bindingIndex, bool allCompositeParts = false)
     {
-        _rebindOperation?.Cancel();
-
         void CleanUp()
         {
-            _rebindOperation?.Dispose();
-            _rebindOperation = null;
+            RebindOperation?.Dispose();
+            RebindOperation = null;
             _action.action.Enable();
         }
 
-        _rebindOperation = action.PerformInteractiveRebinding(bindingIndex)
+        RebindOperation?.Cancel();
+
+        RebindOperation = action.PerformInteractiveRebinding(bindingIndex)
             .OnCancel(
                 operation =>
                 {
@@ -210,15 +211,14 @@ public class RebindActionUI : MonoBehaviour
                         Debug.LogWarning("Binding conflict detected. Reverting to previous binding.");
                         operation.Cancel();
                         SetInvalidBind();
+                        OnRebind?.Invoke(this);
                         return;
                     }
 
                     _rebindStopEvent?.Invoke(this, operation);
                     UpdateBindingDisplay();
                     CleanUp(); 
-                    OnRebind?.Invoke(this);
                     SetValidBind();
-                    SaveActionBinding();
 
                     if (allCompositeParts)
                     {
@@ -228,7 +228,11 @@ public class RebindActionUI : MonoBehaviour
                             PerformInteractiveRebind(action, nextBindingIndex, true);
                         }
                     }
+
+                    OnRebind?.Invoke(this);
                 });
+
+        OnRebindStart?.Invoke(RebindOperation);
 
         string partName = default;
         if (action.bindings[bindingIndex].isPartOfComposite)
@@ -238,9 +242,9 @@ public class RebindActionUI : MonoBehaviour
 
         _bindingText.text = "<Waiting...>";
 
-        _rebindStartEvent?.Invoke(this, _rebindOperation);
+        _rebindStartEvent?.Invoke(this, RebindOperation);
 
-        _rebindOperation.Start();
+        RebindOperation.Start();
     }
 
     private bool IsBindingConflict(InputAction action, InputBinding newBinding)
@@ -249,7 +253,11 @@ public class RebindActionUI : MonoBehaviour
         {
             foreach (InputBinding binding in otherAction.bindings)
             {
-                if (otherAction == action && binding.id == newBinding.id) continue;
+                if (otherAction == action && binding.id == newBinding.id)
+                {
+                    continue;
+                }
+
                 if (binding.effectivePath == newBinding.effectivePath)
                 {
                     OnConflict?.Invoke(binding.effectivePath);
