@@ -11,9 +11,9 @@ public class ItemSlot : MonoBehaviour
     [SerializeField] private Sprite _highlightedSprite;
 
     public bool Occupied = false;
-    public Item Item;
+    public UseableItem Item;
 
-    public void Init(Item item)
+    public void Init(UseableItem item)
     {
         Item = item;
         _batteryProgressBar.gameObject.SetActive(false);

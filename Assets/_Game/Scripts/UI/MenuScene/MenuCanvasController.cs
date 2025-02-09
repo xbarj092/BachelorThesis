@@ -13,6 +13,11 @@ public class MenuCanvasController : BaseCanvasController
     [SerializeField] private KeyBindingsScreen _keyBindingsScreen;
     [SerializeField] private AudioSettingsScreen _audioSettingsScreen;
     [SerializeField] private AboutGameScreen _aboutGameScreen;
+    [SerializeField] private CollectiblesScreen _collectiblesScreen;
+    [SerializeField] private ItemsScreen _itemsScreen;
+    [SerializeField] private EnemiesScreen _enemiesScreen;
+    [SerializeField] private FoodScreen _foodScreen;
+    [SerializeField] private MiscScreen _miscScreen;
 
     private void Awake()
     {
@@ -42,6 +47,11 @@ public class MenuCanvasController : BaseCanvasController
             GameScreenType.KeyBindings => Instantiate(_keyBindingsScreen, transform),
             GameScreenType.AudioSettings => Instantiate(_audioSettingsScreen, transform),
             GameScreenType.AboutGame => Instantiate(_aboutGameScreen, transform),
+            GameScreenType.Collectibles => Instantiate(_collectiblesScreen, transform),
+            GameScreenType.Items => Instantiate(_itemsScreen, transform),
+            GameScreenType.Enemies => Instantiate(_enemiesScreen, transform),
+            GameScreenType.Food => Instantiate(_foodScreen, transform),
+            GameScreenType.Misc => Instantiate(_miscScreen, transform),
             _ => base.GetRelevantScreen(gameScreenType),
         };
     }
@@ -59,6 +69,11 @@ public class MenuCanvasController : BaseCanvasController
             GameScreenType.KeyBindings => GameScreenType.Options,
             GameScreenType.AudioSettings => GameScreenType.Options,
             GameScreenType.AboutGame => GameScreenType.Options,
+            GameScreenType.Collectibles => GameScreenType.MenuMain,
+            GameScreenType.Items => GameScreenType.Collectibles,
+            GameScreenType.Enemies => GameScreenType.Collectibles,
+            GameScreenType.Food => GameScreenType.Collectibles,
+            GameScreenType.Misc => GameScreenType.Collectibles,
             _ => base.GetActiveGameScreen(gameScreenType),
         };
     }

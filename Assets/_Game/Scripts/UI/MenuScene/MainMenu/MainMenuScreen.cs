@@ -14,6 +14,12 @@ public class MainMenuScreen : BaseScreen
         ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.Options);
     }
 
+    public void Collectibles()
+    {
+        Destroy(gameObject);
+        ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.Collectibles);
+    }
+
     public void Leaderboard()
     {
         Destroy(gameObject);

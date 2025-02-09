@@ -3,25 +3,25 @@ using UnityEngine;
 
 public class MouseItemStrategy : ItemStrategyBase
 {
-    public override bool CanUse(Item item)
+    public override bool CanUse(UseableItem item)
     {
         return true;
     }
 
-    public override void Use(Item item)
+    public override void Use(UseableItem item)
     {
         Debug.Log("[MouseItemStrategy] - Used mouse!");
         PlaceOnMousePosition(item);
         MoveAwayFromPlayerSinusoid(item);
     }
 
-    public override void PickUp(Item item)
+    public override void PickUp(UseableItem item)
     {
         base.PickUp(item);
         Debug.Log("[MouseItemStrategy] - Picked up mouse!");
     }
 
-    private void MoveAwayFromPlayerSinusoid(Item item)
+    private void MoveAwayFromPlayerSinusoid(UseableItem item)
     {
         Transform playerTransform = GameObject.FindGameObjectWithTag(GlobalConstants.Tags.Player.ToString()).transform;
         Vector3 startPosition = item.transform.position;
@@ -33,7 +33,7 @@ public class MouseItemStrategy : ItemStrategyBase
         }
     }
 
-    private IEnumerator SinusoidalMovementWithWallCheck(Item item, Vector3 initialDirection)
+    private IEnumerator SinusoidalMovementWithWallCheck(UseableItem item, Vector3 initialDirection)
     {
         float elapsedTime = 0f;
 

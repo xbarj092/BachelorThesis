@@ -22,7 +22,7 @@ public class SavedItem
         Enabled = enabled;
     }
 
-    public virtual void ApplyToItem(Item item)
+    public virtual void ApplyToItem(UseableItem item)
     {
         ItemTransform.ApplyToTransform(item.transform);
         item.UID = UID;

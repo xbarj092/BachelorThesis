@@ -11,7 +11,7 @@ public class SavedCardboardBoxItem : SavedItem
         HasKitten = hasKitten;
     }
 
-    public override void ApplyToItem(Item item)
+    public override void ApplyToItem(UseableItem item)
     {
         base.ApplyToItem(item);
         if (item is CardboardBox box)

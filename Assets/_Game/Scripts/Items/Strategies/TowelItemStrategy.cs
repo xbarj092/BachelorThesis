@@ -20,7 +20,7 @@ public class TowelItemStrategy : ItemStrategyBase
         }
     }
 
-    public override bool CanUse(Item item)
+    public override bool CanUse(UseableItem item)
     {
         RaycastHit2D hit = Physics2D.Raycast(item.transform.position, Vector2.zero, float.MaxValue, LayerMask.GetMask(GlobalConstants.Layers.KittenInteraction.ToString()));
         if (hit.collider != null)
@@ -36,7 +36,7 @@ public class TowelItemStrategy : ItemStrategyBase
         return false;
     }
 
-    public override void Use(Item item)
+    public override void Use(UseableItem item)
     {
         CoroutineMonoBehaviour.StartCoroutine(SetKittenTrapped());
         LocalDataStorage.Instance.PlayerData.InventoryData.RemoveItemFromInventory(item);
@@ -50,7 +50,7 @@ public class TowelItemStrategy : ItemStrategyBase
         _kitten.Untrap();
     }
 
-    public override void PickUp(Item item)
+    public override void PickUp(UseableItem item)
     {
         base.PickUp(item);
         Debug.Log("[TowelItemStrategy] - Picked up towel!");

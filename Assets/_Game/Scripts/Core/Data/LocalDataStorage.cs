@@ -23,16 +23,16 @@ public class LocalDataStorage : MonoSingleton<LocalDataStorage>
         {
             int spriteIndex = PlayerData.PlayerStats.SpriteIndex;
             PlayerData.PlayerStats = new(spriteIndex, 0, 15, 15, 10, 10);
-            PlayerData.InventoryData = new(new List<Item> { null, null, null, null, null, null });
+            PlayerData.InventoryData = new(new List<UseableItem> { null, null, null, null, null, null });
         }
         else
         {
-            PlayerData.InventoryData = new(new List<Item> { null, null, null, null, null, null });
+            PlayerData.InventoryData = new(new List<UseableItem> { null, null, null, null, null, null });
 
             InventoryData inventoryData = PlayerData.InventoryData;
             foreach (SavedItem item in PlayerData.SavedInventoryData.SavedItems)
             {
-                Item inventoryItem = ItemManager.Instance.GetItemWithUID(item.UID);
+                UseableItem inventoryItem = ItemManager.Instance.GetItemWithUID(item.UID);
                 if (inventoryItem != null)
                 {
                     for (int i = 0; i < inventoryData.ItemsInInventory.Count; i++)

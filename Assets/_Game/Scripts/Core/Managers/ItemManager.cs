@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class ItemManager : MonoSingleton<ItemManager>
 {
-    [SerializeField] private SerializedDictionary<ItemType, Item> _items = new();
+    [SerializeField] private SerializedDictionary<ItemType, UseableItem> _items = new();
 
-    public List<Item> SpawnedItems = new();
-    public List<Item> SavedItems = new();
+    public List<UseableItem> SpawnedItems = new();
+    public List<UseableItem> SavedItems = new();
 
     private List<int> _spawnedItemUIDs = new();
 
@@ -17,7 +17,7 @@ public class ItemManager : MonoSingleton<ItemManager>
         LocalDataStorage.Instance.GameData.ItemData.SavedItems.Clear();
         SavedItems.Clear();
 
-        foreach (Item item in SpawnedItems)
+        foreach (UseableItem item in SpawnedItems)
         {
             item.SaveItem();
         }
@@ -29,7 +29,7 @@ public class ItemManager : MonoSingleton<ItemManager>
 
         foreach (SavedItem item in LocalDataStorage.Instance.GameData.ItemData.SavedItems)
         {
-            Item spawnedItem = SpawnItem((ItemType)item.ItemType);
+            UseableItem spawnedItem = SpawnItem((ItemType)item.ItemType);
             if (spawnedItem != null)
             {
                 spawnedItem.LoadItem(item);
@@ -38,14 +38,14 @@ public class ItemManager : MonoSingleton<ItemManager>
         }
     }
 
-    public Item SpawnItem(ItemType itemType)
+    public UseableItem SpawnItem(ItemType itemType)
     {
         return Instantiate(_items[itemType]);
     }
 
     public void SpawnItem(ItemType itemType, Vector2 spawnPosition, Quaternion spawnRotation, Transform parent)
     {
-        Item item = Instantiate(_items[itemType], spawnPosition, spawnRotation, parent);
+        UseableItem item = Instantiate(_items[itemType], spawnPosition, spawnRotation, parent);
         if (item != null)
         {
             item.UID = SetItemUId();
@@ -64,7 +64,7 @@ public class ItemManager : MonoSingleton<ItemManager>
         return uid;
     }
 
-    public Item GetItemWithUID(int uid)
+    public UseableItem GetItemWithUID(int uid)
     {
         return SpawnedItems.FirstOrDefault(item => item.UID == uid);
     }

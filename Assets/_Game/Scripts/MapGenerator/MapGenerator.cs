@@ -136,7 +136,7 @@ namespace MapGenerator
         {
             ItemManager.Instance.LoadItems();
 
-            foreach (Item item in ItemManager.Instance.SpawnedItems)
+            foreach (UseableItem item in ItemManager.Instance.SpawnedItems)
             {
                 item.transform.SetParent(ItemSpawnTransform);
             }

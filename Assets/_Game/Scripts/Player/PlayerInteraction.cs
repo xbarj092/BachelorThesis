@@ -11,8 +11,8 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private SpriteRenderer _interactionZone;
     [SerializeField] private Player _player;
 
-    private Item _highlightedItem;
-    private Item _carryingItem;
+    private UseableItem _highlightedItem;
+    private UseableItem _carryingItem;
     private GameObject _ghostItem;
     private SpriteRenderer _ghostRenderer;
 
@@ -152,7 +152,7 @@ public class PlayerInteraction : MonoBehaviour
         LocalDataStorage.Instance.PlayerData.InventoryData = inventoryData;
     }
 
-    private void UpdateGhostOrCarryingItemVisuals(Item selectedItem)
+    private void UpdateGhostOrCarryingItemVisuals(UseableItem selectedItem)
     {
         if (selectedItem == null)
         {
@@ -241,7 +241,7 @@ public class PlayerInteraction : MonoBehaviour
     private void PickUpFromInventory()
     {
         InventoryData inventory = LocalDataStorage.Instance.PlayerData.InventoryData;
-        Item item = inventory.ItemsInInventory[inventory.CurrentHighlightIndex];
+        UseableItem item = inventory.ItemsInInventory[inventory.CurrentHighlightIndex];
         if (item != null)
         {
             PickUpItem(item);
@@ -279,7 +279,7 @@ public class PlayerInteraction : MonoBehaviour
     private void OnItemDrop()
     {
         InventoryData inventoryData = LocalDataStorage.Instance.PlayerData.InventoryData;
-        Item item = _carryingItem == null ? inventoryData.ItemsInInventory[inventoryData.CurrentHighlightIndex] : _carryingItem;
+        UseableItem item = _carryingItem == null ? inventoryData.ItemsInInventory[inventoryData.CurrentHighlightIndex] : _carryingItem;
         if (item == null)
         {
             return;
@@ -373,7 +373,7 @@ public class PlayerInteraction : MonoBehaviour
         DestroyGhostItem();
     }
 
-    private void PickUpItem(Item item)
+    private void PickUpItem(UseableItem item)
     {
         if (_carryingItem != null)
         {
@@ -385,7 +385,7 @@ public class PlayerInteraction : MonoBehaviour
         HideItemAndCreateGhost(item);
     }
 
-    private void HideItemAndCreateGhost(Item item)
+    private void HideItemAndCreateGhost(UseableItem item)
     {
         item.gameObject.SetActive(false);
         item.IsPickedUp(true);
@@ -411,7 +411,7 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void HighlightItem(Item item)
+    private void HighlightItem(UseableItem item)
     {
         if (_highlightedItem == null && CanSeeItem(item.gameObject))
         {

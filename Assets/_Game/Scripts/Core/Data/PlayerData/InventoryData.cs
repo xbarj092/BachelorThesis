@@ -5,10 +5,10 @@ using System.Linq;
 [Serializable]
 public class InventoryData
 {
-    public List<Item> ItemsInInventory;
+    public List<UseableItem> ItemsInInventory;
     public int CurrentHighlightIndex;
 
-    public InventoryData(List<Item> items)
+    public InventoryData(List<UseableItem> items)
     {
         ItemsInInventory = items;
     }
@@ -23,7 +23,7 @@ public class InventoryData
         return ItemsInInventory.Any(item => item == null);
     }
 
-    public void RemoveItemFromInventory(Item item)
+    public void RemoveItemFromInventory(UseableItem item)
     {
         if (ItemsInInventory[CurrentHighlightIndex] == item)
         {

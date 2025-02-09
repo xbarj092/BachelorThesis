@@ -226,7 +226,7 @@ public class Kitten : MonoBehaviour
 
     private FocusTargetType DetermineTargetType(GameObject target)
     {
-        if (target.TryGetComponent(out Item item) && item.Stats.ItemType == ItemType.Mouse && item.Used)
+        if (target.TryGetComponent(out UseableItem item) && item.Stats.ItemType == ItemType.Mouse && item.Used)
         {
             return FocusTargetType.Mouse;
         }
@@ -343,7 +343,7 @@ public class Kitten : MonoBehaviour
             IsRunningAway = true;
         }
 
-        if (collision.gameObject.TryGetComponent(out Item item) && item.Stats.ItemType == ItemType.Mouse && item.Used)
+        if (collision.gameObject.TryGetComponent(out UseableItem item) && item.Stats.ItemType == ItemType.Mouse && item.Used)
         {
             ItemManager.Instance.SpawnedItems.Remove(item);
             Destroy(item.gameObject);

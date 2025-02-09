@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class CardboardBoxItemStrategy : ItemStrategyBase
 {
-    public override bool CanUse(Item item)
+    public override bool CanUse(UseableItem item)
     {
         return true;
     }
 
-    public override void Use(Item item)
+    public override void Use(UseableItem item)
     {
         Debug.Log("[CardboardBoxItemStrategy] - Used cardboard box!");
         PlaceOnMousePosition(item);
     }
 
-    public override void PickUp(Item item)
+    public override void PickUp(UseableItem item)
     {
         base.PickUp(item);
         Debug.Log("[CardboardBoxItemStrategy] - Picked up cardboard box!");

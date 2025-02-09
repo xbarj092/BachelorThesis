@@ -1,6 +1,6 @@
 public interface IItemStrategy
 {
-    bool CanUse(Item item);
-    void Use(Item item);
-    void PickUp(Item item);
+    bool CanUse(UseableItem item);
+    void Use(UseableItem item);
+    void PickUp(UseableItem item);
 }

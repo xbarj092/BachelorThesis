@@ -18,7 +18,7 @@ public class LaserItemStrategy : ItemStrategyBase
         }
     }
 
-    public override bool CanUse(Item item)
+    public override bool CanUse(UseableItem item)
     {
         if (((Laser)item).Battery > 0)
         {
@@ -30,13 +30,13 @@ public class LaserItemStrategy : ItemStrategyBase
         }
     }
 
-    public override void Use(Item item)
+    public override void Use(UseableItem item)
     {
         MonoBehaviour.StartCoroutine(DepleteBattery(item));
         Debug.Log("[LaserItemStrategy] - Used laser!");
     }
 
-    private IEnumerator DepleteBattery(Item item)
+    private IEnumerator DepleteBattery(UseableItem item)
     {
         while (((Laser)item).Battery > 0)
         {
@@ -45,7 +45,7 @@ public class LaserItemStrategy : ItemStrategyBase
         }
     }
 
-    public override void PickUp(Item item)
+    public override void PickUp(UseableItem item)
     {
         base.PickUp(item);
         Debug.Log("[LaserItemStrategy] - Picked up laser!");

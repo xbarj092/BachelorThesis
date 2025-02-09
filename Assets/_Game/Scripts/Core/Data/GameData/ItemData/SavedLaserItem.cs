@@ -11,7 +11,7 @@ public class SavedLaserItem : SavedItem
         Battery = battery;
     }
 
-    public override void ApplyToItem(Item item)
+    public override void ApplyToItem(UseableItem item)
     {
         base.ApplyToItem(item);
         if (item is Laser laser)

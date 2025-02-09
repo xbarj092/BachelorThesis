@@ -14,4 +14,9 @@ public enum GameScreenType
     KeyBindings = 11,
     AudioSettings = 12,
     AboutGame = 13,
+    Collectibles = 14,
+    Items = 15,
+    Enemies = 16,
+    Food = 17,
+    Misc = 18,
 }

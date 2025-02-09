@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
     {
         LocalDataStorage.Instance.PlayerData.SavedInventoryData.SavedItems.Clear();
 
-        foreach (Item item in LocalDataStorage.Instance.PlayerData.InventoryData.ItemsInInventory)
+        foreach (UseableItem item in LocalDataStorage.Instance.PlayerData.InventoryData.ItemsInInventory)
         {
             if (item != null)
             {
@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
 
     public void PickupItem(GameObject gameObject, bool recordNewItemPickup = false)
     {
-        if (gameObject.TryGetComponent(out Item item))
+        if (gameObject.TryGetComponent(out UseableItem item))
         {
             if (item.Dropped)
             {

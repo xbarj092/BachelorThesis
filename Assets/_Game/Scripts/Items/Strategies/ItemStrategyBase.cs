@@ -2,14 +2,14 @@ using UnityEngine;
 
 public abstract class ItemStrategyBase : IItemStrategy
 {
-    public abstract bool CanUse(Item item);
-    public abstract void Use(Item item);
-    public virtual void PickUp(Item item)
+    public abstract bool CanUse(UseableItem item);
+    public abstract void Use(UseableItem item);
+    public virtual void PickUp(UseableItem item)
     {
         item.gameObject.SetActive(false);
     }
 
-    protected void PlaceOnMousePosition(Item item)
+    protected void PlaceOnMousePosition(UseableItem item)
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0;

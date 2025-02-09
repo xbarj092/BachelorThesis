@@ -6,9 +6,9 @@ public class MouseInputHandler
     private PlayerInteraction _playerInteractions;
     private LayerMask _layerMask;
 
-    public event Action<Item> OnItemPickedUp;
+    public event Action<UseableItem> OnItemPickedUp;
     public event Action OnItemPlaced;
-    public event Action<Item> OnItemHighlighted;
+    public event Action<UseableItem> OnItemHighlighted;
     public event Action OnItemUnhighlighted;
 
     public MouseInputHandler(PlayerInteraction playerInteractions, LayerMask layerMask)
@@ -38,7 +38,7 @@ public class MouseInputHandler
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 2f, _layerMask);
         if (hit.collider != null && hit.collider.CompareTag("Item"))
         {
-            Item item = hit.collider.gameObject.GetComponent<Item>();
+            UseableItem item = hit.collider.gameObject.GetComponent<UseableItem>();
             if (item != null && item.IsInteractable)
             {
                 OnItemPickedUp?.Invoke(item);
@@ -59,7 +59,7 @@ public class MouseInputHandler
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 2f, _layerMask);
         if (hit.collider != null && hit.collider.CompareTag("Item"))
         {
-            Item item = hit.collider.gameObject.GetComponent<Item>();
+            UseableItem item = hit.collider.gameObject.GetComponent<UseableItem>();
             if (item != null)
             {
                 if (item.IsInteractable)

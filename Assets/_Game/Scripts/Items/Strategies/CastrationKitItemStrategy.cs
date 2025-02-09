@@ -4,7 +4,7 @@ public class CastrationKitItemStrategy : ItemStrategyBase
 {
     private Kitten _kitten;
 
-    public override bool CanUse(Item item)
+    public override bool CanUse(UseableItem item)
     {
         RaycastHit2D hit = Physics2D.Raycast(item.transform.position, Vector2.zero, float.MaxValue, LayerMask.GetMask(GlobalConstants.Layers.KittenInteraction.ToString()));
         if (hit.collider != null)
@@ -20,7 +20,7 @@ public class CastrationKitItemStrategy : ItemStrategyBase
         return false;
     }
 
-    public override void Use(Item item)
+    public override void Use(UseableItem item)
     {
         _kitten.IsCastrated = true;
         _kitten.FocusOnPlayer();
@@ -28,7 +28,7 @@ public class CastrationKitItemStrategy : ItemStrategyBase
         Debug.Log("[CastrationKitItemStrategy] - Used castration kit");
     }
 
-    public override void PickUp(Item item)
+    public override void PickUp(UseableItem item)
     {
         base.PickUp(item);
         Debug.Log("[CastrationKitItemStrategy] - Picked up castration kit!");
