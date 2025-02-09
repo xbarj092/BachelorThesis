@@ -46,7 +46,10 @@ public class CardboardBox : UseableItem
     {
         if ((ItemType)item.ItemType == Stats.ItemType)
         {
-            ((SavedCardboardBoxItem)item).ApplyToItem(this);
+            if (item is SavedCardboardBoxItem cardboardBoxItem)
+            {
+                cardboardBoxItem.ApplyToItem(this);
+            }
         }
     }
 }

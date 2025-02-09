@@ -4,6 +4,6 @@ public class ConsumableItemInteractions : ItemInteractions<ConsumableItem, Consu
 {
     protected override void HandlePlayerCollisionEnter(Player player, Collider2D collision)
     {
-        player.PickupFood(gameObject);
+        _item.PickUp();
     }
 }

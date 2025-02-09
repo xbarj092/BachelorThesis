@@ -22,7 +22,7 @@ public class LocalDataStorage : MonoSingleton<LocalDataStorage>
         if (!loaded)
         {
             int spriteIndex = PlayerData.PlayerStats.SpriteIndex;
-            PlayerData.PlayerStats = new(spriteIndex, 0, 15, 15, 10, 10);
+            PlayerData.PlayerStats = new(spriteIndex, 0, 150, 150);
             PlayerData.InventoryData = new(new List<UseableItem> { null, null, null, null, null, null });
         }
         else

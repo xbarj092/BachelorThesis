@@ -70,7 +70,7 @@ public abstract class UseableItem : Item<UseableItemSO, SavedUseableItem>
         ((LaserItemStrategy)_strategy).StopCoroutines();
     }
 
-    public virtual void PickUp()
+    public override void PickUp()
     {
         _strategy.PickUp(this);
     }

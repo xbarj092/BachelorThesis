@@ -8,5 +8,10 @@ public abstract class ConsumableItem : Item<ConsumableItemSO, SavedConsumableIte
         _spriteRenderer.sprite = Stats.Sprite;
     }
 
+    public override void PickUp()
+    {
+        _strategy.PickUp(this);
+    }
+
     public override abstract void SaveItem();
 }

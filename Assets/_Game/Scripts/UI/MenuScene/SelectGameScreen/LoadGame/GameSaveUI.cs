@@ -28,7 +28,7 @@ public class GameSaveUI : MonoBehaviour
 
         _fileName.text = _gameSave.Name;
         _fileImage.sprite = ByteArrayToSprite(gameSave.Image);
-        _food.text = _gameSave.PlayerStats.CurrentFood + "/" + _gameSave.PlayerStats.MaxFood;
+        _food.text = _gameSave.PlayerStats.CurrentTimeLeft + "/" + _gameSave.PlayerStats.MaxTimeLeft;
         _timeAlive.text = _gameSave.PlayerStats.TimeAlive.ToString();
         _inventory.Init(_gameSave.SavedInventoryData);
     }

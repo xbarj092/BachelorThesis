@@ -23,7 +23,8 @@ public class UseableItemInteractions : ItemInteractions<UseableItem, UseableItem
                 {
                     if (gameObject.CompareTag(GlobalConstants.Tags.Item.ToString()) && _item.IsInteractable)
                     {
-                        player.PickupItem(gameObject, true);
+                        _item.PickUp();
+                        UGSAnalyticsManager.Instance.RecordItemPickedUp(_item.Stats.ItemType.ToString(), LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
                     }
                 }
             }
@@ -37,7 +38,8 @@ public class UseableItemInteractions : ItemInteractions<UseableItem, UseableItem
             return;
         }
 
-        player.PickupItem(gameObject, true);
+        _item.PickUp();
+        UGSAnalyticsManager.Instance.RecordItemPickedUp(_item.Stats.ItemType.ToString(), LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
     }
 
     private void HandlePlayerCollisionExit(Player player)

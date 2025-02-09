@@ -338,7 +338,7 @@ public class Kitten : MonoBehaviour
             collision.gameObject.TryGetComponent(out Player player) && !IsRunningAway)
         {
             UGSAnalyticsManager.Instance.RecordFoodStolen(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
-            player.EatFood(LocalDataStorage.Instance.PlayerData.PlayerStats);
+            player.EatFood(15);
             _currentTimeToLive = _timeToLive;
             IsRunningAway = true;
         }

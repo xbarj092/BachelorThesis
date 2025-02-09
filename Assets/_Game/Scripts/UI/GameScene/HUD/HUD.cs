@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,7 +5,7 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
-    [SerializeField] private List<Image> _foodUnits;
+    [SerializeField] private Image _foodLeft;
     [SerializeField] private List<ItemSlot> _itemSlots;
     [SerializeField] private TMP_Text _timer;
 
@@ -41,10 +40,7 @@ public class HUD : MonoBehaviour
 
     private void ChangeFoodAmount(PlayerStats playerStats)
     {
-        for (int i = 0; i < _foodUnits.Count; i++)
-        {
-            _foodUnits[i].gameObject.SetActive(i < playerStats.CurrentFood);
-        }
+        _foodLeft.fillAmount = (float)playerStats.CurrentTimeLeft / (float)playerStats.MaxTimeLeft;
     }
 
     private void ChangeInventoryItems(InventoryData inventoryData)

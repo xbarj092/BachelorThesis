@@ -103,7 +103,10 @@ public class Laser : UseableItem
     {
         if ((ItemType)item.ItemType == Stats.ItemType)
         {
-            ((SavedLaserItem)item).ApplyToItem(this);
+            if (item is SavedLaserItem laserItem)
+            {
+                laserItem.ApplyToItem(this);
+            }
         }
     }
 }

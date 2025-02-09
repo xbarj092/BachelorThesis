@@ -12,6 +12,7 @@ public abstract class Item<T, U> : MonoBehaviour
 
     protected StrategyFactory _strategyFactory = new();
 
+    public abstract void PickUp();
     public abstract void SaveItem();
     public abstract void LoadItem(U item);
 }

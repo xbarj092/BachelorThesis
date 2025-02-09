@@ -259,7 +259,7 @@ public class PlayerInteraction : MonoBehaviour
                 return;
             }
 
-            _player.PickupItem(_carryingItem.gameObject);
+            _carryingItem.PickUp();
         }
 
         if (_carryingItem is Laser laser)

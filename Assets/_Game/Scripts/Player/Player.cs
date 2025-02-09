@@ -18,6 +18,11 @@ public class Player : MonoBehaviour
         _spriteRenderer.sprite = _characterSprites[LocalDataStorage.Instance.PlayerData.PlayerStats.SpriteIndex];
     }
 
+    private void Start()
+    {
+        InvokeRepeating(nameof(DepleteFood), 1, 1);
+    }
+
     private void OnEnable()
     {
         DataEvents.OnDataSaved += SaveData;
@@ -26,11 +31,6 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         DataEvents.OnDataSaved -= SaveData;
-    }
-
-    private void Update()
-    {
-        DepleteFood();
     }
 
     private void FixedUpdate()
@@ -70,59 +70,6 @@ public class Player : MonoBehaviour
         _moveInput = inputValue.Get<Vector2>();
     }
 
-    public void PickupItem(GameObject gameObject, bool recordNewItemPickup = false)
-    {
-        if (gameObject.TryGetComponent(out UseableItem item))
-        {
-            if (item.Dropped)
-            {
-                return;
-            }
-
-            InventoryData inventoryData = LocalDataStorage.Instance.PlayerData.InventoryData;
-            for (int i = 0; i < inventoryData.ItemsInInventory.Count; i++)
-            {
-                if (inventoryData.ItemsInInventory[i] == null)
-                {
-                    if (inventoryData.IsInventoryEmpty())
-                    {
-                        inventoryData.CurrentHighlightIndex = 0;
-                    }
-
-                    inventoryData.ItemsInInventory[i] = item;
-                    item.PickUp();
-                    if (recordNewItemPickup)
-                    {
-                        UGSAnalyticsManager.Instance.RecordItemPickedUp(item.Stats.ItemType.ToString(), LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
-                    }
-                    LocalDataStorage.Instance.PlayerData.InventoryData = inventoryData;
-                    break;
-                }
-            }
-        }
-    }
-
-    public void PickupFood(GameObject foodObject)
-    {
-        PlayerStats stats = LocalDataStorage.Instance.PlayerData.PlayerStats;
-        int secondsAdded;
-        if (stats.CurrentFood < stats.MaxFood)
-        {
-            stats.CurrentFood++;
-            secondsAdded = Mathf.RoundToInt(stats.TimeToEatFood);
-        }
-        else
-        {
-            secondsAdded = Mathf.RoundToInt(stats.CurrentTimeToEatFood);
-            stats.CurrentTimeToEatFood = stats.TimeToEatFood;
-        }
-        LocalDataStorage.Instance.PlayerData.PlayerStats = stats;
-
-        UGSAnalyticsManager.Instance.RecordFoodPickedUp(stats.TimeAlive, secondsAdded);
-
-        Destroy(foodObject);
-    }
-
     private void DepleteFood()
     {
         if (!GameManager.Instance.MapInitialized)
@@ -131,22 +78,16 @@ public class Player : MonoBehaviour
         }
 
         PlayerStats stats = LocalDataStorage.Instance.PlayerData.PlayerStats;
-        stats.CurrentTimeToEatFood -= Time.deltaTime;
-
-        if (stats.CurrentTimeToEatFood <= 0)
-        {
-            EatFood(stats);
-            stats.CurrentTimeToEatFood = stats.TimeToEatFood;
-        }
-
+        stats.CurrentTimeLeft--;
         LocalDataStorage.Instance.PlayerData.PlayerStats = stats;
     }
 
-    public void EatFood(PlayerStats stats)
+    public void EatFood(int timeStolen)
     {
-        if (stats.CurrentFood > 1)
+        PlayerStats stats = LocalDataStorage.Instance.PlayerData.PlayerStats;
+        if (stats.CurrentTimeLeft - timeStolen > 0)
         {
-            stats.CurrentFood -= 1;
+            stats.CurrentTimeLeft -= timeStolen;
             LocalDataStorage.Instance.PlayerData.PlayerStats = stats;
         }
         else

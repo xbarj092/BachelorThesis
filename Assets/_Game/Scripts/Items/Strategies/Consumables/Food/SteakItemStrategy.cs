@@ -1,4 +1,4 @@
-public class FishItemStrategy : ConsumableItemStrategy
+public class SteakItemStrategy : FoodItemStrategy
 {
     public override void PickUp(ConsumableItem item)
     {
