@@ -15,6 +15,6 @@ public class PotionItemStrategy : ConsumableItemStrategy
         }
 
         LocalDataStorage.Instance.PlayerData.PlayerStats = playerStats;
-        item.gameObject.SetActive(false);
+        base.PickUp(item);
     }
 }

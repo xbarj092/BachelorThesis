@@ -20,6 +20,12 @@ public static class DataEvents
         OnSavedInventoryDataChanged?.Invoke(savedInventoryData);
     }
 
+    public static event Action<UnlockedCollectibleData> OnUnlockedCollectibleDataChanged;
+    public static void OnUnlockedCollectibleDataChangedInvoke(UnlockedCollectibleData unlockedCollectibleData)
+    {
+        OnUnlockedCollectibleDataChanged?.Invoke(unlockedCollectibleData);
+    }
+
     public static event Action<GameSeeds> OnGameSeedsChanged;
     public static void OnGameSeedsChangedInvoke(GameSeeds gameSeeds)
     {

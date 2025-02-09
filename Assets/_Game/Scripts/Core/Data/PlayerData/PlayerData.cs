@@ -46,4 +46,15 @@ public class PlayerData
             DataEvents.OnSavedInventoryDataChangedInvoke(_savedInventoryData);
         }
     }
+
+    [SerializeField] private UnlockedCollectibleData _unlockedCollectibleData = new();
+    public UnlockedCollectibleData UnlockedCollectibleData
+    {
+        get => _unlockedCollectibleData;
+        set
+        {
+            _unlockedCollectibleData = value;
+            DataEvents.OnUnlockedCollectibleDataChangedInvoke(_unlockedCollectibleData);
+        }
+    }
 }

@@ -227,7 +227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 4899983424645015507}
   _title: {fileID: 5150735314930769617}
-  _locked: {fileID: 0}
+  _grayScaleMat: {fileID: 2100000, guid: fe0217978a874b148a444e09d2bc37eb, type: 2}
 --- !u!114 &7262797930276886992
 MonoBehaviour:
   m_ObjectHideFlags: 0

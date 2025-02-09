@@ -8,6 +8,7 @@ public class PlayerPrefsWrapper
     private const string KEY_PLAYER_ID = "PlayerID";
     private const string KEY_PLAYER_NAME = "PlayerName";
     private const string KEY_BINDING = "Binding";
+    private const string KEY_UNLOCKED_COLLECTIBLES = "Collectibles";
 
     public void SavePlayerId(string playerId)
     {
@@ -47,5 +48,20 @@ public class PlayerPrefsWrapper
     public string LoadActionBinding()
     {
         return _playerPrefsHandler.LoadData<string>(KEY_BINDING);
+    }
+
+    public void SaveCollectibles(UnlockedCollectibleData collectibles)
+    {
+        _playerPrefsHandler.SaveData(KEY_UNLOCKED_COLLECTIBLES, collectibles);
+    }
+
+    public UnlockedCollectibleData LoadCollectibles()
+    {
+        return _playerPrefsHandler.LoadData<UnlockedCollectibleData>(KEY_UNLOCKED_COLLECTIBLES);
+    }
+
+    public void DeleteCollectibles()
+    {
+        _playerPrefsHandler.DeleteData(KEY_UNLOCKED_COLLECTIBLES);
     }
 }

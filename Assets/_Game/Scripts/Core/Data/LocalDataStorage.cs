@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class LocalDataStorage : MonoSingleton<LocalDataStorage>
 {
-    [field: SerializeField] public PlayerData PlayerData;
-    [field: SerializeField] public GameData GameData;
-    [field: SerializeField] public PlayerPrefsWrapper PlayerPrefs;
+    public PlayerData PlayerData;
+    public GameData GameData;
+    public PlayerPrefsWrapper PlayerPrefs;
 
     private DataSaver _dataSaver = new();
     private DataLoader _dataLoader = new();
@@ -15,6 +15,11 @@ public class LocalDataStorage : MonoSingleton<LocalDataStorage>
     private void Awake()
     {
         InitPlayerData(false);
+        UnlockedCollectibleData data = PlayerPrefs.LoadCollectibles();
+        if (data != null)
+        {
+            PlayerData.UnlockedCollectibleData = data;
+        }
     }
 
     public void InitPlayerData(bool loaded)

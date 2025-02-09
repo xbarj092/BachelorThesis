@@ -54,8 +54,9 @@ public class Kitten : Enemy
 
     private FocusTargetType _currentFocusType;
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         Vector3 currentPosition = transform.position;
         _movementDirection = (currentPosition - _lastPosition).normalized;
         _lastPosition = currentPosition;

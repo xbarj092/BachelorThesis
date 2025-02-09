@@ -7,9 +7,9 @@ public class CollectibleSlot : MonoBehaviour
 {
     [SerializeField] private Image _sprite;
     [SerializeField] private TMP_Text _title;
-    [SerializeField] private GameObject _locked;
 
     private ICollectible _collectible;
+    private bool _hasCollectible;
 
     public event Action<ICollectible> OnHighlight;
     public event Action OnUnhighlight;
@@ -19,16 +19,30 @@ public class CollectibleSlot : MonoBehaviour
         _collectible = collectible;
 
         _sprite.sprite = _collectible.Sprite;
-        _title.text = _collectible.Title;
+        _hasCollectible = LocalDataStorage.Instance.PlayerData.UnlockedCollectibleData.HasItem(_collectible);
+        if (!_hasCollectible)
+        {
+            _sprite.color = Color.black;
+        }
+        else
+        {
+            _title.text = _collectible.Title;
+        }
     }
 
     public void Highlight()
     {
-        OnHighlight?.Invoke(_collectible);
+        if (_hasCollectible)
+        {
+            OnHighlight?.Invoke(_collectible);
+        }
     }
 
     public void Unhighlight()
     {
-        OnUnhighlight?.Invoke();
+        if (_hasCollectible)
+        {
+            OnUnhighlight?.Invoke();
+        }
     }
 }

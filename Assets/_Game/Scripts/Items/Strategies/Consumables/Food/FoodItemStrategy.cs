@@ -20,6 +20,6 @@ public class FoodItemStrategy : ConsumableItemStrategy
 
         LocalDataStorage.Instance.PlayerData.PlayerStats = stats;
         UGSAnalyticsManager.Instance.RecordFoodPickedUp(stats.TimeAlive, secondsAdded);
-        item.gameObject.SetActive(false);
+        base.PickUp(item);
     }
 }

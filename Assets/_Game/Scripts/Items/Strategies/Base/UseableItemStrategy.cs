@@ -21,6 +21,7 @@ public abstract class UseableItemStrategy : StrategyBase<UseableItem, UseableIte
                     inventoryData.CurrentHighlightIndex = 0;
                 }
 
+                LocalDataStorage.Instance.PlayerData.UnlockedCollectibleData.AddUseable(item.Stats);
                 inventoryData.ItemsInInventory[i] = item;
                 LocalDataStorage.Instance.PlayerData.InventoryData = inventoryData;
                 break;
