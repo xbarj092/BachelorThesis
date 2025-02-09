@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
+    [SerializeField] private StatusEffects _statusEffects;
     [SerializeField] private Image _foodLeft;
     [SerializeField] private List<ItemSlot> _itemSlots;
     [SerializeField] private TMP_Text _timer;
@@ -18,7 +19,7 @@ public class HUD : MonoBehaviour
 
     private void OnEnable()
     {
-        DataEvents.OnPlayerStatsChanged += ChangeFoodAmount;
+        DataEvents.OnPlayerStatsChanged += OnPlayerStatsChanged;
         DataEvents.OnInventoryDataChanged += ChangeInventoryItems;
 
         if (_itemSlots.Count > 0)
@@ -29,7 +30,7 @@ public class HUD : MonoBehaviour
 
     private void OnDisable()
     {
-        DataEvents.OnPlayerStatsChanged -= ChangeFoodAmount;
+        DataEvents.OnPlayerStatsChanged -= OnPlayerStatsChanged;
         DataEvents.OnInventoryDataChanged -= ChangeInventoryItems;
     }
 
@@ -38,9 +39,10 @@ public class HUD : MonoBehaviour
         _timer.text = TimeUtils.GetFormattedTimeFromSeconds(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive++);
     }
 
-    private void ChangeFoodAmount(PlayerStats playerStats)
+    private void OnPlayerStatsChanged(PlayerStats playerStats)
     {
         _foodLeft.fillAmount = (float)playerStats.CurrentTimeLeft / (float)playerStats.MaxTimeLeft;
+        _statusEffects.HandleStatusEffects(playerStats);
     }
 
     private void ChangeInventoryItems(InventoryData inventoryData)

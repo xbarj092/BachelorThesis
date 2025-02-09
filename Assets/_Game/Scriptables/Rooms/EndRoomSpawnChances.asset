@@ -30,3 +30,5 @@ MonoBehaviour:
     _serializedList:
     - Key: 1
       Value: 0.5
+    - Key: 3
+      Value: 0.5

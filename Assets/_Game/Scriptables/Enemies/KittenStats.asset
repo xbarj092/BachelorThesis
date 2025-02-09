@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6321dc8e8a8cfcd4fa87bb627ce3553b, type: 3}
+  m_Name: KittenStats
+  m_EditorClassIdentifier: 
+  Sprite: {fileID: 21300000, guid: dd079a4152f072e4c8854bb38de9892e, type: 3}
+  StealAmount: 15
+  Description: Kitten, mates a lot, dont let them overpopulate

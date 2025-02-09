@@ -236,6 +236,8 @@ MonoBehaviour:
       Value: {fileID: 954903894178867638, guid: 2a6bcc7737a10dc4394137630082a807, type: 3}
     - Key: 2
       Value: {fileID: 2242458297373148142, guid: 63d5a82f66fd6f147a191978486750cc, type: 3}
+    - Key: 3
+      Value: {fileID: 1913867062892782376, guid: 3d3e90bd186788841841dafc3d7d1a28, type: 3}
   SpawnedItems: []
   SavedItems: []
   SpawnedConsumables: []

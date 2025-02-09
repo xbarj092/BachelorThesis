@@ -53,7 +53,9 @@ public class FocusedState : BaseState
             return runningAwayState;
         }
 
-        if (_targetLost && _brain.GetState(StateType.Idle, out BaseState idleState))
+        if ((_currentTarget != null && _currentTarget.CompareTag(GlobalConstants.Tags.Player.ToString()) && 
+            LocalDataStorage.Instance.PlayerData.PlayerStats.IsInvisible ||
+            _targetLost) && _brain.GetState(StateType.Idle, out BaseState idleState))
         {
             return idleState;
         }

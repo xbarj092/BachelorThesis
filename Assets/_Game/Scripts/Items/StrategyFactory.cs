@@ -20,7 +20,7 @@ public class StrategyFactory
         {
             ConsumableType.Fish => new FishItemStrategy(),
             ConsumableType.Steak => new SteakItemStrategy(),
-            ConsumableType.Potion => new PotionItemStrategy(),
+            ConsumableType.InvisibilityPotion => new PotionItemStrategy(),
             _ => null,
         };
     }

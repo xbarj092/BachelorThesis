@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Kitten : MonoBehaviour
+public class Kitten : Enemy
 {
     [SerializeField] private StateMachineBrain _stateMachineBrain;
 
@@ -12,7 +12,6 @@ public class Kitten : MonoBehaviour
     private float _currentTimeToLive;
 
     [Header("Death Settings")]
-    [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] private Sprite _deadSprite;
     [SerializeField] private Sprite _defaultSprite;
     [SerializeField] private Sprite _focusedSprite;
@@ -231,7 +230,7 @@ public class Kitten : MonoBehaviour
             return FocusTargetType.Mouse;
         }
 
-        if (target.CompareTag(GlobalConstants.Tags.Player.ToString()))
+        if (target.CompareTag(GlobalConstants.Tags.Player.ToString()) && !LocalDataStorage.Instance.PlayerData.PlayerStats.IsInvisible)
         {
             return FocusTargetType.Player;
         }
@@ -304,7 +303,7 @@ public class Kitten : MonoBehaviour
 
     public void FocusOnPlayer()
     {
-        if (IsTrapped)
+        if (IsTrapped || LocalDataStorage.Instance.PlayerData.PlayerStats.IsInvisible)
         {
             return;
         }
@@ -338,7 +337,7 @@ public class Kitten : MonoBehaviour
             collision.gameObject.TryGetComponent(out Player player) && !IsRunningAway)
         {
             UGSAnalyticsManager.Instance.RecordFoodStolen(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
-            player.EatFood(15);
+            player.EatFood(_stats.StealAmount);
             _currentTimeToLive = _timeToLive;
             IsRunningAway = true;
         }
@@ -363,7 +362,7 @@ public class Kitten : MonoBehaviour
     public void IsInRange(bool inRange)
     {
         IsInRangeOfPlayer = inRange;
-        if (inRange && IsHigherPriority(FocusTargetType.Player, _currentFocusType))
+        if (inRange && IsHigherPriority(FocusTargetType.Player, _currentFocusType) && !LocalDataStorage.Instance.PlayerData.PlayerStats.IsInvisible)
         {
             _currentTarget = _playerTransform;
             _currentFocusType = FocusTargetType.Player;

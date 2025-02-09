@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +10,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private List<Sprite> _characterSprites;
 
+    private bool _invincible;
     private Vector2 _moveInput;
 
     private void Awake()
