@@ -8,26 +8,10 @@ public class SavedItem
     public int ItemType;
     public int UID;
 
-    public bool Dropped;
-    public bool Used;
-    public bool Enabled;
-
-    public SavedItem(TransformData itemTransform, int itemType, int uid, bool dropped, bool used, bool enabled)
+    public SavedItem(TransformData itemTransform, int itemType, int uID)
     {
         ItemTransform = itemTransform;
         ItemType = itemType;
-        UID = uid;
-        Dropped = dropped;
-        Used = used;
-        Enabled = enabled;
-    }
-
-    public virtual void ApplyToItem(UseableItem item)
-    {
-        ItemTransform.ApplyToTransform(item.transform);
-        item.UID = UID;
-        item.Dropped = Dropped;
-        item.Used = Used;
-        item.gameObject.SetActive(Enabled);
+        UID = uID;
     }
 }

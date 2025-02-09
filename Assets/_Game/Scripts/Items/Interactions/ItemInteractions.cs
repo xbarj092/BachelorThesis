@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public abstract class ItemInteractions<T, U> : MonoBehaviour 
-    where T : Item<U> 
+public abstract class ItemInteractions<T, U, V> : MonoBehaviour 
+    where T : Item<U, V> 
     where U : ItemBaseSO
+    where V : SavedItem
 {
     [SerializeField] protected CircleCollider2D _collider;
     [SerializeField] protected T _item;

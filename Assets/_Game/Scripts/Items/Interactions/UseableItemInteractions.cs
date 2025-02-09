@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UseableItemInteractions : ItemInteractions<UseableItem, UseableItemSO>
+public class UseableItemInteractions : ItemInteractions<UseableItem, UseableItemSO, SavedUseableItem>
 {
     private void OnEnable()
     {

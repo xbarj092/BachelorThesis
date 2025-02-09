@@ -36,6 +36,6 @@ public class InventoryData
 [Serializable]
 public class SavedInventoryData
 {
-    public List<SavedItem> SavedItems;
+    public List<SavedUseableItem> SavedItems;
     public int CurrentHighlightIndex;
 }

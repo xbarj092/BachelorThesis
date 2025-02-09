@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c2528613946ed4a8795e1a27ab046a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _items:
+  _useableItems:
     _serializedList:
     - Key: 1
       Value: {fileID: 3199732880389946512, guid: 8af717ca600c28943bcd74ce097d6a89, type: 3}
@@ -230,8 +230,16 @@ MonoBehaviour:
       Value: {fileID: 3013150036535382391, guid: 2050bf487a5895a4cab4e2bf988feb8f, type: 3}
     - Key: 6
       Value: {fileID: 5906434041033461365, guid: b509a83eb2b369e4db9b2823e7ed224a, type: 3}
+  _consumableItems:
+    _serializedList:
+    - Key: 1
+      Value: {fileID: 954903894178867638, guid: 2a6bcc7737a10dc4394137630082a807, type: 3}
+    - Key: 2
+      Value: {fileID: 0}
   SpawnedItems: []
   SavedItems: []
+  SpawnedConsumables: []
+  SavedConsumables: []
 --- !u!1 &6546885819914672363
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,4 +377,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72d2ac19754d7e44b9bdc21a11b1d34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ActiveGameScreen>k__BackingField: {fileID: 0}
+  ActiveGameScreen: {fileID: 0}

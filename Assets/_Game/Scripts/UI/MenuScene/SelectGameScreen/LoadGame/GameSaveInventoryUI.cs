@@ -9,7 +9,7 @@ public class GameSaveInventoryUI : MonoBehaviour
 
     public void Init(SavedInventoryData savedInventoryData)
     {
-        foreach (SavedItem item in savedInventoryData.SavedItems)
+        foreach (SavedUseableItem item in savedInventoryData.SavedItems)
         {
             Image image = Instantiate(_inventoryIconPrefab, transform);
             image.sprite = _itemSprites[(ItemType)item.ItemType];

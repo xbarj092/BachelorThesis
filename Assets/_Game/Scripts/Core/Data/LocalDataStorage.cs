@@ -30,7 +30,7 @@ public class LocalDataStorage : MonoSingleton<LocalDataStorage>
             PlayerData.InventoryData = new(new List<UseableItem> { null, null, null, null, null, null });
 
             InventoryData inventoryData = PlayerData.InventoryData;
-            foreach (SavedItem item in PlayerData.SavedInventoryData.SavedItems)
+            foreach (SavedUseableItem item in PlayerData.SavedInventoryData.SavedItems)
             {
                 UseableItem inventoryItem = ItemManager.Instance.GetItemWithUID(item.UID);
                 if (inventoryItem != null)

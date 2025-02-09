@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class SavedLaserItem : SavedItem
+public class SavedLaserItem : SavedUseableItem
 {
     public float Battery;
 

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public abstract class UseableItem : Item<UseableItemSO>
+public abstract class UseableItem : Item<UseableItemSO, SavedUseableItem>
 {
     [SerializeField] protected SpriteRenderer _spriteRenderer;
 
@@ -17,8 +17,6 @@ public abstract class UseableItem : Item<UseableItemSO>
     public bool Highlighting;
     public bool Dropped;
     public bool Used;
-
-    public int UID;
 
     private void OnItemInRangeInvoke()
     {
@@ -106,7 +104,7 @@ public abstract class UseableItem : Item<UseableItemSO>
         _pickedUp = pickedUp;
     }
 
-    public abstract void SaveItem();
+    public override abstract void SaveItem();
     public abstract void SaveInventoryItem();
-    public abstract void LoadItem(SavedItem item);
+    public override abstract void LoadItem(SavedUseableItem item);
 }

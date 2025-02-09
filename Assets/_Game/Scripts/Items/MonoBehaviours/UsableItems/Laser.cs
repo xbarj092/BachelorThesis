@@ -99,7 +99,7 @@ public class Laser : UseableItem
         LocalDataStorage.Instance.PlayerData.SavedInventoryData.SavedItems.Add(savedItem);
     }
 
-    public override void LoadItem(SavedItem item)
+    public override void LoadItem(SavedUseableItem item)
     {
         if ((ItemType)item.ItemType == Stats.ItemType)
         {

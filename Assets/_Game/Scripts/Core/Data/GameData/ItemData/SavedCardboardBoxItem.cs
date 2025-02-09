@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class SavedCardboardBoxItem : SavedItem
+public class SavedCardboardBoxItem : SavedUseableItem
 {
     public bool HasKitten;
 

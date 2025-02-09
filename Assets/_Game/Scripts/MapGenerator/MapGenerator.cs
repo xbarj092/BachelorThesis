@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +12,6 @@ namespace MapGenerator
         [Space]
         [SerializeField] private GameObject _hallwayPrefab;
         [SerializeField] private GameObject _hallwayFloorPrefab;
-        [Space]
-        [SerializeField] private GameObject _foodPrefab;
 
         [Header("Map Parameters")]
         [SerializeField] private int _dungeonSizeX;
@@ -59,24 +56,6 @@ namespace MapGenerator
             DataEvents.OnDataSaved -= SaveData;
         }
 
-        private void LoadTransforms(List<TransformData> transforms, Transform spawnTransform, GameObject prefab)
-        {
-            foreach (TransformData transform in transforms)
-            {
-                GameObject gameObject = Instantiate(prefab, spawnTransform);
-                transform.ApplyToTransform(gameObject.transform);
-            }
-        }
-
-        private void LoadTransforms(List<TransformData> roomFloorTransforms, Transform roomFloorLayoutSpawnTransform, Room _roomPrefab)
-        {
-            foreach (TransformData transform in roomFloorTransforms)
-            {
-                Room room = Instantiate(_roomPrefab, roomFloorLayoutSpawnTransform);
-                transform.ApplyToTransform(room.transform);
-            }
-        }
-
         private void SaveData()
         {
             SaveFoodLayout();
@@ -117,7 +96,6 @@ namespace MapGenerator
                 yield return SpawnMap();
 
                 GameData gameData = LocalDataStorage.Instance.GameData;
-                LoadTransforms(gameData.FoodData.FoodTransforms, FoodSpawnTransform, _foodPrefab);
                 LoadItems();
                 LoadKittens();
             }
@@ -139,6 +117,11 @@ namespace MapGenerator
             foreach (UseableItem item in ItemManager.Instance.SpawnedItems)
             {
                 item.transform.SetParent(ItemSpawnTransform);
+            }
+
+            foreach (ConsumableItem item in ItemManager.Instance.SpawnedConsumables)
+            {
+                item.transform.SetParent(FoodSpawnTransform);
             }
         }
 
