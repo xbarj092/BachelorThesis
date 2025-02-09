@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62f30a22896512841958681b14b29236, type: 3}
   m_Name: Laser
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: 33c649978d0f0e74cbafd1ad4e2913e6, type: 3}
-  Description: Laser gets kittens attention
+  <Title>k__BackingField: Laser pointer
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 33c649978d0f0e74cbafd1ad4e2913e6, type: 3}
+  <Description>k__BackingField: Catches kittens attention
   ItemType: 1
   Battery: 3

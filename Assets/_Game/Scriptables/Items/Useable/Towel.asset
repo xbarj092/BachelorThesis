@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f12f0de80f0a243b1dabda40fa5000, type: 3}
   m_Name: Towel
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: 73446fcc8f218924daf2215bb43fb698, type: 3}
-  Description: Cardboard box used to trap kittens
+  <Title>k__BackingField: Towel
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 73446fcc8f218924daf2215bb43fb698, type: 3}
+  <Description>k__BackingField: Used to wrap kittens in burritos, immobilizes for
+    a while, but then kittens free themselves
   ItemType: 4

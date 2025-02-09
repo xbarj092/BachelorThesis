@@ -1,9 +1,10 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemyStats", menuName = "EnemyStats", order = 0)]
-public class EnemyStats : ScriptableObject
+public class EnemyStats : ScriptableObject, ICollectible
 {
-    public Sprite Sprite;
-    public int StealAmount;
-    public string Description;
+    [field: SerializeField] public string Title { get; set; }
+    [field: SerializeField] public Sprite Sprite { get; set; }
+    [field: SerializeField] public int StealAmount { get; set; }
+    [field: SerializeField] public string Description { get; set; }
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f12f0de80f0a243b1dabda40fa5000, type: 3}
   m_Name: Mouse
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: 677551a6d78258a489fd1aa6d7ebc9ff, type: 3}
-  Description: Cardboard box used to trap kittens
+  <Title>k__BackingField: Wind-up mouse
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 677551a6d78258a489fd1aa6d7ebc9ff, type: 3}
+  <Description>k__BackingField: Catches kittens attention and lures them away
   ItemType: 2

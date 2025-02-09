@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4514da2ad8fd4d44bbade86cbab01b85, type: 3}
   m_Name: InvisibilityPotion
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: b30a6cac727296d4c83ab84e28f190b9, type: 3}
-  Description: Potion that grants its consumer invisibility
+  <Title>k__BackingField: Invisibility potion
+  <Sprite>k__BackingField: {fileID: 21300000, guid: b30a6cac727296d4c83ab84e28f190b9, type: 3}
+  <Description>k__BackingField: Makes you disappear
   ConsumableType: 3
   Duration: 10

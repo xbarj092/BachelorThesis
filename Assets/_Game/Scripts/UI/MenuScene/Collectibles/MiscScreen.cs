@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class MiscScreen : CollectibleGameScreen
+public class MiscScreen : CollectibleGameScreen<ICollectible>
 {
 
 }

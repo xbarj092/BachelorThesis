@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class ItemBaseSO : ScriptableObject
+public class ItemBaseSO : ScriptableObject, ICollectible
 {
-    public Sprite Sprite;
-    public string Description;
+    [field: SerializeField] public string Title { get; set; }
+    [field: SerializeField] public Sprite Sprite { get; set; }
+    [field: SerializeField] public string Description { get; set; }
 }

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da5f32ea6c23f54eba04072193b7bf6, type: 3}
   m_Name: SmallFish
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 0}
-  Description: Small fish that barely fills your stomach
-  ConsumableType: 1
+  <Title>k__BackingField: Small fish
+  <Sprite>k__BackingField: {fileID: 0}
+  <Description>k__BackingField: Barely fills your stomach
+  ConsumableType: 2
   ReplenishAmount: 5

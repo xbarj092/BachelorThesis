@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &317065148009823925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3353407925411613393}
+  - component: {fileID: 214646139192551674}
+  m_Layer: 5
+  m_Name: Slots
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3353407925411613393
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317065148009823925}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2491354461586516627}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -225, y: 0}
+  m_SizeDelta: {x: -750, y: -400}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &214646139192551674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317065148009823925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 150, y: 150}
+  m_Spacing: {x: 25, y: 25}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &2568249111683628316
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,6 +92,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7219758071276708522}
+  - {fileID: 3353407925411613393}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -90,6 +151,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameScreenType: 15
+  _collectibles:
+  - {fileID: 11400000, guid: cf303edf92787a548a8fd35120fde75c, type: 2}
+  - {fileID: 11400000, guid: df327d431d26b7a498bcb723b5b8c33f, type: 2}
+  - {fileID: 11400000, guid: 7c77ad07ce6444b439d34f1514060685, type: 2}
+  - {fileID: 11400000, guid: 8d1b1961857713b46bf45c648b30039d, type: 2}
+  - {fileID: 11400000, guid: f393d8f15e7698146b12b2f1df819e77, type: 2}
+  - {fileID: 11400000, guid: 1e85ffc3547d9f24cafeeee85f4a4a1b, type: 2}
+  _collectibleSlotPrefab: {fileID: 6593746491088634011, guid: b433c9452b72c38438905f4c5b8fd083, type: 3}
+  _spawnTransform: {fileID: 3353407925411613393}
 --- !u!1001 &8362986065385604763
 PrefabInstance:
   m_ObjectHideFlags: 0

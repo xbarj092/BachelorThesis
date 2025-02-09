@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemiesScreen : CollectibleGameScreen
+public class EnemiesScreen : CollectibleGameScreen<EnemyStats>
 {
-    
 }
