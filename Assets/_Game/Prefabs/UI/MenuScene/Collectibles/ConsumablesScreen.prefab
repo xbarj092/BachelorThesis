@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9056884048037372049}
   - component: {fileID: 8659507552835181627}
   m_Layer: 5
-  m_Name: FoodScreen
+  m_Name: ConsumablesScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

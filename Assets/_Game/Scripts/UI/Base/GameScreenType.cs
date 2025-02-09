@@ -17,6 +17,6 @@ public enum GameScreenType
     Collectibles = 14,
     Items = 15,
     Enemies = 16,
-    Food = 17,
+    Consumables = 17,
     Misc = 18,
 }

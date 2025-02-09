@@ -121,8 +121,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2357604104763017389}
-  - {fileID: 3095332107119069478}
   - {fileID: 1395082949024313958}
+  - {fileID: 3095332107119069478}
   - {fileID: 3095067355742388689}
   m_Father: {fileID: 3178142657391339842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -171,7 +171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6584961228283351448, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}
       propertyPath: m_Name
-      value: ItemsButton
+      value: UseablesButton
       objectReference: {fileID: 0}
     - target: {fileID: 7209905551203947295, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}
       propertyPath: m_Pivot.x
@@ -651,11 +651,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1781580194978860946, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}
       propertyPath: m_text
-      value: FOOD
+      value: CONSUMABLES
       objectReference: {fileID: 0}
     - target: {fileID: 6584961228283351448, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}
       propertyPath: m_Name
-      value: FoodButton
+      value: ConsumablesButton
       objectReference: {fileID: 0}
     - target: {fileID: 7209905551203947295, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}
       propertyPath: m_Pivot.x
@@ -683,7 +683,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7209905551203947295, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 300
+      value: 550
       objectReference: {fileID: 0}
     - target: {fileID: 7209905551203947295, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}
       propertyPath: m_SizeDelta.y
@@ -743,7 +743,7 @@ PrefabInstance:
       objectReference: {fileID: 7655511618586246004}
     - target: {fileID: 7347756210984329784, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Food
+      value: Consumables
       objectReference: {fileID: 0}
     - target: {fileID: 7347756210984329784, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

@@ -6,16 +6,16 @@ public class CollectiblesScreen : BaseScreen
         ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.Items);
     }
 
+    public void Consumables()
+    {
+        Destroy(gameObject);
+        ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.Consumables);
+    }
+
     public void Enemies()
     {
         Destroy(gameObject);
         ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.Enemies);
-    }
-
-    public void Food()
-    {
-        Destroy(gameObject);
-        ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.Food);
     }
 
     public void Misc()

@@ -16,7 +16,7 @@ public class MenuCanvasController : BaseCanvasController
     [SerializeField] private CollectiblesScreen _collectiblesScreen;
     [SerializeField] private ItemsScreen _itemsScreen;
     [SerializeField] private EnemiesScreen _enemiesScreen;
-    [SerializeField] private FoodScreen _foodScreen;
+    [SerializeField] private ConsumablesScreen _foodScreen;
     [SerializeField] private MiscScreen _miscScreen;
 
     private void Awake()
@@ -50,7 +50,7 @@ public class MenuCanvasController : BaseCanvasController
             GameScreenType.Collectibles => Instantiate(_collectiblesScreen, transform),
             GameScreenType.Items => Instantiate(_itemsScreen, transform),
             GameScreenType.Enemies => Instantiate(_enemiesScreen, transform),
-            GameScreenType.Food => Instantiate(_foodScreen, transform),
+            GameScreenType.Consumables => Instantiate(_foodScreen, transform),
             GameScreenType.Misc => Instantiate(_miscScreen, transform),
             _ => base.GetRelevantScreen(gameScreenType),
         };
@@ -72,7 +72,7 @@ public class MenuCanvasController : BaseCanvasController
             GameScreenType.Collectibles => GameScreenType.MenuMain,
             GameScreenType.Items => GameScreenType.Collectibles,
             GameScreenType.Enemies => GameScreenType.Collectibles,
-            GameScreenType.Food => GameScreenType.Collectibles,
+            GameScreenType.Consumables => GameScreenType.Collectibles,
             GameScreenType.Misc => GameScreenType.Collectibles,
             _ => base.GetActiveGameScreen(gameScreenType),
         };
