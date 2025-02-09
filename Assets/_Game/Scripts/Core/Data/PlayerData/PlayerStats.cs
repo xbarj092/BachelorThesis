@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class PlayerStats
@@ -10,9 +11,7 @@ public class PlayerStats
     public int CurrentTimeLeft;
     public int MaxTimeLeft;
 
-    public bool IsInvisible;
-    public int OriginalInvisibilityTimeLeft;
-    public int InvisibilityTimeLeft;
+    public List<StatusEffectData> StatusEffects = new();
 
     public PlayerStats(int spriteIndex, int timeAlive, int currentTimeLeft, int maxTimeLeft, bool isInvisible)
     {
@@ -20,6 +19,20 @@ public class PlayerStats
         TimeAlive = timeAlive;
         CurrentTimeLeft = currentTimeLeft;
         MaxTimeLeft = maxTimeLeft;
-        IsInvisible = isInvisible;
+    }
+}
+
+[Serializable]
+public class StatusEffectData
+{
+    public int Type;
+    public int OriginalTimeLeft;
+    public int CurrentTimeLeft;
+
+    public StatusEffectData(int type, int originalTimeLeft)
+    {
+        Type = type;
+        OriginalTimeLeft = originalTimeLeft;
+        CurrentTimeLeft = OriginalTimeLeft;
     }
 }

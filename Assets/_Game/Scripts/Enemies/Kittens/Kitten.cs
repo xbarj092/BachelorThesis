@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class Kitten : Enemy
@@ -230,7 +231,7 @@ public class Kitten : Enemy
             return FocusTargetType.Mouse;
         }
 
-        if (target.CompareTag(GlobalConstants.Tags.Player.ToString()) && !LocalDataStorage.Instance.PlayerData.PlayerStats.IsInvisible)
+        if (target.CompareTag(GlobalConstants.Tags.Player.ToString()) && !LocalDataStorage.Instance.PlayerData.PlayerStats.StatusEffects.Any(effect => effect.Type == (int)StatusEffectType.Invisibility))
         {
             return FocusTargetType.Player;
         }
@@ -303,7 +304,7 @@ public class Kitten : Enemy
 
     public void FocusOnPlayer()
     {
-        if (IsTrapped || LocalDataStorage.Instance.PlayerData.PlayerStats.IsInvisible)
+        if (IsTrapped || LocalDataStorage.Instance.PlayerData.PlayerStats.StatusEffects.Any(effect => effect.Type == (int)StatusEffectType.Invisibility))
         {
             return;
         }
@@ -362,7 +363,7 @@ public class Kitten : Enemy
     public void IsInRange(bool inRange)
     {
         IsInRangeOfPlayer = inRange;
-        if (inRange && IsHigherPriority(FocusTargetType.Player, _currentFocusType) && !LocalDataStorage.Instance.PlayerData.PlayerStats.IsInvisible)
+        if (inRange && IsHigherPriority(FocusTargetType.Player, _currentFocusType) && !LocalDataStorage.Instance.PlayerData.PlayerStats.StatusEffects.Any(effect => effect.Type == (int)StatusEffectType.Invisibility))
         {
             _currentTarget = _playerTransform;
             _currentFocusType = FocusTargetType.Player;

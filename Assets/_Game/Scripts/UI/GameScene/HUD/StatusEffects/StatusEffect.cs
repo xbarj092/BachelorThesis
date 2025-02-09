@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,35 +7,46 @@ public class StatusEffect : MonoBehaviour
     [SerializeField] private Image _effectImage;
     [SerializeField] private Image _fillImage;
 
-    public StatusEffectType Type;
+    public StatusEffectData EffectData;
 
     private void OnDisable()
     {
         CancelInvoke();
     }
 
-    public void Init(Sprite sprite, StatusEffectType type, int timeLeft)
+    public void Init(Sprite sprite, StatusEffectData effectData)
     {
-        Type = type;
+        EffectData = effectData;
 
         _effectImage.sprite = sprite;
         _fillImage.sprite = sprite;
 
-        InvokeRepeating(nameof(TimeOutInvincibility), 1, 1);
+        InvokeRepeating(nameof(TimeOutEffect), 1, 1);
     }
 
-    private void TimeOutInvincibility()
+    private void TimeOutEffect()
     {
         PlayerStats playerStats = LocalDataStorage.Instance.PlayerData.PlayerStats;
-        playerStats.InvisibilityTimeLeft--;
-        _fillImage.fillAmount = (float)playerStats.InvisibilityTimeLeft / (float)playerStats.OriginalInvisibilityTimeLeft;
+        StatusEffectData effectData = playerStats.StatusEffects.FirstOrDefault(effect => effect.Type == EffectData.Type);
 
-        if (playerStats.InvisibilityTimeLeft <= 0)
+        if (effectData != null)
         {
-            playerStats.IsInvisible = false;
-            Destroy(gameObject);
-        }
+            effectData.CurrentTimeLeft--;
+            _fillImage.fillAmount = (float)effectData.CurrentTimeLeft / (float)effectData.OriginalTimeLeft;
 
-        LocalDataStorage.Instance.PlayerData.PlayerStats = playerStats;
+            if (effectData.CurrentTimeLeft <= 0)
+            {
+                playerStats.StatusEffects.Remove(effectData);
+                Destroy(gameObject);
+            }
+
+            int index = playerStats.StatusEffects.FindIndex(effect => effect.Type == EffectData.Type);
+            if (index >= 0)
+            {
+                playerStats.StatusEffects[index] = effectData;
+            }
+
+            LocalDataStorage.Instance.PlayerData.PlayerStats = playerStats;
+        }
     }
 }

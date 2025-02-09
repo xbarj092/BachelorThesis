@@ -13,5 +13,9 @@ public abstract class ConsumableItem : Item<ConsumableItemSO, SavedConsumableIte
         _strategy.PickUp(this);
     }
 
-    public override abstract void SaveItem();
+    public override void SaveItem()
+    {
+        SavedConsumableItem savedItem = new(new(transform), (int)Stats.ConsumableType, UID, gameObject.activeInHierarchy);
+        LocalDataStorage.Instance.GameData.ItemData.SavedConsumables.Add(savedItem);
+    }
 }

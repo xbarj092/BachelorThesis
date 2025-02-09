@@ -12,18 +12,18 @@ public class StatusEffects : MonoBehaviour
 
     public void HandleStatusEffects(PlayerStats playerStats)
     {
-        if (playerStats.IsInvisible)
+        foreach (StatusEffectData effectData in playerStats.StatusEffects)
         {
-            ShowStatusEffect(StatusEffectType.Invisibility, playerStats.InvisibilityTimeLeft);
+            ShowStatusEffect(effectData);
         }
     }
 
-    private void ShowStatusEffect(StatusEffectType invisibility, int invisibilityTimeLeft)
+    private void ShowStatusEffect(StatusEffectData effectData)
     {
-        if (!_activeStatusEffects.Any(effect => effect.Type == invisibility))
+        if (!_activeStatusEffects.Any(effect => effect.EffectData.Type == effectData.Type))
         {
             StatusEffect effect = Instantiate(_statusEffectPrefab, transform);
-            effect.Init(_sprites[invisibility], invisibility, invisibilityTimeLeft);
+            effect.Init(_sprites[(StatusEffectType)effectData.Type], effectData);
             _activeStatusEffects.Add(effect);
         }
     }

@@ -1,5 +1,6 @@
 using MapGenerator;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -54,7 +55,7 @@ public class FocusedState : BaseState
         }
 
         if ((_currentTarget != null && _currentTarget.CompareTag(GlobalConstants.Tags.Player.ToString()) && 
-            LocalDataStorage.Instance.PlayerData.PlayerStats.IsInvisible ||
+            LocalDataStorage.Instance.PlayerData.PlayerStats.StatusEffects.Any(effect => effect.Type == (int)StatusEffectType.Invisibility) ||
             _targetLost) && _brain.GetState(StateType.Idle, out BaseState idleState))
         {
             return idleState;
