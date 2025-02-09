@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6779324534085097011, guid: 9f3ac364c7374344db69d3a4f025f6b0, type: 3}
       propertyPath: m_Name
-      value: Steak Variant
+      value: Steak
       objectReference: {fileID: 0}
     - target: {fileID: 8266860323416403039, guid: 9f3ac364c7374344db69d3a4f025f6b0, type: 3}
       propertyPath: _item
@@ -97,4 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0f5030b8834eed4fb24155de3bda51e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 8753572910618805403}
   <Stats>k__BackingField: {fileID: 11400000, guid: 25ac8717ad3e05744acf4a93a497bee3, type: 2}
+  UID: 0
+--- !u!212 &8753572910618805403 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8433046198676469834, guid: 9f3ac364c7374344db69d3a4f025f6b0, type: 3}
+  m_PrefabInstance: {fileID: 896993652289256657}
+  m_PrefabAsset: {fileID: 0}

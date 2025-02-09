@@ -5,4 +5,5 @@ using UnityEngine;
 public class ItemSpawnChance : ScriptableObject
 {
     public SerializedDictionary<ItemType, float> ItemSpawnChances = new();
+    public SerializedDictionary<ConsumableType, float> ConsumableSpawnChances = new();
 }

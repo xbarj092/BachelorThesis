@@ -1,23 +1,8 @@
 using UnityEngine;
 
-public class ClothespinItemStrategy : ItemStrategyBase
+public class CastrationKitItemStrategy : UseableItemStrategy
 {
     private Kitten _kitten;
-
-    private static DummyMonoBehaviour _coroutineMonoBehaviour;
-    private static DummyMonoBehaviour CoroutineMonoBehaviour
-    {
-        get
-        {
-            if (_coroutineMonoBehaviour == null)
-            {
-                GameObject loaderGameObject = new("Coroutine Game Object");
-                _coroutineMonoBehaviour = loaderGameObject.AddComponent<DummyMonoBehaviour>();
-            }
-
-            return _coroutineMonoBehaviour;
-        }
-    }
 
     public override bool CanUse(UseableItem item)
     {
@@ -25,7 +10,7 @@ public class ClothespinItemStrategy : ItemStrategyBase
         if (hit.collider != null)
         {
             Kitten kitten = hit.collider.GetComponentInParent<Kitten>();
-            if (kitten != null && !kitten.IsTrapped)
+            if (kitten != null && !kitten.IsCastrated)
             {
                 _kitten = kitten;
                 return true;
@@ -37,14 +22,15 @@ public class ClothespinItemStrategy : ItemStrategyBase
 
     public override void Use(UseableItem item)
     {
-        _kitten.Trap();
+        _kitten.IsCastrated = true;
+        _kitten.FocusOnPlayer();
         LocalDataStorage.Instance.PlayerData.InventoryData.RemoveItemFromInventory(item);
-        Debug.Log("[ClothespinItemStrategy] - Used clothespin!");
+        Debug.Log("[CastrationKitItemStrategy] - Used castration kit");
     }
 
     public override void PickUp(UseableItem item)
     {
         base.PickUp(item);
-        Debug.Log("[ClothespinItemStrategy] - Picked up clothespin!");
+        Debug.Log("[CastrationKitItemStrategy] - Picked up castration kit!");
     }
 }

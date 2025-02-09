@@ -1,6 +1,5 @@
-public interface IItemStrategy
+public interface IUseableStrategy
 {
     bool CanUse(UseableItem item);
     void Use(UseableItem item);
-    void PickUp(UseableItem item);
 }

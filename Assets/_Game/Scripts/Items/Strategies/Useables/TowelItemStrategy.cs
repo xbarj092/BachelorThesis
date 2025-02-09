@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class TowelItemStrategy : ItemStrategyBase
+public class TowelItemStrategy : UseableItemStrategy
 {
     private Kitten _kitten;
 

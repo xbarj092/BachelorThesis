@@ -1,13 +1,9 @@
 using UnityEngine;
 
-public abstract class ItemStrategyBase : IItemStrategy
+public abstract class UseableItemStrategy : StrategyBase<UseableItem, UseableItemSO, SavedUseableItem>, IUseableStrategy
 {
     public abstract bool CanUse(UseableItem item);
     public abstract void Use(UseableItem item);
-    public virtual void PickUp(UseableItem item)
-    {
-        item.gameObject.SetActive(false);
-    }
 
     protected void PlaceOnMousePosition(UseableItem item)
     {

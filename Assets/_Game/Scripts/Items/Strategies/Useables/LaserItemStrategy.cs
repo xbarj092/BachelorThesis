@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class LaserItemStrategy : ItemStrategyBase
+public class LaserItemStrategy : UseableItemStrategy
 {
     private static DummyMonoBehaviour _monoBehaviour;
     private static DummyMonoBehaviour MonoBehaviour

@@ -6,8 +6,6 @@ namespace MapGenerator
 {
     public class Room : MonoBehaviour
     {
-        [SerializeField] private GameObject _food;
-
         public RoomType RoomType;
 
         private Vector2Int _gridCoordinates;
@@ -28,7 +26,7 @@ namespace MapGenerator
             if (RoomType == RoomType.Normal)
             {
                 SpawnKittens();
-                SpawnFood();
+                SpawnConsumables();
             }
         }
 
@@ -61,42 +59,9 @@ namespace MapGenerator
             }
         }
 
-        private void SpawnFood()
+        private void SpawnObjects<T>(Dictionary<T, float> spawnChances, System.Action<T> spawnAction)
         {
-            int foodSpawned = 0;
-            int randomNumber;
-            if (!_mapGenerator.LoadedData)
-            {
-                randomNumber = LocalDataStorage.Instance.GameData.Random.Next(0, 6);
-            }
-            else
-            {
-                LocalDataStorage.Instance.GameData.Random.Next();
-                return;
-            }
-
-            if (randomNumber > 8)
-            {
-                foodSpawned = 3;
-            }
-            else if (randomNumber > 5)
-            {
-                foodSpawned = 2;
-            }
-            else if (randomNumber > 2)
-            {
-                foodSpawned = 1;
-            }
-
-            for (int i = 0; i < foodSpawned; i++)
-            {
-                Instantiate(_food, GetRandomCoords(), Quaternion.identity, _mapGenerator.FoodSpawnTransform);
-            }
-        }
-
-        private void SpawnItems()
-        {
-            foreach (KeyValuePair<ItemType, float> spawnChances in _spawnChance.ItemSpawnChances)
+            foreach (KeyValuePair<T, float> spawnChance in spawnChances)
             {
                 int randomNumber;
                 if (!_mapGenerator.LoadedData)
@@ -109,11 +74,27 @@ namespace MapGenerator
                     continue;
                 }
 
-                if (randomNumber < spawnChances.Value * 6)
+                if (randomNumber < spawnChance.Value * 6)
                 {
-                    ItemManager.Instance.SpawnItem(spawnChances.Key, GetRandomCoords(), Quaternion.identity, _mapGenerator.ItemSpawnTransform);
+                    spawnAction.Invoke(spawnChance.Key);
                 }
             }
+        }
+
+        private void SpawnConsumables()
+        {
+            SpawnObjects(_spawnChance.ConsumableSpawnChances, consumableType =>
+            {
+                ItemManager.Instance.SpawnConsumable(consumableType, GetRandomCoords(), Quaternion.identity, _mapGenerator.ItemSpawnTransform);
+            });
+        }
+
+        private void SpawnItems()
+        {
+            SpawnObjects(_spawnChance.ItemSpawnChances, itemType =>
+            {
+                ItemManager.Instance.SpawnItem(itemType, GetRandomCoords(), Quaternion.identity, _mapGenerator.ItemSpawnTransform);
+            });
         }
 
         private Vector2 GetRandomCoords()

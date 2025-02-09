@@ -1,6 +1,6 @@
 public class StrategyFactory
 {
-    public ItemStrategyBase CreateStrategy(ItemType itemType)
+    public UseableItemStrategy CreateStrategy(ItemType itemType)
     {
         return itemType switch
         {
@@ -10,6 +10,17 @@ public class StrategyFactory
             ItemType.Towel => new TowelItemStrategy(),
             ItemType.Clothespin => new ClothespinItemStrategy(),
             ItemType.CardboardBox => new CardboardBoxItemStrategy(),
+            _ => null,
+        };
+    }
+
+    public ConsumableItemStrategy CreateStrategy(ConsumableType consumableType)
+    {
+        return consumableType switch
+        {
+            ConsumableType.Fish => new FishItemStrategy(),
+            ConsumableType.Steak => new SteakItemStrategy(),
+            ConsumableType.Potion => new PotionItemStrategy(),
             _ => null,
         };
     }

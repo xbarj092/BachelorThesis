@@ -1,6 +1,7 @@
 public enum ConsumableType
 {
     None = 0,
-    Food = 1,
-    Potion = 2,
+    Steak = 1,
+    Fish = 2,
+    Potion = 3,
 }

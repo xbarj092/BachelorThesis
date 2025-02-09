@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MouseItemStrategy : ItemStrategyBase
+public class MouseItemStrategy : UseableItemStrategy
 {
     public override bool CanUse(UseableItem item)
     {

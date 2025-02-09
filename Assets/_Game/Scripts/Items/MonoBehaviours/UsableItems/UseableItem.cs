@@ -3,8 +3,6 @@ using UnityEngine;
 
 public abstract class UseableItem : Item<UseableItemSO, SavedUseableItem>
 {
-    [SerializeField] protected SpriteRenderer _spriteRenderer;
-
     [SerializeField] private GameObject _ghostItem;
     [SerializeField] private InteractionControler _interaction;
 
@@ -17,6 +15,8 @@ public abstract class UseableItem : Item<UseableItemSO, SavedUseableItem>
     public bool Highlighting;
     public bool Dropped;
     public bool Used;
+
+    private UseableItemStrategy _strategy;
 
     private void OnItemInRangeInvoke()
     {

@@ -181,7 +181,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4667403748993630162}
-  - component: {fileID: 4351296397141309653}
+  - component: {fileID: 4170845001754423859}
   m_Layer: 0
   m_Name: ItemManager
   m_TagString: Untagged
@@ -204,7 +204,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7460344270319024745}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4351296397141309653
+--- !u!114 &4170845001754423859
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6297308481549680904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42c2528613946ed4a8795e1a27ab046a, type: 3}
+  m_Script: {fileID: 11500000, guid: cdf5dbe1bd7793741beaf2fc06894b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _useableItems:
@@ -235,7 +235,7 @@ MonoBehaviour:
     - Key: 1
       Value: {fileID: 954903894178867638, guid: 2a6bcc7737a10dc4394137630082a807, type: 3}
     - Key: 2
-      Value: {fileID: 0}
+      Value: {fileID: 2242458297373148142, guid: 63d5a82f66fd6f147a191978486750cc, type: 3}
   SpawnedItems: []
   SavedItems: []
   SpawnedConsumables: []

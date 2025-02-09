@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CardboardBoxItemStrategy : ItemStrategyBase
+public class CardboardBoxItemStrategy : UseableItemStrategy
 {
     public override bool CanUse(UseableItem item)
     {
