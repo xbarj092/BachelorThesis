@@ -40,6 +40,12 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (TutorialManager.Instance.IsPaused)
+        {
+            _rigidbody.velocity = Vector2.zero;
+            return;
+        }
+
         _rigidbody.velocity = _moveInput;
 
         if (_moveInput.sqrMagnitude > 0.01f)
@@ -101,7 +107,7 @@ public class Player : MonoBehaviour
                         TutorialManager.Instance.CurrentItemInRange = item;
                     }
                 }
-                else if (!TutorialManager.Instance.CompletedTutorialIDs.Contains(TutorialID.Kittens) && !TutorialManager.Instance.IsTutorialPlaying(TutorialID.Kittens))
+                if (!TutorialManager.Instance.CompletedTutorialIDs.Contains(TutorialID.Kittens) && !TutorialManager.Instance.IsTutorialPlaying(TutorialID.Kittens))
                 {
                     if (hit.TryGetComponent(out Kitten kitten))
                     {
@@ -141,7 +147,7 @@ public class Player : MonoBehaviour
 
     private void DepleteFood()
     {
-        if (!GameManager.Instance.MapInitialized)
+        if (!GameManager.Instance.MapInitialized || TutorialManager.Instance.IsPaused)
         {
             return;
         }

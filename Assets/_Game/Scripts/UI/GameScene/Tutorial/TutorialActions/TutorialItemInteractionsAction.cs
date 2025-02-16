@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,35 +10,41 @@ public class TutorialItemInteractionsAction : TutorialAction
     [SerializeField] private Image _inventoryCutout;
     [SerializeField] private Image _itemCutout;
 
-    private event Action CurrentMouseClickAction;
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            CurrentMouseClickAction?.Invoke();
-        }
-    }
-
     private void OnDisable()
     {
-        CurrentMouseClickAction = null;
+        TutorialManager.Instance.IsPaused = false;
+        TutorialManager.Instance.CanUseItem = true;
+        TutorialEvents.OnItemPickedUp -= OnAfterItemPickedUp;
+        TutorialEvents.OnItemPlacedInInventory -= OnAfterItemPlacedInInventory;
+        TutorialEvents.OnItemPickedUpFromInventory -= OnAfterItemPickedUpFromInventory;
+        TutorialEvents.OnItemDropped -= OnAfterItemDrop;
     }
 
     public override void StartAction()
     {
-        Time.timeScale = 0f;
+        TutorialManager.Instance.IsPaused = true;
         _background.gameObject.SetActive(true);
-        _itemOnGroundCutout.gameObject.SetActive(true);
+        StartCoroutine(DelayedItemHighlight());
+        TutorialManager.Instance.CurrentItemInRange.Highlight();
+        _itemOnGroundCutout.sprite = TutorialManager.Instance.CurrentItemInRange.Stats.Sprite;
         _tutorialPlayer.MoveToNextNarratorText();
         TutorialEvents.OnItemPickedUp += OnAfterItemPickedUp;
     }
 
+    private IEnumerator DelayedItemHighlight()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _itemOnGroundCutout.transform.position = Camera.main.WorldToScreenPoint(TutorialManager.Instance.CurrentItemInRange.transform.position);
+        _itemOnGroundCutout.gameObject.SetActive(true);
+    }
+
     private void OnAfterItemPickedUp()
     {
+        TutorialEvents.OnItemPickedUp -= OnAfterItemPickedUp;
         _itemOnGroundCutout.gameObject.SetActive(false);
         _inventoryCutout.gameObject.SetActive(true);
         _tutorialPlayer.MoveToNextNarratorText();
+        TutorialManager.Instance.CanUseItem = false;
         TutorialEvents.OnItemPlacedInInventory += OnAfterItemPlacedInInventory;
     }
 
@@ -48,7 +54,7 @@ public class TutorialItemInteractionsAction : TutorialAction
         _inventoryCutout.gameObject.SetActive(false);
         _itemCutout.gameObject.SetActive(true);
         _tutorialPlayer.MoveToNextNarratorText();
-        TutorialEvents.OnItemPickedUpFromInventory -= OnAfterItemPickedUpFromInventory;
+        TutorialEvents.OnItemPickedUpFromInventory += OnAfterItemPickedUpFromInventory;
     }
 
     private void OnAfterItemPickedUpFromInventory()
@@ -57,18 +63,19 @@ public class TutorialItemInteractionsAction : TutorialAction
         _background.gameObject.SetActive(false);
         _itemCutout.gameObject.SetActive(false);
         _tutorialPlayer.MoveToNextNarratorText();
-        CurrentMouseClickAction = OnAfterItemDrop;
+        TutorialEvents.OnItemDropped += OnAfterItemDrop;
     }
 
     private void OnAfterItemDrop()
     {
-        CurrentMouseClickAction = null;
+        TutorialEvents.OnItemDropped -= OnAfterItemDrop;
         OnActionFinishedInvoke();
     }
 
     public override void Exit()
     {
-        TutorialManager.Instance.InstantiateTutorial(TutorialManager.Instance.CurrentItemInRange.Stats.ItemType);
-        Time.timeScale = 1f;
+        TutorialManager.Instance.CanUseItem = true;
+        TutorialManager.Instance.CurrentItemInRange = null;
+        TutorialManager.Instance.IsPaused = false;
     }
 }

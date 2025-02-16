@@ -74,9 +74,18 @@ public class PlayerInteraction : MonoBehaviour
             });
         }
 
-        if (ScreenManager.Instance.ActiveGameScreen != null)
+        if (ScreenManager.Instance.ActiveGameScreen != null || TutorialManager.Instance.IsTutorialPlaying(TutorialID.ItemInteractions))
         {
             return;
+        }
+
+        if (TutorialManager.Instance.IsTutorialPlaying(TutorialID.Kittens))
+        {
+            InventoryData inventoryData = LocalDataStorage.Instance.PlayerData.InventoryData;
+            if (inventoryData.ItemsInInventory[inventoryData.CurrentHighlightIndex] == TutorialManager.Instance.CurrentItemToUse)
+            {
+                return;
+            }
         }
 
         HandleMouseWheelInput();
@@ -212,7 +221,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void PickUpFromGroundOrUse(InputAction.CallbackContext context)
     {
-        if (ScreenManager.Instance.ActiveGameScreen != null)
+        if (ScreenManager.Instance.ActiveGameScreen != null || !TutorialManager.Instance.CanUseItem)
         {
             return;
         }
@@ -237,10 +246,31 @@ public class PlayerInteraction : MonoBehaviour
         if (_carryingItem != null)
         {
             PlaceInInventory();
+            if (TutorialManager.Instance.IsTutorialPlaying(TutorialID.ItemInteractions))
+            {
+                TutorialEvents.OnItemPlacedInInventoryInvoke();
+            }
         }
         else
         {
+            if (TutorialManager.Instance.IsTutorialPlaying(TutorialID.Kittens))
+            {
+                InventoryData inventoryData = LocalDataStorage.Instance.PlayerData.InventoryData;
+                if (inventoryData.ItemsInInventory[inventoryData.CurrentHighlightIndex] == TutorialManager.Instance.CurrentItemToUse)
+                {
+                    TutorialEvents.OnItemPickedUpFromInventoryInvoke();
+                }
+                else
+                {
+                    return;
+                }
+            }
+
             PickUpFromInventory();
+            if (TutorialManager.Instance.IsTutorialPlaying(TutorialID.ItemInteractions))
+            {
+                TutorialEvents.OnItemPickedUpFromInventoryInvoke();
+            }
         }
     }
 
@@ -311,6 +341,11 @@ public class PlayerInteraction : MonoBehaviour
             inventoryData.ItemsInInventory[inventoryData.CurrentHighlightIndex] = null;
         }
 
+        if (TutorialManager.Instance.IsTutorialPlaying(TutorialID.ItemInteractions))
+        {
+            TutorialEvents.OnItemDroppedInvoke();
+        }
+
         LocalDataStorage.Instance.PlayerData.InventoryData = inventoryData;
         if (_carryingItem != null)
         {
@@ -324,6 +359,11 @@ public class PlayerInteraction : MonoBehaviour
         if (_carryingItem == null || !_carryingItem.CanUse())
         {
             return;
+        }
+
+        if (TutorialManager.Instance.IsTutorialPlaying(TutorialID.Kittens))
+        {
+            TutorialEvents.OnItemUsedInvoke();
         }
 
         UGSAnalyticsManager.Instance.RecordItemUsed(_carryingItem.Stats.ItemType.ToString(), LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);

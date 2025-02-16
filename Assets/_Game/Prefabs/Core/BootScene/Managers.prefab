@@ -279,8 +279,12 @@ MonoBehaviour:
   - {fileID: 2948798742160830293, guid: 81ff8f264e361e94bbeac9c532dcb12b, type: 3}
   - {fileID: 2948798742160830293, guid: adb80dda80f648b4c98bf9966807acac, type: 3}
   - {fileID: 1553658184631962313, guid: 7316d6109960c904e94c32cfd0d47400, type: 3}
+  - {fileID: 1278021128136280661, guid: 6657d941063be224da81a7010a37447b, type: 3}
   CompletedTutorialIDs: 
   CurrentItemInRange: {fileID: 0}
+  CurrentKittenInRange: {fileID: 0}
+  IsPaused: 0
+  CanUseItem: 1
 --- !u!1 &6297308481549680904
 GameObject:
   m_ObjectHideFlags: 0

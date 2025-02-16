@@ -42,6 +42,11 @@ public class MouseInputHandler
             if (item != null && item.IsInteractable)
             {
                 OnItemPickedUp?.Invoke(item);
+                if (TutorialManager.Instance.IsTutorialPlaying(TutorialID.ItemInteractions))
+                {
+                    TutorialEvents.OnItemPickedUpInvoke();
+                }
+
                 return true;
             }
         }

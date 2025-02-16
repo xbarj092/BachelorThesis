@@ -14,6 +14,9 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     public TutorialPlayer CurrentTutorial { get; private set; }
     [HideInInspector] public UseableItem CurrentItemInRange;
     [HideInInspector] public Kitten CurrentKittenInRange;
+    [HideInInspector] public UseableItem CurrentItemToUse;
+    public bool IsPaused = false;
+    public bool CanUseItem = true;
 
     public event Action<TutorialID> OnTutorialEnd;
 
@@ -136,6 +139,16 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     public void ToggleTutorials()
     {
         TutorialsEnabled = !TutorialsEnabled;
+        List<int> tutorialInts = CompletedTutorialIDs.Select(tutorial => (int)tutorial).ToList();
+        LocalDataStorage.Instance.PlayerPrefs.SaveTutorialSettings(new(tutorialInts, TutorialsEnabled));
+    }
+
+    public void ResetTutorials()
+    {
+        CompletedTutorialIDs.Clear();
+        CompletedTutorials.Clear();
+        TutorialsEnabled = true;
+
         List<int> tutorialInts = CompletedTutorialIDs.Select(tutorial => (int)tutorial).ToList();
         LocalDataStorage.Instance.PlayerPrefs.SaveTutorialSettings(new(tutorialInts, TutorialsEnabled));
     }

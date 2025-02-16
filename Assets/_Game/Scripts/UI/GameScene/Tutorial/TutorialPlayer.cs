@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TutorialPlayer : MonoBehaviour
 { 
-    [SerializeField] private TMP_Text _text;
+    [SerializeField] protected TMP_Text _text;
     public TMP_Text PublicText => _text;
     [field: SerializeField] public TutorialID TutorialID { get; private set; }
 

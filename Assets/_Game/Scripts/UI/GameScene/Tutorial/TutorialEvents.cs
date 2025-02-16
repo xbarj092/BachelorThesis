@@ -28,6 +28,19 @@ public static class TutorialEvents
         OnItemPickedUpFromInventory?.Invoke();
     }
 
+    public static event Action OnItemDropped;
+    public static void OnItemDroppedInvoke()
+    {
+        OnItemDropped?.Invoke();
+    }
+
+    // kittens
+    public static event Action OnItemUsed;
+    public static void OnItemUsedInvoke()
+    {
+        OnItemUsed?.Invoke();
+    }
+
     // end
     public static event Action OnTutorialCompleted;
     public static void OnTutorialCompletedInvoke()

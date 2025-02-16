@@ -9,8 +9,10 @@ public class KittenStateMachine : MonoBehaviour
 
     private void Update()
     {
-        if (CurrentState == null)
+        if (CurrentState == null || TutorialManager.Instance.IsPaused)
+        {
             return;
+        }
 
         BaseState nextState = CurrentState.ExecuteState();
         if (nextState != null && nextState != CurrentState)

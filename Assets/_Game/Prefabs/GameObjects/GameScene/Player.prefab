@@ -281,7 +281,7 @@ MonoBehaviour:
   _characterSprites:
   - {fileID: 21300000, guid: c3d8a55599117ea499d15ff26e950d56, type: 3}
   - {fileID: 21300000, guid: ee461e503eda73c4b9114b06ffe246da, type: 3}
-  _viewRange: 6
+  _viewRange: 3
   _viewAngle: 160
 --- !u!114 &4608072559281339292
 MonoBehaviour:

@@ -11,7 +11,7 @@ public class TutorialsScreen : BaseScreen
 
     private void Start()
     {
-        _enabledText.text = ENABLED_TEXT_PREFIX + (TutorialManager.Instance.TutorialsEnabled ? ENABLED_TEXT_ON : ENABLED_TEXT_OFF);
+        UpdateText();
     }
 
     public void ReplayTutorials()
@@ -23,11 +23,17 @@ public class TutorialsScreen : BaseScreen
     public void ToggleTutorials()
     {
         TutorialManager.Instance.ToggleTutorials();
-        _enabledText.text = ENABLED_TEXT_PREFIX + (TutorialManager.Instance.TutorialsEnabled ? ENABLED_TEXT_ON : ENABLED_TEXT_OFF);
+        UpdateText();
     }
 
     public void ResetTutorials()
     {
+        TutorialManager.Instance.ResetTutorials();
+        UpdateText();
+    }
 
+    private void UpdateText()
+    {
+        _enabledText.text = ENABLED_TEXT_PREFIX + (TutorialManager.Instance.TutorialsEnabled ? ENABLED_TEXT_ON : ENABLED_TEXT_OFF);
     }
 }

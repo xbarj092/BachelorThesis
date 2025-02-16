@@ -56,6 +56,11 @@ public class Kitten : Enemy
 
     protected override void Update()
     {
+        if (TutorialManager.Instance.IsPaused)
+        {
+            return;
+        }
+
         base.Update();
         Vector3 currentPosition = transform.position;
         _movementDirection = (currentPosition - _lastPosition).normalized;
