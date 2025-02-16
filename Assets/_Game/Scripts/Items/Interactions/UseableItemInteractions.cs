@@ -38,8 +38,11 @@ public class UseableItemInteractions : ItemInteractions<UseableItem, UseableItem
             return;
         }
 
-        _item.PickUp();
-        UGSAnalyticsManager.Instance.RecordItemPickedUp(_item.Stats.ItemType.ToString(), LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
+        if (LocalDataStorage.Instance.PlayerData.InventoryData.HasRoomInInventory())
+        {
+            _item.PickUp();
+            UGSAnalyticsManager.Instance.RecordItemPickedUp(_item.Stats.ItemType.ToString(), LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
+        }
     }
 
     private void HandlePlayerCollisionExit(Player player)

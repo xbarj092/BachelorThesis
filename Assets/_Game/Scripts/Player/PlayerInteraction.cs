@@ -65,7 +65,13 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            _keyboardInputHandler.HandleInteraction();
+            _keyboardInputHandler.HandleInteraction(() =>
+            {
+                if (_isUsingItem)
+                {
+                    PlaceInInventoryOrPickUpFromInventory(default);
+                }
+            });
         }
 
         if (ScreenManager.Instance.ActiveGameScreen != null)

@@ -94,6 +94,7 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
 
     private IEnumerator InitGame()
     {
+        ScreenManager.Instance.ActiveGameScreen = FindFirstObjectByType<LoadingScreen>();
         GameManager.Instance.MapInitialized = false;
         Time.timeScale = 1;
         MapGenerator.MapGenerator generator = FindObjectOfType<MapGenerator.MapGenerator>();
@@ -112,6 +113,15 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
         GameManager.Instance.MapInitialized = true;
         GameEvents.OnMapLoadedInvoke();
         KittenManager.Instance.Initialize();
+
+        if (!TutorialManager.Instance.IsTutorialCompleted(TutorialID.GeneralInfo))
+        {
+            TutorialManager.Instance.InstantiateTutorial(TutorialID.GeneralInfo);
+        }
+        else if (!TutorialManager.Instance.IsTutorialCompleted(TutorialID.Movement))
+        {
+            TutorialManager.Instance.InstantiateTutorial(TutorialID.Movement);
+        }
     }
 
     private void SpawnEntities()

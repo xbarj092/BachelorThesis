@@ -12,6 +12,8 @@ public class MenuCanvasController : BaseCanvasController
     [SerializeField] private OptionsScreen _optionsScreenPrefab;
     [SerializeField] private KeyBindingsScreen _keyBindingsScreen;
     [SerializeField] private AudioSettingsScreen _audioSettingsScreen;
+    [SerializeField] private TutorialsScreen _tutorialScreen;
+    [SerializeField] private ReplayTutorialScreen _replayTutorialScreen;
     [SerializeField] private AboutGameScreen _aboutGameScreen;
     [SerializeField] private CollectiblesScreen _collectiblesScreen;
     [SerializeField] private ItemsScreen _itemsScreen;
@@ -46,6 +48,8 @@ public class MenuCanvasController : BaseCanvasController
             GameScreenType.Options => Instantiate(_optionsScreenPrefab, transform),
             GameScreenType.KeyBindings => Instantiate(_keyBindingsScreen, transform),
             GameScreenType.AudioSettings => Instantiate(_audioSettingsScreen, transform),
+            GameScreenType.Tutorials => Instantiate(_tutorialScreen, transform),
+            GameScreenType.ReplayTutorial => Instantiate(_replayTutorialScreen, transform),
             GameScreenType.AboutGame => Instantiate(_aboutGameScreen, transform),
             GameScreenType.Collectibles => Instantiate(_collectiblesScreen, transform),
             GameScreenType.Items => Instantiate(_itemsScreen, transform),
@@ -68,6 +72,8 @@ public class MenuCanvasController : BaseCanvasController
             GameScreenType.LoadGame => GameScreenType.SelectGameMode,
             GameScreenType.KeyBindings => GameScreenType.Options,
             GameScreenType.AudioSettings => GameScreenType.Options,
+            GameScreenType.Tutorials => GameScreenType.Options,
+            GameScreenType.ReplayTutorial => GameScreenType.Tutorials,
             GameScreenType.AboutGame => GameScreenType.Options,
             GameScreenType.Collectibles => GameScreenType.MenuMain,
             GameScreenType.Items => GameScreenType.Collectibles,

@@ -166,4 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _effectImage: {fileID: 2201554595588708643}
   _fillImage: {fileID: 5565076190941986636}
-  Type: 0
+  EffectData:
+    Type: 0
+    OriginalTimeLeft: 0
+    CurrentTimeLeft: 0

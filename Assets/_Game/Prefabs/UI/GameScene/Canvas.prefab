@@ -33,7 +33,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2587030782595360341}
-  - {fileID: 535297308859474366}
+  - {fileID: 1810761695009438720}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -52,7 +52,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 100.3
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -121,6 +121,8 @@ MonoBehaviour:
   _optionsScreenPrefab: {fileID: 501426191692918833, guid: 5520c853c11b95c4ba2fc2c4a992985e, type: 3}
   _keyBindingsScreen: {fileID: 5071418753969360273, guid: 57db63eb449f4334a932fb4372c10fca, type: 3}
   _audioSettingsScreen: {fileID: 6471530500618024504, guid: d8ad485d6e3abdb4eb29f8b95b100070, type: 3}
+  _tutorialScreen: {fileID: 1786924404219966789, guid: 1a0500414f392694693bbc3172d385b8, type: 3}
+  _replayTutorialScreen: {fileID: 2373813765666589135, guid: 10254b48d0c1a89439b4353524e6c99b, type: 3}
   _aboutGameScreen: {fileID: 8676644126472218306, guid: 58601dcad42f090499cd7f4c23731678, type: 3}
 --- !u!1001 &7592991500202352056
 PrefabInstance:
@@ -560,7 +562,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5384408771714350061, guid: 6524593bfb5025a469f56f56ff24dfc4, type: 3}
   m_PrefabInstance: {fileID: 7592991500202352056}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8134065875105342803
+--- !u!1001 &7975555992536922349
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -571,6 +573,10 @@ PrefabInstance:
     - target: {fileID: 271411786027467533, guid: 3d0cfde3415da11499fb5dfcf4c1b592, type: 3}
       propertyPath: m_Name
       value: LoadingScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 271411786027467533, guid: 3d0cfde3415da11499fb5dfcf4c1b592, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8615319849344517357, guid: 3d0cfde3415da11499fb5dfcf4c1b592, type: 3}
       propertyPath: m_Pivot.x
@@ -657,8 +663,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d0cfde3415da11499fb5dfcf4c1b592, type: 3}
---- !u!224 &535297308859474366 stripped
+--- !u!224 &1810761695009438720 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8615319849344517357, guid: 3d0cfde3415da11499fb5dfcf4c1b592, type: 3}
-  m_PrefabInstance: {fileID: 8134065875105342803}
+  m_PrefabInstance: {fileID: 7975555992536922349}
   m_PrefabAsset: {fileID: 0}

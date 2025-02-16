@@ -6,12 +6,24 @@ public class PauseScreen : BaseScreen
 {
     [SerializeField] private GameObject _savingVisual;
     [SerializeField] private List<Button> _buttons = new();
+    [SerializeField] private GameObject _tutorialSkipButton;
 
     public bool IsSaving = false;
+
+    private void Start()
+    {
+        _tutorialSkipButton.SetActive(TutorialManager.Instance.IsTutorialPlaying());
+    }
 
     public void Resume()
     {
         Time.timeScale = 1;
+        CloseScreen();
+    }
+
+    public void SkipCurrentTutorial()
+    {
+        TutorialManager.Instance.SkipCurrentTutorial();
         CloseScreen();
     }
 

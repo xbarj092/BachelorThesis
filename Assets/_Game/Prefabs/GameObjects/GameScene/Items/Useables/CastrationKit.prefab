@@ -113,16 +113,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6dcf66eba942a43b4c4dad3f7fcf02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Stats>k__BackingField: {fileID: 11400000, guid: df327d431d26b7a498bcb723b5b8c33f, type: 2}
   _spriteRenderer: {fileID: 4915458218231152835}
+  <Stats>k__BackingField: {fileID: 11400000, guid: df327d431d26b7a498bcb723b5b8c33f, type: 2}
+  UID: 0
   _ghostItem: {fileID: 2797450546706936104, guid: 8012bf0d87c9fb04ab4fc6294f14c000, type: 3}
   _interaction: {fileID: 1714035677799800250}
+  _defaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  _outlineMaterial: {fileID: -876546973899608171, guid: 59d12df00206918479df5b51a5ae2630, type: 3}
   UsageType: 0
   IsHovered: 0
   Highlighting: 0
   Dropped: 0
   Used: 0
-  UID: 0
 --- !u!212 &4915458218231152835 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ public class StatusEffect : MonoBehaviour
     [SerializeField] private Image _fillImage;
 
     public StatusEffectData EffectData;
+
+    public event Action<StatusEffect> OnStatusEnded; 
 
     private void OnDisable()
     {
@@ -32,11 +35,12 @@ public class StatusEffect : MonoBehaviour
         if (effectData != null)
         {
             effectData.CurrentTimeLeft--;
-            _fillImage.fillAmount = (float)effectData.CurrentTimeLeft / (float)effectData.OriginalTimeLeft;
+            _fillImage.fillAmount = 1 - ((float)effectData.CurrentTimeLeft / (float)effectData.OriginalTimeLeft);
 
             if (effectData.CurrentTimeLeft <= 0)
             {
                 playerStats.StatusEffects.Remove(effectData);
+                OnStatusEnded?.Invoke(this);
                 Destroy(gameObject);
             }
 

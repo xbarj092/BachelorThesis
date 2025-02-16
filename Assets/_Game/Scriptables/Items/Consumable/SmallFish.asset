@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SmallFish
   m_EditorClassIdentifier: 
   <Title>k__BackingField: Small fish
-  <Sprite>k__BackingField: {fileID: 0}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 87984cdf53f1691499214cdb85b266cb, type: 3}
   <Description>k__BackingField: Barely fills your stomach
   ConsumableType: 2
   ReplenishAmount: 5

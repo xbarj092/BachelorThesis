@@ -12,6 +12,12 @@ public class OptionsScreen : BaseScreen
         ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.AudioSettings);
     }
 
+    public void TutorialSettings()
+    {
+        Destroy(gameObject);
+        ScreenEvents.OnGameScreenOpenedInvoke(GameScreenType.Tutorials);
+    }
+
     public void AboutGame()
     {
         Destroy(gameObject);

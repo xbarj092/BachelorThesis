@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameScreenType: 17
+  _collectibleDetailPopup: {fileID: 7745462454003183837, guid: 3a0cad63ccd50e14fb2b31f9aee229f2, type: 3}
   _collectibles:
   - {fileID: 11400000, guid: 7cec62e3b980c42489b10168406b8ef1, type: 2}
   - {fileID: 11400000, guid: 25ac8717ad3e05744acf4a93a497bee3, type: 2}
@@ -130,8 +131,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -225, y: 0}
-  m_SizeDelta: {x: -750, y: -400}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -300, y: -400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3968133710482691857
 MonoBehaviour:

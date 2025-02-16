@@ -19,4 +19,6 @@ public enum GameScreenType
     Enemies = 16,
     Consumables = 17,
     Misc = 18,
+    Tutorials = 19,
+    ReplayTutorial = 20,
 }

@@ -32,6 +32,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4834205371642729699, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - target: {fileID: 5635671606158594644, guid: 00b7fe954bc9d294688b8df603c557f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -106,16 +110,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93c6f5f6284252341992909731862236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Stats>k__BackingField: {fileID: 11400000, guid: cf303edf92787a548a8fd35120fde75c, type: 2}
   _spriteRenderer: {fileID: 2934354632435487449}
+  <Stats>k__BackingField: {fileID: 11400000, guid: cf303edf92787a548a8fd35120fde75c, type: 2}
+  UID: 0
   _ghostItem: {fileID: 5358534490309780274, guid: 6f6d7fe031bba0644872ac6314e7b292, type: 3}
   _interaction: {fileID: 8882970482794418080}
+  _defaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  _outlineMaterial: {fileID: -876546973899608171, guid: 59d12df00206918479df5b51a5ae2630, type: 3}
   UsageType: 0
   IsHovered: 0
   Highlighting: 0
   Dropped: 0
   Used: 0
-  UID: 0
   _openedBox: {fileID: 21300000, guid: 98f858b6f9364704cb95a49d72705a62, type: 3}
   _occupiedBox: {fileID: 21300000, guid: e977b5860551cb847b2d0072e3f371f6, type: 3}
   HasKitten: 0

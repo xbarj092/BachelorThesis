@@ -43,6 +43,12 @@ public class Laser : UseableItem
             return;
         }
 
+        if (ScreenManager.Instance.ActiveGameScreen != null && ScreenManager.Instance.ActiveGameScreen.GameScreenType == GameScreenType.Pause && Used)
+        {
+            UseStop();
+            return;
+        }
+
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0;
 

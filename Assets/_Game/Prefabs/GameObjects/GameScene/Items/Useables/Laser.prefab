@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -205,16 +205,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f622031e0c3e8d4588b9029f5e4879b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Stats>k__BackingField: {fileID: 11400000, guid: 8d1b1961857713b46bf45c648b30039d, type: 2}
   _spriteRenderer: {fileID: 4139101924684345797}
+  <Stats>k__BackingField: {fileID: 11400000, guid: 8d1b1961857713b46bf45c648b30039d, type: 2}
+  UID: 0
   _ghostItem: {fileID: 6599099477623242798, guid: 169e4c6a615a71e43b333bc536ba633a, type: 3}
   _interaction: {fileID: 7678433059843681468}
+  _defaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  _outlineMaterial: {fileID: -876546973899608171, guid: 59d12df00206918479df5b51a5ae2630, type: 3}
   UsageType: 1
   IsHovered: 0
   Highlighting: 0
   Dropped: 0
   Used: 0
-  UID: 0
   _laserDot: {fileID: 1176001775025498404}
   _layerMask:
     serializedVersion: 2

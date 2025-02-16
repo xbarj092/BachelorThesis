@@ -123,6 +123,8 @@ MonoBehaviour:
   _optionsScreenPrefab: {fileID: 501426191692918833, guid: 5520c853c11b95c4ba2fc2c4a992985e, type: 3}
   _keyBindingsScreen: {fileID: 5071418753969360273, guid: 57db63eb449f4334a932fb4372c10fca, type: 3}
   _audioSettingsScreen: {fileID: 6471530500618024504, guid: d8ad485d6e3abdb4eb29f8b95b100070, type: 3}
+  _tutorialScreen: {fileID: 1786924404219966789, guid: 1a0500414f392694693bbc3172d385b8, type: 3}
+  _replayTutorialScreen: {fileID: 2373813765666589135, guid: 10254b48d0c1a89439b4353524e6c99b, type: 3}
   _aboutGameScreen: {fileID: 8676644126472218306, guid: 58601dcad42f090499cd7f4c23731678, type: 3}
   _collectiblesScreen: {fileID: 7655511618586246004, guid: 7d5c247646bc068458cfed43af8b9d09, type: 3}
   _itemsScreen: {fileID: 2586122390429826634, guid: 0dab3b93afe64c943980d34e1c009e03, type: 3}

@@ -129,13 +129,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46e2c82cb9eea0a4cacf3d2219a932e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Stats>k__BackingField: {fileID: 11400000, guid: f393d8f15e7698146b12b2f1df819e77, type: 2}
   _spriteRenderer: {fileID: 1729777961005508362}
+  <Stats>k__BackingField: {fileID: 11400000, guid: f393d8f15e7698146b12b2f1df819e77, type: 2}
+  UID: 0
   _ghostItem: {fileID: 8855443163729975009, guid: 15238bb923500ed4c823badb62faa1c3, type: 3}
   _interaction: {fileID: 5476142464977042035}
+  _defaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  _outlineMaterial: {fileID: -876546973899608171, guid: 59d12df00206918479df5b51a5ae2630, type: 3}
   UsageType: 0
   IsHovered: 0
   Highlighting: 0
   Dropped: 0
   Used: 0
-  UID: 0

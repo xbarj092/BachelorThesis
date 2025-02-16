@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StateType: 1
-  _moveSpeed: 0.75
+  _moveSpeed: 0.6
   _boostedSpeedMultiplier: 5
 --- !u!114 &2529649059364383967
 MonoBehaviour:
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StateType: 2
-  _chaseSpeed: 1
+  _chaseSpeed: 0.75
   _timeoutDuration: 10
 --- !u!114 &1774946690935229404
 MonoBehaviour:
@@ -235,6 +235,7 @@ GameObject:
   - component: {fileID: 5434703141080909983}
   - component: {fileID: 1606511128137652074}
   - component: {fileID: 3669059994186079762}
+  - component: {fileID: 4075059753515558756}
   m_Layer: 11
   m_Name: Kitten
   m_TagString: Untagged
@@ -411,6 +412,48 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &4075059753515558756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4420139627812897466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000178478dc
+  m_ShapePath:
+  - {x: -0.45169437, y: -0.45640194, z: 0}
+  - {x: -0.6046442, y: -0.27106306, z: 0}
+  - {x: -0.6517206, y: 0.011395514, z: 0}
+  - {x: -0.6046442, y: 0.27973115, z: 0}
+  - {x: -0.42815596, y: 0.47052488, z: 0}
+  - {x: -0.22803275, y: 0.61397374, z: 0}
+  - {x: 0.026179936, y: 0.6469273, z: 0}
+  - {x: 0.28980792, y: 0.57631266, z: 0}
+  - {x: 0.47052482, y: 0.4469867, z: 0}
+  - {x: 0.59109706, y: 0.25619292, z: 0}
+  - {x: 0.65229636, y: -0.0074350624, z: 0}
+  - {x: 0.5863894, y: -0.28047833, z: 0}
+  - {x: 0.42344838, y: -0.46110952, z: 0}
+  - {x: 0.2427315, y: -0.60059804, z: 0}
+  - {x: 0.0073493593, y: -0.62884384, z: 0}
+  - {x: -0.27981684, y: -0.6100133, z: 0}
+  m_ShapePathHash: -195729127
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 35968
+  m_LocalBounds:
+    m_Center: {x: 0.00028789043, y: 0.009041727, z: 0}
+    m_Extent: {x: 0.6520085, y: 0.6378856, z: 0}
 --- !u!1 &7038004806067361994
 GameObject:
   m_ObjectHideFlags: 0

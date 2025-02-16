@@ -33,8 +33,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -225, y: 0}
-  m_SizeDelta: {x: -750, y: -400}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -300, y: -400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4642810625939139020
 MonoBehaviour:
@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameScreenType: 18
+  _collectibleDetailPopup: {fileID: 7745462454003183837, guid: 3a0cad63ccd50e14fb2b31f9aee229f2, type: 3}
   _collectibleSlotPrefab: {fileID: 6593746491088634011, guid: b433c9452b72c38438905f4c5b8fd083, type: 3}
   _spawnTransform: {fileID: 1007394171034303607}
 --- !u!1001 &3870168891604602824

@@ -10,8 +10,13 @@ public class Player : MonoBehaviour
 
     [SerializeField] private List<Sprite> _characterSprites;
 
+    [Header("Field of View Settings")]
+    [SerializeField] private float _viewRange = 6f;
+    [SerializeField] private float _viewAngle = 60f;
+
     private bool _invincible;
     private Vector2 _moveInput;
+    private int _frameCounter = 0;
 
     private void Awake()
     {
@@ -39,8 +44,72 @@ public class Player : MonoBehaviour
 
         if (_moveInput.sqrMagnitude > 0.01f)
         {
+            if (TutorialManager.Instance.IsTutorialPlaying(TutorialID.Movement))
+            {
+                TutorialEvents.OnPlayerMovedInvoke();
+            }
+
             float targetAngle = Mathf.Atan2(_moveInput.y, _moveInput.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, targetAngle + 90);
+        }
+
+        _frameCounter++;
+        if (_frameCounter >= 5)
+        {
+            CheckFieldOfView();
+            _frameCounter = 0;
+        }
+    }
+
+    private void CheckFieldOfView()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _viewRange);
+
+        foreach (Collider2D hit in hits)
+        {
+            if (hit == null || hit.transform == transform)
+            {
+                continue;
+            }
+
+            float distanceToTarget = Vector2.Distance(transform.position, hit.transform.position);
+
+            Vector2 directionToTarget = (hit.transform.position - transform.position).normalized;
+
+            int layerMask = LayerMask.GetMask(GlobalConstants.Layers.Map.ToString());
+            RaycastHit2D rayHit = Physics2D.Raycast(transform.position, directionToTarget, distanceToTarget, layerMask);
+
+            if (rayHit.collider != null)
+            {
+                continue;
+            }
+
+            float angleToTarget = Vector2.Angle(transform.right, directionToTarget);
+
+            if (distanceToTarget > _viewRange || angleToTarget > (_viewAngle + 90) / 2)
+            {
+                continue;
+            }
+
+            if (TutorialManager.Instance.TutorialsEnabled)
+            {
+                if (!TutorialManager.Instance.CompletedTutorialIDs.Contains(TutorialID.ItemInteractions) && !TutorialManager.Instance.IsTutorialPlaying(TutorialID.ItemInteractions))
+                {
+                    if (hit.TryGetComponent(out UseableItem item))
+                    {
+                        TutorialManager.Instance.InstantiateTutorial(TutorialID.ItemInteractions);
+                        TutorialManager.Instance.CurrentItemInRange = item;
+                    }
+                }
+                else if (!TutorialManager.Instance.CompletedTutorialIDs.Contains(TutorialID.Kittens) && !TutorialManager.Instance.IsTutorialPlaying(TutorialID.Kittens))
+                {
+                    if (hit.TryGetComponent(out Kitten kitten))
+                    {
+                        TutorialManager.Instance.InstantiateTutorial(TutorialID.Kittens);
+                        TutorialManager.Instance.CurrentKittenInRange = kitten;
+                    }
+                }
+            }
         }
     }
 
@@ -79,6 +148,11 @@ public class Player : MonoBehaviour
 
         PlayerStats stats = LocalDataStorage.Instance.PlayerData.PlayerStats;
         stats.CurrentTimeLeft--;
+        if (stats.CurrentTimeLeft <= 0)
+        {
+            StartCoroutine(Death());
+        }
+
         LocalDataStorage.Instance.PlayerData.PlayerStats = stats;
     }
 

@@ -1,4 +1,5 @@
 using AYellowpaper.SerializedCollections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -24,7 +25,14 @@ public class StatusEffects : MonoBehaviour
         {
             StatusEffect effect = Instantiate(_statusEffectPrefab, transform);
             effect.Init(_sprites[(StatusEffectType)effectData.Type], effectData);
+            effect.OnStatusEnded += OnStatusEnded;
             _activeStatusEffects.Add(effect);
         }
+    }
+
+    private void OnStatusEnded(StatusEffect effect)
+    {
+        effect.OnStatusEnded -= OnStatusEnded;
+        _activeStatusEffects.Remove(effect);
     }
 }

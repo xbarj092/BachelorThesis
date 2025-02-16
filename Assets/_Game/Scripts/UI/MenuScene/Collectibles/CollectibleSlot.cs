@@ -7,12 +7,12 @@ public class CollectibleSlot : MonoBehaviour
 {
     [SerializeField] private Image _sprite;
     [SerializeField] private TMP_Text _title;
+    [SerializeField] private ColoredUIHighlighter _highlighter;
 
     private ICollectible _collectible;
     private bool _hasCollectible;
 
-    public event Action<ICollectible> OnHighlight;
-    public event Action OnUnhighlight;
+    public event Action<ICollectible> OnClick;
 
     public void Init(ICollectible collectible)
     {
@@ -30,11 +30,19 @@ public class CollectibleSlot : MonoBehaviour
         }
     }
 
+    public void ShowDetail()
+    {
+        if (_hasCollectible)
+        {
+            OnClick?.Invoke(_collectible);
+        }
+    }
+
     public void Highlight()
     {
         if (_hasCollectible)
         {
-            OnHighlight?.Invoke(_collectible);
+            _highlighter.Highlight();
         }
     }
 
@@ -42,7 +50,7 @@ public class CollectibleSlot : MonoBehaviour
     {
         if (_hasCollectible)
         {
-            OnUnhighlight?.Invoke();
+            _highlighter.Unhighlight();
         }
     }
 }
