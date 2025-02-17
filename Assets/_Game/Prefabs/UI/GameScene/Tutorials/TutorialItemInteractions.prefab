@@ -178,6 +178,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6958a312f79914b9b88c9bedb8aaf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _leftClickAction: {fileID: 3286424555785894770, guid: 6b0da74587745304aadb207cff6d1abd, type: 3}
+  _rightClickAction: {fileID: 275522587122548883, guid: 6b0da74587745304aadb207cff6d1abd, type: 3}
+  _dropAction: {fileID: 2322232915075501652, guid: 6b0da74587745304aadb207cff6d1abd, type: 3}
   _background: {fileID: 3576930653841807574}
   _itemOnGroundCutout: {fileID: 3968698416081152305}
   _inventoryCutout: {fileID: 3044219076505875976}

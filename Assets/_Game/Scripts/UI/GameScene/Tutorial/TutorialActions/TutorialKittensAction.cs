@@ -1,10 +1,12 @@
 using AYellowpaper.SerializedCollections;
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class TutorialKittensAction : TutorialAction
 {
@@ -16,6 +18,9 @@ public class TutorialKittensAction : TutorialAction
     [SerializeField] private SerializedDictionary<ItemType, List<string>> _itemStrings;
 
     private List<string> _strings = new();
+
+    private CinemachineVirtualCamera _cinemachineCamera;
+    private Transform _player;
 
     private event Action CurrentMouseClickAction;
 
@@ -39,6 +44,10 @@ public class TutorialKittensAction : TutorialAction
 
     public override void StartAction()
     {
+        _cinemachineCamera = FindFirstObjectByType<CinemachineVirtualCamera>();
+        _player = FindFirstObjectByType<Player>().transform;
+        _cinemachineCamera.m_Follow = TutorialManager.Instance.CurrentKittenInRange.transform;
+
         TutorialManager.Instance.IsPaused = true;
         _background.gameObject.SetActive(true);
         StartCoroutine(DelayedItemHighlight());
@@ -69,6 +78,7 @@ public class TutorialKittensAction : TutorialAction
 
     private void OnAfterMatingNotified()
     {
+        _cinemachineCamera.m_Follow = _player;
         CurrentMouseClickAction = null;
         InventoryData inventoryData = LocalDataStorage.Instance.PlayerData.InventoryData;
 

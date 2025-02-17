@@ -314,6 +314,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnItemDrop()
     {
+        if (!TutorialManager.Instance.CanDropItem)
+        {
+            return;
+        }
+
         InventoryData inventoryData = LocalDataStorage.Instance.PlayerData.InventoryData;
         UseableItem item = _carryingItem == null ? inventoryData.ItemsInInventory[inventoryData.CurrentHighlightIndex] : _carryingItem;
         if (item == null)

@@ -15,9 +15,9 @@ MonoBehaviour:
   Title: ITEM INTERACTIONS
   VideoClip: {fileID: 0}
   Strings:
-  - Hey, an item! You can pick items up by clicking on them with LMB or colliding
+  - Hey, an item! You can pick items up by clicking on them with {0} or colliding
     with them.
-  - After you find an item, it will be stored in your inventory. Click RMB to put
+  - After you find an item, it will be stored in your inventory. Click {0} to put
     it in there
-  - To equip an item from the inventory, RMB again.
-  - You can drop items you dont want with Q
+  - To equip an item from the inventory, {0} again.
+  - You can drop items you dont want with {0}

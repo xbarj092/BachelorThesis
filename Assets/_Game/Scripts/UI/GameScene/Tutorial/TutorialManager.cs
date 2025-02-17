@@ -17,6 +17,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     [HideInInspector] public UseableItem CurrentItemToUse;
     public bool IsPaused = false;
     public bool CanUseItem = true;
+    public bool CanDropItem = true;
 
     public event Action<TutorialID> OnTutorialEnd;
 

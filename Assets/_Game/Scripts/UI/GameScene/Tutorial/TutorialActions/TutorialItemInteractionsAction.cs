@@ -1,14 +1,23 @@
+using Cinemachine;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class TutorialItemInteractionsAction : TutorialAction
 {
+    [SerializeField] private InputActionReference _leftClickAction;
+    [SerializeField] private InputActionReference _rightClickAction;
+    [SerializeField] private InputActionReference _dropAction;
+
     [SerializeField] private Image _background;
 
     [SerializeField] private Image _itemOnGroundCutout;
     [SerializeField] private Image _inventoryCutout;
     [SerializeField] private Image _itemCutout;
+
+    private CinemachineVirtualCamera _cinemachineCamera;
+    private Transform _player;
 
     private void OnDisable()
     {
@@ -22,18 +31,23 @@ public class TutorialItemInteractionsAction : TutorialAction
 
     public override void StartAction()
     {
+        _cinemachineCamera = FindFirstObjectByType<CinemachineVirtualCamera>();
+        _player = FindFirstObjectByType<Player>().transform;
+
         TutorialManager.Instance.IsPaused = true;
         _background.gameObject.SetActive(true);
+        _cinemachineCamera.m_Follow = TutorialManager.Instance.CurrentItemInRange.transform;
         StartCoroutine(DelayedItemHighlight());
         TutorialManager.Instance.CurrentItemInRange.Highlight();
         _itemOnGroundCutout.sprite = TutorialManager.Instance.CurrentItemInRange.Stats.Sprite;
         _tutorialPlayer.MoveToNextNarratorText();
+        _tutorialPlayer.PublicText.text = string.Format(_tutorialPlayer.PublicText.text, _leftClickAction.action.GetBindingDisplayString());
         TutorialEvents.OnItemPickedUp += OnAfterItemPickedUp;
     }
 
     private IEnumerator DelayedItemHighlight()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         _itemOnGroundCutout.transform.position = Camera.main.WorldToScreenPoint(TutorialManager.Instance.CurrentItemInRange.transform.position);
         _itemOnGroundCutout.gameObject.SetActive(true);
     }
@@ -41,10 +55,13 @@ public class TutorialItemInteractionsAction : TutorialAction
     private void OnAfterItemPickedUp()
     {
         TutorialEvents.OnItemPickedUp -= OnAfterItemPickedUp;
+        _cinemachineCamera.m_Follow = _player;
         _itemOnGroundCutout.gameObject.SetActive(false);
         _inventoryCutout.gameObject.SetActive(true);
         _tutorialPlayer.MoveToNextNarratorText();
+        _tutorialPlayer.PublicText.text = string.Format(_tutorialPlayer.PublicText.text, _rightClickAction.action.GetBindingDisplayString());
         TutorialManager.Instance.CanUseItem = false;
+        TutorialManager.Instance.CanDropItem = false;
         TutorialEvents.OnItemPlacedInInventory += OnAfterItemPlacedInInventory;
     }
 
@@ -54,6 +71,7 @@ public class TutorialItemInteractionsAction : TutorialAction
         _inventoryCutout.gameObject.SetActive(false);
         _itemCutout.gameObject.SetActive(true);
         _tutorialPlayer.MoveToNextNarratorText();
+        _tutorialPlayer.PublicText.text = string.Format(_tutorialPlayer.PublicText.text, _rightClickAction.action.GetBindingDisplayString());
         TutorialEvents.OnItemPickedUpFromInventory += OnAfterItemPickedUpFromInventory;
     }
 
@@ -63,6 +81,8 @@ public class TutorialItemInteractionsAction : TutorialAction
         _background.gameObject.SetActive(false);
         _itemCutout.gameObject.SetActive(false);
         _tutorialPlayer.MoveToNextNarratorText();
+        _tutorialPlayer.PublicText.text = string.Format(_tutorialPlayer.PublicText.text, _dropAction.action.GetBindingDisplayString());
+        TutorialManager.Instance.CanDropItem = true;
         TutorialEvents.OnItemDropped += OnAfterItemDrop;
     }
 

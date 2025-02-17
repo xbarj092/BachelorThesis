@@ -15,4 +15,4 @@ MonoBehaviour:
   Title: MOVEMENT
   VideoClip: {fileID: 0}
   Strings:
-  - Use WASD to move
+  - Use {0} to move
