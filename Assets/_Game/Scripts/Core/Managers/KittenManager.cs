@@ -156,6 +156,11 @@ public class KittenManager : MonoSingleton<KittenManager>
 
     private void DecayInfluenceMap()
     {
+        if (TutorialManager.Instance.IsPaused)
+        {
+            return;
+        }
+
         for (int x = 0; x < _coarseWidth; x++)
         {
             for (int y = 0; y < _coarseHeight; y++)
@@ -212,6 +217,11 @@ public class KittenManager : MonoSingleton<KittenManager>
 
     private void CheckGenderBalance()
     {
+        if (TutorialManager.Instance.IsPaused)
+        {
+            return;
+        }
+
         int maleCount = Kittens.FindAll(k => k.Male).Count;
         int femaleCount = Kittens.Count - maleCount;
 

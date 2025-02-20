@@ -7,6 +7,7 @@ public enum TutorialID
     Movement = 2,
     Kittens = 3, // stealing food, lifecycle
     ItemInteractions = 4, // pickup, drop, use
+    StatusEffect = 13,
 
     // items
     CardboardBoxUse = 5,

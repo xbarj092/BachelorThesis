@@ -36,6 +36,11 @@ public class HUD : MonoBehaviour
 
     private void UpdateTimer()
     {
+        if (TutorialManager.Instance.IsPaused)
+        {
+            return;
+        }
+
         _timer.text = TimeUtils.GetFormattedTimeFromSeconds(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive++);
     }
 

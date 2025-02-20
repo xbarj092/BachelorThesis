@@ -10,7 +10,7 @@ public class TutorialPlayer : MonoBehaviour
     [field: SerializeField] public TutorialID TutorialID { get; private set; }
 
     public TutorialAction Action;
-    [field: SerializeField] public TutorialStorage TutorialStorage { get; private set; }
+    [field: SerializeField] public TutorialStorage TutorialStorage;
 
     private int _currentMainTextIndex = -1;
 
@@ -77,6 +77,11 @@ public class TutorialPlayer : MonoBehaviour
 
     private IEnumerator FadeOutText()
     {
+        if (_text == null)
+        {
+            yield break;
+        }
+
         float startAlpha = _text.alpha;
         for (float t = 0; t < FADE_DURATION; t += Time.deltaTime)
         {
@@ -89,7 +94,11 @@ public class TutorialPlayer : MonoBehaviour
 
     private IEnumerator FadeInText()
     {
-        
+        if (_text == null)
+        {
+            yield break;
+        }
+
         float startAlpha = _text.alpha;
         for (float t = 0; t < FADE_DURATION; t += Time.deltaTime)
         {

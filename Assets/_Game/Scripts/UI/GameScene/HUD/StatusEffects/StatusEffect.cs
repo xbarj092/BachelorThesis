@@ -29,6 +29,11 @@ public class StatusEffect : MonoBehaviour
 
     private void TimeOutEffect()
     {
+        if (TutorialManager.Instance.IsPaused)
+        {
+            return;
+        }
+
         PlayerStats playerStats = LocalDataStorage.Instance.PlayerData.PlayerStats;
         StatusEffectData effectData = playerStats.StatusEffects.FirstOrDefault(effect => effect.Type == EffectData.Type);
 

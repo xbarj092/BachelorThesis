@@ -10,14 +10,14 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     [HideInInspector] public List<TutorialID> CompletedTutorialIDs = new();
     [HideInInspector] public List<TutorialPlayer> CompletedTutorials => TutorialList.Where(tutorial => CompletedTutorialIDs.Contains(tutorial.TutorialID)).ToList();
+    [HideInInspector] public TutorialPlayer CurrentTutorial { get; private set; }
 
-    public TutorialPlayer CurrentTutorial { get; private set; }
     [HideInInspector] public UseableItem CurrentItemInRange;
     [HideInInspector] public Kitten CurrentKittenInRange;
     [HideInInspector] public UseableItem CurrentItemToUse;
-    public bool IsPaused = false;
-    public bool CanUseItem = true;
-    public bool CanDropItem = true;
+    [HideInInspector] public bool IsPaused = false;
+    [HideInInspector] public bool CanUseItem = true;
+    [HideInInspector] public bool CanDropItem = true;
 
     public event Action<TutorialID> OnTutorialEnd;
 
@@ -166,4 +166,6 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     public bool IsTutorialPlaying() => CurrentTutorial != null;
     public bool IsTutorialCompleted(TutorialID tutorialID) => CompletedTutorialIDs.Contains(tutorialID);
+    public bool IsTutorialCompleted(ItemType itemType) => CompletedTutorialIDs.Contains(GetTutorialIDFromItemType(itemType));
+    public bool IsTutorialCompleted(ConsumableType consumableType) => CompletedTutorialIDs.Contains(GetTutorialIDFromConsumableType(consumableType));
 }

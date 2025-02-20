@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 971479895136808641}
   - component: {fileID: 3495403248338651926}
   - component: {fileID: 8435690181815596713}
+  - component: {fileID: 8871243606476021748}
+  - component: {fileID: 2014185760585038637}
   m_Layer: 5
   m_Name: TutorialSlot
   m_TagString: Untagged
@@ -149,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tutorialVideoPlayer: {fileID: 1687932937501031197, guid: 70abadd4d57fe52498e94aa0dfa101e9, type: 3}
-  _tutorialTitle: {fileID: 4641357490787846882}
+  _textFieldResizer: {fileID: 2014185760585038637}
 --- !u!114 &3495403248338651926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,6 +214,32 @@ MonoBehaviour:
   _targetGraphic: {fileID: 4641357490787846882}
   _highlightedColor: {r: 0.8784314, g: 0.6784314, b: 0.039215688, a: 1}
   _unhighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &8871243606476021748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266381889078072552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183e99367e25a3041a1ba0a1d7934b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2014185760585038637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266381889078072552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 514b12cd48c3caa48870396bfbeb1051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textField: {fileID: 4641357490787846882}
+  _rectTransform: {fileID: 4386120476455655023}
 --- !u!1 &2586531705288773293
 GameObject:
   m_ObjectHideFlags: 0

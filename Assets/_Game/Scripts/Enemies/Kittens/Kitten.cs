@@ -130,6 +130,11 @@ public class Kitten : Enemy
 
     private void Starve()
     {
+        if (TutorialManager.Instance.IsPaused)
+        {
+            return;
+        }
+
         _currentTimeToLive -= 1;
 
         if (_currentTimeToLive <= 0)

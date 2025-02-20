@@ -20,6 +20,11 @@ public class LeaderboardScreen : BaseScreen
 
     private void Refresh()
     {
+        if (TutorialManager.Instance.IsPaused)
+        {
+            return;
+        }
+
         StartCoroutine(LootLockerManager.Instance.FetchTopHighscoresRoutine(SetUpLeaderboardPositions));
     }
 

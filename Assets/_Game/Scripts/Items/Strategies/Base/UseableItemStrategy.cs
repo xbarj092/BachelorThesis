@@ -22,6 +22,10 @@ public abstract class UseableItemStrategy : StrategyBase<UseableItem, UseableIte
                 }
 
                 LocalDataStorage.Instance.PlayerData.UnlockedCollectibleData.AddUseable(item.Stats);
+                if (!TutorialManager.Instance.IsTutorialCompleted(item.Stats.ItemType) && !TutorialManager.Instance.IsTutorialPlaying())
+                {
+                    TutorialManager.Instance.InstantiateTutorial(item.Stats.ItemType);
+                }
                 inventoryData.ItemsInInventory[i] = item;
                 LocalDataStorage.Instance.PlayerData.InventoryData = inventoryData;
                 break;

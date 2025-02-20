@@ -1,10 +1,9 @@
-using TMPro;
 using UnityEngine;
 
 public class TutorialSlot : MonoBehaviour
 {
     [SerializeField] private TutorialVideoPlayer _tutorialVideoPlayer;
-    [SerializeField] private TMP_Text _tutorialTitle;
+    [SerializeField] private TextFieldResizer _textFieldResizer;
 
     private TutorialStorage _tutorial;
     private Transform _spawnTransform;
@@ -14,8 +13,7 @@ public class TutorialSlot : MonoBehaviour
         _tutorial = tutorial;
         _spawnTransform = spawnTransform;
 
-        _tutorialTitle.text = tutorial.Title;
-        // image
+        _textFieldResizer.UpdateText(tutorial.Title);
     }
 
     public void ShowTutorialVideo()

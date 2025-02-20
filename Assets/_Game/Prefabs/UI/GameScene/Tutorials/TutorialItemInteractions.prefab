@@ -94,7 +94,7 @@ MonoBehaviour:
   _text: {fileID: 5144796553989332178}
   <TutorialID>k__BackingField: 4
   Action: {fileID: 8598051612821270728}
-  <TutorialStorage>k__BackingField: {fileID: 11400000, guid: 4666df2b91c6d8046b9ac96fbca7fb2e, type: 2}
+  TutorialStorage: {fileID: 11400000, guid: 4666df2b91c6d8046b9ac96fbca7fb2e, type: 2}
 --- !u!1 &2794516515646002782
 GameObject:
   m_ObjectHideFlags: 0

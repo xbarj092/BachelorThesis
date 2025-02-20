@@ -280,11 +280,22 @@ MonoBehaviour:
   - {fileID: 2948798742160830293, guid: adb80dda80f648b4c98bf9966807acac, type: 3}
   - {fileID: 1553658184631962313, guid: 7316d6109960c904e94c32cfd0d47400, type: 3}
   - {fileID: 1278021128136280661, guid: 6657d941063be224da81a7010a37447b, type: 3}
+  - {fileID: 8450317158229500636, guid: 86db6f4f2a8e79144a8dac724ff94570, type: 3}
+  - {fileID: 8450317158229500636, guid: 4a4cbd1bbcadf4941b070146a38ed6ba, type: 3}
+  - {fileID: 8450317158229500636, guid: 03741f45ebec8ac449c49ba019cd5358, type: 3}
+  - {fileID: 8450317158229500636, guid: e4fd50b442b42504e91a07d7d81dcfdd, type: 3}
+  - {fileID: 8450317158229500636, guid: 04b67743099f8a642a020e60a72c3443, type: 3}
+  - {fileID: 8450317158229500636, guid: f7510e4f5b0597f40bb8a2ec06f95d69, type: 3}
+  - {fileID: 8450317158229500636, guid: b15de5264ce73c7428b15419ed54a1c4, type: 3}
+  - {fileID: 8450317158229500636, guid: c32c9e1b8adaf03409c358c623868bc1, type: 3}
+  - {fileID: 2948798742160830293, guid: f5f7dc04bba90dd4f8036b051e9fcba8, type: 3}
   CompletedTutorialIDs: 
   CurrentItemInRange: {fileID: 0}
   CurrentKittenInRange: {fileID: 0}
+  CurrentItemToUse: {fileID: 0}
   IsPaused: 0
   CanUseItem: 1
+  CanDropItem: 1
 --- !u!1 &6297308481549680904
 GameObject:
   m_ObjectHideFlags: 0
