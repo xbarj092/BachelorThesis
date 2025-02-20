@@ -227,7 +227,7 @@ MonoBehaviour:
       Value: {fileID: 2492351062735055466, guid: 30f5dfe55936138488d5cb1bec4884ff, type: 2}
     - Key: 3
       Value: {fileID: 5411111184790683999, guid: 30f5dfe55936138488d5cb1bec4884ff, type: 2}
-  _mixer: {fileID: 24300002, guid: 30f5dfe55936138488d5cb1bec4884ff, type: 2}
+  _masterMixer: {fileID: 24300002, guid: 30f5dfe55936138488d5cb1bec4884ff, type: 2}
   _sounds:
   - Name: 0
     Group: 1

@@ -8,7 +8,7 @@ public class AudioManager : MonoSingleton<AudioManager>
 {
     [SerializeField] private bool _spacialBlend;
     [SerializeField] private SerializedDictionary<SoundGroup, AudioMixerGroup> _mixers = new();
-    [SerializeField] private AudioMixerGroup _mixer;
+    [SerializeField] private AudioMixerGroup _masterMixer;
     [SerializeField] private List<Sound> _sounds;
 
     public bool Muted = false;
@@ -71,7 +71,7 @@ public class AudioManager : MonoSingleton<AudioManager>
 
     public void SetSoundVolume(SoundGroup group, float volume)
     {
-        _mixer.audioMixer.SetFloat(GetNameFromGroup(group), volume);
+        _masterMixer.audioMixer.SetFloat(GetNameFromGroup(group), volume);
     }
 
     private string GetNameFromGroup(SoundGroup group)
