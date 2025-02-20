@@ -219,13 +219,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spacialBlend: 0
-  _mixer: {fileID: 0}
+  _mixers:
+    _serializedList:
+    - Key: 2
+      Value: {fileID: -6805654092006982248, guid: 30f5dfe55936138488d5cb1bec4884ff, type: 2}
+    - Key: 1
+      Value: {fileID: 2492351062735055466, guid: 30f5dfe55936138488d5cb1bec4884ff, type: 2}
+    - Key: 3
+      Value: {fileID: 5411111184790683999, guid: 30f5dfe55936138488d5cb1bec4884ff, type: 2}
+  _mixer: {fileID: 24300002, guid: 30f5dfe55936138488d5cb1bec4884ff, type: 2}
   _sounds:
   - Name: 0
-    Group: 0
+    Group: 1
     Clip: {fileID: 0}
     SpatialBlend: 0
-    NumberOfSource: 0
+    NumberOfSource: 1
+    Volume: 0
+    Pitch: 0
+    Source: []
+  - Name: 0
+    Group: 3
+    Clip: {fileID: 0}
+    SpatialBlend: 0
+    NumberOfSource: 1
     Volume: 0
     Pitch: 0
     Source: []

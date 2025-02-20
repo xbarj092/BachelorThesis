@@ -14,7 +14,6 @@ public class TutorialMovementAction : TutorialAction
 
     public override void StartAction()
     {
-        _tutorialPlayer.SetTextLocalPosition(Vector2.zero);
         _tutorialPlayer.MoveToNextNarratorText();
 
         ReadOnlyArray<InputBinding> bindings = _movementAction.action.bindings;

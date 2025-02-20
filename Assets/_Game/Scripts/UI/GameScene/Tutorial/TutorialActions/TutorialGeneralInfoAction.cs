@@ -9,6 +9,9 @@ public class TutorialGeneralInfoAction : TutorialAction
     [SerializeField] private Image _hungerMeterCutout;
     [SerializeField] private Image _timeAliveCutout;
 
+    [SerializeField] private RectTransform _hungerMeterTransform;
+    [SerializeField] private RectTransform _timeAliveTransform;
+
     private event Action CurrentMouseClickAction;
 
     private void Update()
@@ -29,6 +32,7 @@ public class TutorialGeneralInfoAction : TutorialAction
         Time.timeScale = 0f;
         _background.gameObject.SetActive(true);
         _hungerMeterCutout.gameObject.SetActive(true);
+        _tutorialPlayer.SetTextTransform(_hungerMeterTransform);
         _tutorialPlayer.MoveToNextNarratorText();
         CurrentMouseClickAction = OnAfterHungerMeter;
     }
@@ -37,6 +41,7 @@ public class TutorialGeneralInfoAction : TutorialAction
     {
         _hungerMeterCutout.gameObject.SetActive(false);
         _timeAliveCutout.gameObject.SetActive(true);
+        _tutorialPlayer.SetTextTransform(_timeAliveTransform);
         _tutorialPlayer.MoveToNextNarratorText();
         CurrentMouseClickAction = OnAfterTimeAlive;
     }

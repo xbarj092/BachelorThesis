@@ -431,6 +431,11 @@ public class PlayerInteraction : MonoBehaviour
             return;
         }
 
+        if (!TutorialManager.Instance.IsTutorialCompleted(item.Stats.ItemType) && !TutorialManager.Instance.IsTutorialPlaying())
+        {
+            TutorialManager.Instance.InstantiateTutorial(item.Stats.ItemType);
+        }
+
         item.IsPickedUp(true);
         _carryingItem = item;
         HideItemAndCreateGhost(item);

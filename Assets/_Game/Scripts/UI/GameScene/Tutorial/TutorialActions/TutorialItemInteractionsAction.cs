@@ -16,6 +16,10 @@ public class TutorialItemInteractionsAction : TutorialAction
     [SerializeField] private Image _inventoryCutout;
     [SerializeField] private Image _itemCutout;
 
+    [SerializeField] private RectTransform _itemOnGroundTransform;
+    [SerializeField] private RectTransform _inventoryTransform;
+    [SerializeField] private RectTransform _itemTransform;
+
     private CinemachineVirtualCamera _cinemachineCamera;
     private Transform _player;
 
@@ -40,16 +44,17 @@ public class TutorialItemInteractionsAction : TutorialAction
         StartCoroutine(DelayedItemHighlight());
         TutorialManager.Instance.CurrentItemInRange.Highlight();
         _itemOnGroundCutout.sprite = TutorialManager.Instance.CurrentItemInRange.Stats.Sprite;
-        _tutorialPlayer.MoveToNextNarratorText();
-        _tutorialPlayer.PublicText.text = string.Format(_tutorialPlayer.PublicText.text, _leftClickAction.action.GetBindingDisplayString());
         TutorialEvents.OnItemPickedUp += OnAfterItemPickedUp;
     }
 
     private IEnumerator DelayedItemHighlight()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(1);
         _itemOnGroundCutout.transform.position = Camera.main.WorldToScreenPoint(TutorialManager.Instance.CurrentItemInRange.transform.position);
         _itemOnGroundCutout.gameObject.SetActive(true);
+        _tutorialPlayer.SetTextTransform(_itemOnGroundTransform);
+        _tutorialPlayer.MoveToNextNarratorText();
+        _tutorialPlayer.PublicText.text = string.Format(_tutorialPlayer.PublicText.text, _leftClickAction.action.GetBindingDisplayString());
     }
 
     private void OnAfterItemPickedUp()
@@ -58,6 +63,7 @@ public class TutorialItemInteractionsAction : TutorialAction
         _cinemachineCamera.m_Follow = _player;
         _itemOnGroundCutout.gameObject.SetActive(false);
         _inventoryCutout.gameObject.SetActive(true);
+        _tutorialPlayer.SetTextTransform(_inventoryTransform);
         _tutorialPlayer.MoveToNextNarratorText();
         _tutorialPlayer.PublicText.text = string.Format(_tutorialPlayer.PublicText.text, _rightClickAction.action.GetBindingDisplayString());
         TutorialManager.Instance.CanUseItem = false;
@@ -70,6 +76,7 @@ public class TutorialItemInteractionsAction : TutorialAction
         TutorialEvents.OnItemPlacedInInventory -= OnAfterItemPlacedInInventory;
         _inventoryCutout.gameObject.SetActive(false);
         _itemCutout.gameObject.SetActive(true);
+        _tutorialPlayer.SetTextTransform(_itemTransform);
         _tutorialPlayer.MoveToNextNarratorText();
         _tutorialPlayer.PublicText.text = string.Format(_tutorialPlayer.PublicText.text, _rightClickAction.action.GetBindingDisplayString());
         TutorialEvents.OnItemPickedUpFromInventory += OnAfterItemPickedUpFromInventory;

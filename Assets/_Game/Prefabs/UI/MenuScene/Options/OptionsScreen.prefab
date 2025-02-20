@@ -158,6 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameScreenType: 6
+  _tutorialButton: {fileID: 1896107431548149090}
 --- !u!1 &7589507674640891145
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,6 +658,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}
+--- !u!1 &1896107431548149090 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6584961228283351448, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}
+  m_PrefabInstance: {fileID: 4697862374955896058}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2683180103966105573 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7209905551203947295, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}

@@ -20,6 +20,7 @@ public class TutorialItemUseAction : TutorialAction
     private void OnDisable()
     {
         CurrentMouseClickAction = null;
+        TutorialManager.Instance.IsPaused = false;
     }
 
     public override void StartAction()

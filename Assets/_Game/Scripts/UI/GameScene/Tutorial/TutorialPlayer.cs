@@ -51,6 +51,12 @@ public class TutorialPlayer : MonoBehaviour
         _text.gameObject.SetActive(true);
     }
 
+    public void SetTextTransform(RectTransform transform)
+    {
+        _text.rectTransform.sizeDelta = transform.sizeDelta;
+        SetTextLocalPosition(transform.localPosition);
+    }
+
     public RectTransform GetTextTransform()
     {
         return _text.rectTransform;

@@ -1,5 +1,14 @@
+using UnityEngine;
+
 public class OptionsScreen : BaseScreen
 {
+    [SerializeField] private GameObject _tutorialButton;
+
+    private void Start()
+    {
+        _tutorialButton.SetActive(SceneLoadManager.Instance.IsSceneLoaded(SceneLoader.Scenes.MenuScene));
+    }
+
     public void KeyBindings()
     {
         Destroy(gameObject);

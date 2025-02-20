@@ -14,6 +14,10 @@ public class TutorialKittensAction : TutorialAction
     [SerializeField] private Image _kittenCutout;
     [SerializeField] private Image _itemCutout;
 
+    [SerializeField] private RectTransform _kittenTransform;
+    [SerializeField] private RectTransform _noItemTransform;
+    [SerializeField] private RectTransform _itemTransform;
+
     [SerializeField] private SerializedDictionary<ItemType, List<string>> _itemStrings;
 
     private List<string> _strings = new();
@@ -36,6 +40,8 @@ public class TutorialKittensAction : TutorialAction
     private void OnDisable()
     {
         TutorialManager.Instance.IsPaused = false;
+        TutorialManager.Instance.CanUseItem = true;
+        TutorialManager.Instance.CanDropItem = true;
         CurrentMouseClickAction = null;
         TutorialEvents.OnItemPickedUpFromInventory -= OnItemPickedUpFromInventory;
         TutorialEvents.OnItemUsed -= OnItemUsed;
@@ -50,15 +56,17 @@ public class TutorialKittensAction : TutorialAction
         TutorialManager.Instance.IsPaused = true;
         _background.gameObject.SetActive(true);
         StartCoroutine(DelayedItemHighlight());
-        _tutorialPlayer.MoveToNextNarratorText();
         CurrentMouseClickAction = OnAfterKittenHighlighted;
     }
 
     private IEnumerator DelayedItemHighlight()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         _kittenCutout.transform.position = Camera.main.WorldToScreenPoint(TutorialManager.Instance.CurrentKittenInRange.transform.position);
         _kittenCutout.gameObject.SetActive(true);
+        TutorialManager.Instance.CurrentKittenInRange.Highlight();
+        _tutorialPlayer.MoveToNextNarratorText();
+        _tutorialPlayer.SetTextTransform(_kittenTransform);
     }
 
     private void OnAfterKittenHighlighted()
@@ -109,8 +117,11 @@ public class TutorialKittensAction : TutorialAction
     {
         // highlight item slot on the index
         _kittenCutout.gameObject.SetActive(false);
+        TutorialManager.Instance.CurrentKittenInRange.Unhighlight();
         _itemCutout.gameObject.SetActive(true);
-        _itemCutout.transform.position += new Vector3(ITEM_HIGHLIGHT_OFFSET * index, 0);
+        _itemCutout.transform.localPosition += new Vector3(ITEM_HIGHLIGHT_OFFSET * index, 0);
+        _tutorialPlayer.SetTextTransform(_itemTransform);
+        _tutorialPlayer.SetTextLocalPosition(_tutorialPlayer.PublicText.transform.localPosition + new Vector3(ITEM_HIGHLIGHT_OFFSET * index, 0));
         _strings = strings;
         _tutorialPlayer.PublicText.text = _strings[0];
         TutorialManager.Instance.CurrentItemToUse = LocalDataStorage.Instance.PlayerData.InventoryData.ItemsInInventory[index];
@@ -120,7 +131,6 @@ public class TutorialKittensAction : TutorialAction
     private void OnItemPickedUpFromInventory()
     {
         TutorialEvents.OnItemPickedUpFromInventory -= OnItemPickedUpFromInventory;
-        _kittenCutout.gameObject.SetActive(true);
         _itemCutout.gameObject.SetActive(false);
         TutorialEvents.OnItemUsed += OnItemUsed;
     }
@@ -128,7 +138,8 @@ public class TutorialKittensAction : TutorialAction
     private void OnItemUsed()
     {
         TutorialEvents.OnItemUsed -= OnItemUsed;
-        _kittenCutout.gameObject.SetActive(false);
+        TutorialManager.Instance.CanUseItem = false;
+        TutorialManager.Instance.CanDropItem = false;
         _background.gameObject.SetActive(false);
         _tutorialPlayer.PublicText.text = _strings[1];
         CurrentMouseClickAction = null;
@@ -150,6 +161,7 @@ public class TutorialKittensAction : TutorialAction
     private void NoItemsInInventory()
     {
         _tutorialPlayer.MoveToNextNarratorText();
+        _tutorialPlayer.SetTextTransform(_noItemTransform);
         _kittenCutout.gameObject.SetActive(false);
         _background.gameObject.SetActive(false);
         CurrentMouseClickAction = OnAfterSilentWalkNotified;
@@ -163,5 +175,7 @@ public class TutorialKittensAction : TutorialAction
 
     public override void Exit()
     {
+        TutorialManager.Instance.CanUseItem = true;
+        TutorialManager.Instance.CanDropItem = true;
     }
 }

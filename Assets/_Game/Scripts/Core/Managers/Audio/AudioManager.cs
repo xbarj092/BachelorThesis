@@ -1,3 +1,4 @@
+using AYellowpaper.SerializedCollections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,10 +7,16 @@ using UnityEngine.Audio;
 public class AudioManager : MonoSingleton<AudioManager>
 {
     [SerializeField] private bool _spacialBlend;
+    [SerializeField] private SerializedDictionary<SoundGroup, AudioMixerGroup> _mixers = new();
     [SerializeField] private AudioMixerGroup _mixer;
     [SerializeField] private List<Sound> _sounds;
 
     public bool Muted = false;
+
+    private const string MASTER_VOLUME = "MasterVolume";
+    private const string SFX_VOLUME = "SFXVolume";
+    private const string MUSIC_VOLUME = "MusicVolume";
+    private const string UI_VOLUME = "UIVolume";
 
     private void Awake()
     {
@@ -24,7 +31,7 @@ public class AudioManager : MonoSingleton<AudioManager>
                 source.volume = sound.Volume;
                 source.pitch = sound.Pitch;
                 source.spatialBlend = sound.SpatialBlend;
-                source.outputAudioMixerGroup = _mixer;
+                source.outputAudioMixerGroup = _mixers[sound.Group];
                 sound.Source.Add(source);
             }
         }
@@ -62,14 +69,20 @@ public class AudioManager : MonoSingleton<AudioManager>
         return foundSound.Source.Exists((source) => source.isPlaying);
     }
 
-    public void ToggleMute(bool mute)
+    public void SetSoundVolume(SoundGroup group, float volume)
     {
-        Muted = mute;
-        AudioListener.volume = mute ? 0 : 1;
+        _mixer.audioMixer.SetFloat(GetNameFromGroup(group), volume);
     }
 
-    public void ToggleMute(bool mute, SoundGroup group)
+    private string GetNameFromGroup(SoundGroup group)
     {
-
+        return group switch
+        {
+            SoundGroup.None => MASTER_VOLUME,
+            SoundGroup.SFX => SFX_VOLUME,
+            SoundGroup.Music => MUSIC_VOLUME,
+            SoundGroup.UI => UI_VOLUME,
+            _ => null
+        };
     }
 }

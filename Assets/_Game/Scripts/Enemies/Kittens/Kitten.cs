@@ -17,6 +17,8 @@ public class Kitten : Enemy
     [SerializeField] private Sprite _defaultSprite;
     [SerializeField] private Sprite _focusedSprite;
     [SerializeField] private Sprite _trappedSprite;
+    [SerializeField] private Material _defaultMaterial;
+    [SerializeField] private Material _outlineMaterial;
 
     [Header("Field of View Settings")]
     [SerializeField] private float _viewRange = 5f;
@@ -401,5 +403,17 @@ public class Kitten : Enemy
         _matingTimeout = savedKitten.MatingTimeout;
 
         StartCoroutine(Init((StateType)savedKitten.CurrentState));
+    }
+
+    public void Highlight()
+    {
+        _renderer.material = _outlineMaterial;
+        _renderer.material.SetInt("_Outlined", 1);
+    }
+
+    public void Unhighlight()
+    {
+        _renderer.material.SetInt("_Outlined", 0);
+        _renderer.material = _defaultMaterial;
     }
 }

@@ -18,6 +18,7 @@ public class TutorialStatusEffect : TutorialAction
 
     private void OnDisable()
     {
+        TutorialManager.Instance.IsPaused = false;
         CurrentMouseClickAction = null;
     }
 
