@@ -1,23 +1,3 @@
-public enum TutorialID
-{
-    None = 0,
-
-    // general
-    GeneralInfo = 1,
-    Movement = 2,
-    Kittens = 3, // stealing food, lifecycle
-    ItemInteractions = 4, // pickup, drop, use
-    StatusEffect = 13,
-
-    // items
-    CardboardBoxUse = 5,
-    CastrationKitUse = 6,
-    ClothespinUse = 7,
-    TowelUse = 8,
-    LaserUse = 9,
-    MouseUse = 10,
-
-    // food
-    FoodPickup = 11,
-    InvisibilityPotionPickup = 12,
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:45f38bbaed5151e95805b477d67e1cac9e5013615971fb9e341ec77c4b65c912
+size 423

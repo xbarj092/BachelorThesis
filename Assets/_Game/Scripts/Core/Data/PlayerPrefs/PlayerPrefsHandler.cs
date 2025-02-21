@@ -1,32 +1,3 @@
-using UnityEngine;
-using Newtonsoft.Json;
-
-public class PlayerPrefsHandler
-{
-    public void SaveData<T>(string key, T data)
-    {
-        string jsonData = JsonConvert.SerializeObject(data);
-        PlayerPrefs.SetString(key, jsonData);
-        PlayerPrefs.Save();
-    }
-
-    public T LoadData<T>(string key)
-    {
-        if (PlayerPrefs.HasKey(key))
-        {
-            string jsonData = PlayerPrefs.GetString(key);
-            return JsonConvert.DeserializeObject<T>(jsonData);
-        }
-
-        return default;
-    }
-
-    public void DeleteData(string key)
-    {
-        if (PlayerPrefs.HasKey(key))
-        {
-            PlayerPrefs.DeleteKey(key);
-            PlayerPrefs.Save();
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:3084db171e67e0f17f71d78e6c416f4f60d3ce29d8cc81ba225b3466d72191ab
+size 708

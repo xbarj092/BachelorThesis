@@ -1,21 +1,3 @@
-using UnityEngine;
-using UnityEngine.UI;
-
-public class ColoredUIHighlighter : UIHighlighter
-{
-    [SerializeField] private Graphic _targetGraphic;
-    [SerializeField] private Color _highlightedColor;
-    [SerializeField] private Color _unhighlightedColor;
-
-    public override void Highlight()
-    {
-        _targetGraphic.color = _highlightedColor;
-        base.Highlight();
-    }
-
-    public override void Unhighlight()
-    {
-        _targetGraphic.color = _unhighlightedColor;
-        base.Unhighlight();
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:1285b053bc31d57b6a78992ac1df87f7952473f2bb61ea619ac08d883a6f562f
+size 517

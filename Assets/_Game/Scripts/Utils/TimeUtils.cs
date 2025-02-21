@@ -1,26 +1,3 @@
-using System;
-
-public static class TimeUtils
-{
-    public static string GetFormattedTimeFromSeconds(int seconds)
-    {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(seconds);
-
-        string timeText = "";
-
-        int totalHours = (int)timeSpan.TotalHours;
-
-        if (totalHours > 0)
-        {
-            timeText += $"{totalHours}H ";
-        }
-        if (timeSpan.Minutes > 0 || totalHours > 0)
-        {
-            timeText += $"{timeSpan.Minutes}M ";
-        }
-
-        timeText += $"{timeSpan.Seconds}S";
-
-        return timeText.Trim();
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:0d8087e2f55121933680a0a031d7fffad692c104d07966ce8ec4c4a119f8bdb7
+size 560

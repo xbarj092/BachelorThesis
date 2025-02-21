@@ -1,22 +1,3 @@
-public class Towel : UseableItem
-{
-    public override void SaveItem()
-    {
-        SavedUseableItem savedItem = new(new(transform), (int)Stats.ItemType, UID, Dropped, Used, gameObject.activeInHierarchy);
-        LocalDataStorage.Instance.GameData.ItemData.SavedItems.Add(savedItem);
-    }
-
-    public override void SaveInventoryItem()
-    {
-        SavedUseableItem savedItem = new(new(transform), (int)Stats.ItemType, UID, Dropped, Used, gameObject.activeInHierarchy);
-        LocalDataStorage.Instance.PlayerData.SavedInventoryData.SavedItems.Add(savedItem);
-    }
-
-    public override void LoadItem(SavedUseableItem item)
-    {
-        if ((ItemType)item.ItemType == Stats.ItemType)
-        {
-            item.ApplyToItem(this);
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:a8ac787e9872b15b0d5ec1a0aa588cd7b6c42c6fe01f28314a79b15d78f6ec9e
+size 752

@@ -1,24 +1,3 @@
-public enum GameScreenType
-{
-    None = 0,
-    MenuMain = 1,
-    Death = 2,
-    Pause = 3,
-    HUD = 4,
-    Loading = 5,
-    Options = 6,
-    LoadGame = 7,
-    Leaderboard = 8,
-    SelectGameMode = 9,
-    NewGame = 10,
-    KeyBindings = 11,
-    AudioSettings = 12,
-    AboutGame = 13,
-    Collectibles = 14,
-    Items = 15,
-    Enemies = 16,
-    Consumables = 17,
-    Misc = 18,
-    Tutorials = 19,
-    ReplayTutorial = 20,
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:57c11f321cf9dff9e4d433dff279a9d43fe6a0da2930d09fa19a79a0e6f89248
+size 426

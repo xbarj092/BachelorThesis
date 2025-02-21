@@ -1,22 +1,3 @@
-using System;
-using UnityEngine;
-
-[Serializable]
-public class Vector3Data
-{
-    public float x;
-    public float y;
-    public float z;
-
-    public Vector3Data(Vector3 vector)
-    {
-        x = vector.x;
-        y = vector.y;
-        z = vector.z;
-    }
-
-    public Vector3 ToVector3()
-    {
-        return new Vector3(x, y, z);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:81b4bb46a756d980bf303e13032d0ae2b871c52aac0f88f84605309f84cbfd04
+size 337

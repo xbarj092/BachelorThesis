@@ -1,18 +1,3 @@
-using UnityEngine;
-using DG.Tweening;
-
-public class UIHighlighter : MonoBehaviour
-{
-    [SerializeField] private Vector3 _highlightedScale;
-    [SerializeField] private float _animationTime;
-
-    public virtual void Highlight()
-    {
-        transform.DOScale(_highlightedScale, _animationTime).SetUpdate(true);
-    }
-
-    public virtual void Unhighlight()
-    {
-        transform.DOScale(Vector3.one, _animationTime).SetUpdate(true);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:6fe445e5e4cdb5b05517e46ce5f376a6453395315400565d1fde9ddb20d24f99
+size 443

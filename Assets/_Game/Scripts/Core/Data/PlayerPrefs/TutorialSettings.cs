@@ -1,15 +1,3 @@
-using System;
-using System.Collections.Generic;
-
-[Serializable] 
-public class TutorialSettings
-{
-    public List<int> CompletedTutorials;
-    public bool TutorialEnabled;
-
-    public TutorialSettings(List<int> completedTutorials, bool tutorialEnabled)
-    {
-        CompletedTutorials = completedTutorials;
-        TutorialEnabled = tutorialEnabled;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:1a9d6ba5b629c40bacead46707947956bcc8ea7e1a75d536c126ca06d5a55ba8
+size 358

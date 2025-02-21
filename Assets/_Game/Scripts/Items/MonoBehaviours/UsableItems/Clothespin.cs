@@ -1,19 +1,3 @@
-public class Clothespin : UseableItem
-{
-    public override void SaveItem()
-    {
-        SavedUseableItem savedItem = new(new(transform), (int)Stats.ItemType, UID, Dropped, Used, gameObject.activeInHierarchy);
-        LocalDataStorage.Instance.GameData.ItemData.SavedItems.Add(savedItem);
-    }
-
-    public override void SaveInventoryItem()
-    {
-        SavedUseableItem savedItem = new(new(transform), (int)Stats.ItemType, UID, Dropped, Used, gameObject.activeInHierarchy);
-        LocalDataStorage.Instance.PlayerData.SavedInventoryData.SavedItems.Add(savedItem);
-    }
-
-    public override void LoadItem(SavedUseableItem item)
-    {
-        item.ApplyToItem(this);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:618d28d7bf19ef1263dc4910f643af643cee56c494913f9d9e63c246358152ea
+size 678

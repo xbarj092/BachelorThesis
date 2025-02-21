@@ -1,34 +1,3 @@
-using UnityEngine;
-
-public class TrappedState : BaseState
-{
-    public override void OnStateEnter()
-    {
-        Debug.Log("[TrappedState] - entered trapped state");
-    }
-
-    public override BaseState ExecuteState()
-    {
-        if (_kitten.IsDead && _brain.GetState(StateType.Death, out BaseState deathState))
-        {
-            return deathState;
-        }
-
-        if (_kitten.IsRunningAway && _brain.GetState(StateType.RunningAway, out BaseState runningAwayState))
-        {
-            return runningAwayState;
-        }
-
-        if (!_kitten.IsTrapped && _brain.GetState(StateType.Idle, out BaseState idleState))
-        {
-            return idleState;
-        }
-
-        return null;
-    }
-
-    public override void OnStateExit()
-    {
-        Debug.Log("[TrappedState] - exitted trapped state");
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:13ffe296d4eb1f75055c2f29acf128e7c72cc627361509f6ec31b7674dd21f0d
+size 819

@@ -1,16 +1,3 @@
-using System;
-
-[Serializable]
-public class StatusEffectData
-{
-    public int Type;
-    public int OriginalTimeLeft;
-    public int CurrentTimeLeft;
-
-    public StatusEffectData(int type, int originalTimeLeft)
-    {
-        Type = type;
-        OriginalTimeLeft = originalTimeLeft;
-        CurrentTimeLeft = OriginalTimeLeft;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:bc096a020be923f57da0b61f0e43bca2d3571c907c4476dd159d9e52b52a8700
+size 333

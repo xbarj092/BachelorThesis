@@ -1,16 +1,3 @@
-using System;
-
-public static class ScreenEvents
-{
-    public static event Action<GameScreenType> OnGameScreenOpened;
-    public static void OnGameScreenOpenedInvoke(GameScreenType gameScreenType)
-    {
-        OnGameScreenOpened?.Invoke(gameScreenType);
-    }
-
-    public static event Action<GameScreenType> OnGameScreenClosed;
-    public static void OnGameScreenClosedInvoke(GameScreenType gameScreenType)
-    {
-        OnGameScreenClosed?.Invoke(gameScreenType);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d9615113b6f24ba95febef34874b56cd0acd27e8de6a8d5ac154c90dab933b05
+size 473

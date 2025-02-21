@@ -1,21 +1,3 @@
-using AYellowpaper.SerializedCollections;
-using UnityEngine;
-
-[CreateAssetMenu(fileName = "SystemSettings", menuName = "Game/SystemSettings", order = 0)]
-public class SystemSettings : ScriptableObject
-{
-    public enum Environment
-    {
-        Test,
-        ProdProcGen,
-        ProdHandMade,
-    }
-
-    public Environment CurrentEnvironment;
-
-    [Header("LootLocker API Endpoints")]
-    public SerializedDictionary<Environment, string> LootLockerLeaderboardIDs = new();
-
-    [Header("Services Environments")]
-    public SerializedDictionary<Environment, string> ServiceEnvironmentIDs = new();
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d608afa8ce5725313ba88f77a08bda5f4afc3a42fbbe5a584beefe08ae81947f
+size 598

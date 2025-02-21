@@ -1,20 +1,3 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-
-[Serializable]
-public class Sound 
-{
-    public SoundType Name;
-    public SoundGroup Group;
-
-    public AudioClip Clip;
-
-    public float SpatialBlend;
-    public int NumberOfSource = 1;
-
-    [Range(0f, 1f)] public float Volume;
-    [Range(0.1f, 3f)] public float Pitch;
-
-    [HideInInspector] public List<AudioSource> Source;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:a9ccf11137eb0398e8e684e46d698024ff08ce3264a3f761cb55b25b0c4d1e14
+size 398

@@ -1,20 +1,3 @@
-using TMPro;
-using UnityEngine;
-
-public class TextFieldResizer : MonoBehaviour
-{
-    [SerializeField] private TMP_Text _textField;
-    [SerializeField] private RectTransform _rectTransform;
-
-    public void UpdateText(string newText)
-    {
-        _textField.text = newText;
-        ResizeToFitText();
-    }
-
-    private void ResizeToFitText()
-    {
-        Vector2 newSize = new(_textField.preferredWidth, _textField.preferredHeight);
-        _rectTransform.sizeDelta = newSize;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:bdc85a9efe9a6dbea776b2020698dca10b84f5fee103270bcf07564dcf2dd0fe
+size 488

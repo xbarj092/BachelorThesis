@@ -1,34 +1,3 @@
-using System;
-using UnityEngine;
-
-[Serializable]
-public class TransformData
-{
-    public Vector3Data Position;
-    public QuaternionData Rotation;
-    public Vector3Data Scale;
-
-    public TransformData(Transform transform)
-    {
-        if (transform == null)
-        {
-            return;
-        }
-
-        Position = new Vector3Data(transform.position);
-        Rotation = new QuaternionData(transform.rotation);
-        Scale = new Vector3Data(transform.localScale);
-    }
-
-    public void ApplyToTransform(Transform transform)
-    {
-        if (transform == null)
-        {
-            return;
-        }
-
-        transform.position = Position.ToVector3();
-        transform.rotation = Rotation.ToQuaternion();
-        transform.localScale = Scale.ToVector3();
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e61afacf643925834dc4138db5d55bed41935511630c0d0dcd43ba21ba849db7
+size 774

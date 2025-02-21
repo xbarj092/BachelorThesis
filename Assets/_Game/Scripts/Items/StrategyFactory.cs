@@ -1,27 +1,3 @@
-public class StrategyFactory
-{
-    public UseableItemStrategy CreateStrategy(ItemType itemType)
-    {
-        return itemType switch
-        {
-            ItemType.Laser => new LaserItemStrategy(),
-            ItemType.Mouse => new MouseItemStrategy(),
-            ItemType.CastrationKit => new CastrationKitItemStrategy(),
-            ItemType.Towel => new TowelItemStrategy(),
-            ItemType.Clothespin => new ClothespinItemStrategy(),
-            ItemType.CardboardBox => new CardboardBoxItemStrategy(),
-            _ => null,
-        };
-    }
-
-    public ConsumableItemStrategy CreateStrategy(ConsumableType consumableType)
-    {
-        return consumableType switch
-        {
-            ConsumableType.Fish => new FishItemStrategy(),
-            ConsumableType.Steak => new SteakItemStrategy(),
-            ConsumableType.InvisibilityPotion => new PotionItemStrategy(),
-            _ => null,
-        };
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:694b9bc992fcad512dc39ea1ddc3a7a2c70aa7c1fc9da7df9bdce8e7506b67b6
+size 924

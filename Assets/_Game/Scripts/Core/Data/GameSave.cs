@@ -1,33 +1,3 @@
-using System;
-
-[Serializable]
-public class GameSave
-{
-    public string Name;
-    public byte[] Image;
-
-    public TransformData PlayerTransform;
-    public PlayerStats PlayerStats;
-    public SavedInventoryData SavedInventoryData;
-
-    public GameSeeds GameSeeds;
-    public KittenData KittenData;
-    public FoodData FoodData;
-    public ItemData ItemData;
-
-    public GameSave(byte[] image, TransformData playerTransform, PlayerStats playerStats, SavedInventoryData savedInventoryData, 
-        GameSeeds gameSeeds, KittenData kittenData, FoodData foodData, ItemData itemData)
-    {
-        Name = LocalDataStorage.Instance.PlayerPrefs.LoadPlayerName();
-        Image = image;
-
-        PlayerTransform = playerTransform;
-        PlayerStats = playerStats;
-        SavedInventoryData = savedInventoryData;
-
-        GameSeeds = gameSeeds;
-        KittenData = kittenData;
-        FoodData = foodData;
-        ItemData = itemData;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e70720e11e126843be4f07148e81857c1eae0cfcf3da253fc0e881e758045ca9
+size 939

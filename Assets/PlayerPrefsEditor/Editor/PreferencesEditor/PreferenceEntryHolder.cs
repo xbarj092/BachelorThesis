@@ -1,29 +1,3 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-namespace BgTools.PlayerPrefsEditor
-{
-    [System.Serializable]
-    public class PreferenceEntryHolder : ScriptableObject
-    {
-        public List<PreferenceEntry> userDefList;
-        public List<PreferenceEntry> unityDefList;
-
-        private void OnEnable()
-        {
-            hideFlags = HideFlags.DontSave;
-            if (userDefList == null)
-                userDefList = new List<PreferenceEntry>();
-            if (unityDefList == null)
-                unityDefList = new List<PreferenceEntry>();
-        }
-
-        public void ClearLists()
-        {
-            if (userDefList != null)
-                userDefList.Clear();
-            if (unityDefList != null)
-                unityDefList.Clear();
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:570abfe9c6a517e5c18408163c8e674b2c097604d66d45d9de7f406389d5869c
+size 788

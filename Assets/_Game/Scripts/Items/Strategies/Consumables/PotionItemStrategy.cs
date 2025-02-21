@@ -1,20 +1,3 @@
-using System.Linq;
-
-public class PotionItemStrategy : ConsumableItemStrategy
-{
-    public override void PickUp(ConsumableItem item)
-    {
-        PlayerStats playerStats = LocalDataStorage.Instance.PlayerData.PlayerStats;
-        if (!playerStats.StatusEffects.Any(effect => effect.Type == (int)StatusEffectType.Invisibility))
-        {
-            playerStats.StatusEffects.Add(new((int)StatusEffectType.Invisibility, ((PotionItemSO)item.Stats).Duration));
-        }
-        else
-        {
-            playerStats.StatusEffects.FirstOrDefault(effect => effect.Type == (int)StatusEffectType.Invisibility).CurrentTimeLeft = ((PotionItemSO)item.Stats).Duration;
-        }
-
-        LocalDataStorage.Instance.PlayerData.PlayerStats = playerStats;
-        base.PickUp(item);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:b94c882b361886fca4f7ef1b32df7b848a83238edc4767b1b917c1983091cf1e
+size 778

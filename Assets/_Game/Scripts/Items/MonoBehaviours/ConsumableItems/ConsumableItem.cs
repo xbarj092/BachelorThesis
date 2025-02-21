@@ -1,21 +1,3 @@
-public abstract class ConsumableItem : Item<ConsumableItemSO, SavedConsumableItem>
-{
-    private ConsumableItemStrategy _strategy;
-
-    private void Awake()
-    {
-        _strategy = _strategyFactory.CreateStrategy(Stats.ConsumableType);
-        _spriteRenderer.sprite = Stats.Sprite;
-    }
-
-    public override void PickUp()
-    {
-        _strategy.PickUp(this);
-    }
-
-    public override void SaveItem()
-    {
-        SavedConsumableItem savedItem = new(new(transform), (int)Stats.ConsumableType, UID, gameObject.activeInHierarchy);
-        LocalDataStorage.Instance.GameData.ItemData.SavedConsumables.Add(savedItem);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:95dfb2f9216f5264792aedc88eead0e5f76e02916567be1e69301b8629e44d7b
+size 629

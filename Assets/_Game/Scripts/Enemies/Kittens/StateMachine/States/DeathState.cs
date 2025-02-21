@@ -1,19 +1,3 @@
-using UnityEngine;
-
-public class DeathState : BaseState
-{
-    public override void OnStateEnter()
-    {
-        Debug.Log("[DeathState] - entered death state");
-    }
-
-    public override BaseState ExecuteState()
-    {
-        return null;
-    }
-
-    public override void OnStateExit()
-    {
-        Debug.Log("[DeathState] - exitted death state");
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:0ac4455676d45e03f1368ede6883e9a9ee5709d5e80e88da4d806838ac921d30
+size 357

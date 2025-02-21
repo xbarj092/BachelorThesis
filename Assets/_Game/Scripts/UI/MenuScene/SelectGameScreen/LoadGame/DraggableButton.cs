@@ -1,30 +1,3 @@
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-
-public class DraggableButton : Button, IBeginDragHandler, IDragHandler, IEndDragHandler
-{
-    private ScrollRect _scrollRect;
-
-    protected override void Start()
-    {
-        base.Start();
-        _scrollRect = GetComponentInParent<ScrollRect>();
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        _scrollRect.OnBeginDrag(eventData);
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        _scrollRect.OnDrag(eventData);
-        interactable = false;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        _scrollRect.OnEndDrag(eventData);
-        interactable = true;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c7c390e17f566366341bcaa8e53c82a4d5f2711a23bb231613c7072e84ab70d5
+size 696

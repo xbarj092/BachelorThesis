@@ -1,26 +1,3 @@
-using UnityEngine;
-
-public class Enemy : MonoBehaviour
-{
-    [SerializeField] protected SpriteRenderer _renderer;
-    [SerializeField] protected EnemyStats _stats;
-
-    private void Start()
-    {
-        _renderer.sprite = _stats.Sprite;
-    }
-
-    protected virtual void Update()
-    {
-        if (IsInCameraBounds())
-        {
-            LocalDataStorage.Instance.PlayerData.UnlockedCollectibleData.AddEnemies(_stats);
-        }
-    }
-
-    private bool IsInCameraBounds()
-    {
-        Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
-        return viewportPos.x >= 0 && viewportPos.x <= 1 && viewportPos.y >= 0 && viewportPos.y <= 1 && viewportPos.z > 0;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:bbdde59a60748595537a595153b1e008fb1e7673ac90d1daef7e04a9f2b990de
+size 695

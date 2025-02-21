@@ -1,18 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6321dc8e8a8cfcd4fa87bb627ce3553b, type: 3}
-  m_Name: KittenStats
-  m_EditorClassIdentifier: 
-  <Title>k__BackingField: Small kitten
-  <Sprite>k__BackingField: {fileID: 21300000, guid: dd079a4152f072e4c8854bb38de9892e, type: 3}
-  <StealAmount>k__BackingField: 15
-  <Description>k__BackingField: Small kitten....
+version https://git-lfs.github.com/spec/v1
+oid sha256:95e36ed216ec4cd4a576fdcfb17fd6d5f1bdebfa6018cae30615ed55155f050a
+size 618

@@ -1,27 +1,3 @@
-public class FoodItemStrategy : ConsumableItemStrategy
-{
-    public override void PickUp(ConsumableItem item)
-    {
-        int replenishAmount = ((FoodItemSO)item.Stats).ReplenishAmount;
-        PlayerStats stats = LocalDataStorage.Instance.PlayerData.PlayerStats;
-        stats.CurrentTimeToEatFood += replenishAmount;
-
-        while (stats.CurrentTimeToEatFood >= stats.TimeToEatFood)
-        {
-            if (stats.CurrentFood < stats.MaxFood)
-            {
-                stats.CurrentFood++;
-                stats.CurrentTimeToEatFood -= stats.TimeToEatFood;
-            }
-            else
-            {
-                stats.CurrentTimeToEatFood = stats.TimeToEatFood;
-                break;
-            }
-        }
-
-        LocalDataStorage.Instance.PlayerData.PlayerStats = stats;
-        UGSAnalyticsManager.Instance.RecordFoodPickedUp(stats.TimeAlive, replenishAmount);
-        base.PickUp(item);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c5b7a6168cdeddfd93e6db4ded716d94dfb77a6490261b876e4ea6c209af2a7d
+size 956

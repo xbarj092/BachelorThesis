@@ -1,26 +1,3 @@
-using System;
-
-[Serializable]
-public class SavedUseableItem : SavedItem
-{
-    public bool Dropped;
-    public bool Used;
-    public bool Enabled;
-
-    public SavedUseableItem(TransformData itemTransform, int itemType, int uid, bool dropped, bool used, bool enabled) : 
-        base(itemTransform, itemType, uid)
-    {
-        Dropped = dropped;
-        Used = used;
-        Enabled = enabled;
-    }
-
-    public virtual void ApplyToItem(UseableItem item)
-    {
-        ItemTransform.ApplyToTransform(item.transform);
-        item.UID = UID;
-        item.Dropped = Dropped;
-        item.Used = Used;
-        item.gameObject.SetActive(Enabled);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:b6a8595e4bd9df013147b5f20073ccdf57aed3d5a835c6f00007d0cac7566642
+size 650

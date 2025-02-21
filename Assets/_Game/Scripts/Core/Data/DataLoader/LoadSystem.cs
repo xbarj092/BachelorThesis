@@ -1,26 +1,3 @@
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using UnityEngine;
-
-public class DataLoader
-{
-    public T LoadData<T>(string path)
-    {
-        T data = default;
-
-        if (File.Exists(path))
-        {
-            BinaryFormatter binaryFormatter = new();
-            FileStream fileStream = new(path, FileMode.Open);
-
-            data = (T)binaryFormatter.Deserialize(fileStream);
-            fileStream.Close();
-        }
-        else
-        {
-            Debug.LogError("Save file not found in " + path);
-        }
-
-        return data;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c5f0590df1044246a990b31fde021d29ee66f2a3298035905b6d9513ad187fe0
+size 575

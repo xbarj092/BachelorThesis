@@ -1,22 +1,3 @@
-public class AudioSettingsScreen : BaseScreen
-{
-    public void SetMasterVolume(float volume)
-    {
-        AudioManager.Instance.SetSoundVolume(SoundGroup.None, volume);
-    }
-
-    public void SetSFXVolume(float volume)
-    {
-        AudioManager.Instance.SetSoundVolume(SoundGroup.SFX, volume);
-    }
-
-    public void SetMusicVolume(float volume)
-    {
-        AudioManager.Instance.SetSoundVolume(SoundGroup.Music, volume);
-    }
-
-    public void SetUIVolume(float volume)
-    {
-        AudioManager.Instance.SetSoundVolume(SoundGroup.UI, volume);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:3bdaaff80b12f7fe5b922fd1f11255750f69b648d99855d8d71ada84f8e29030
+size 559

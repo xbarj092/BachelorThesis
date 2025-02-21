@@ -1,22 +1,3 @@
-using System;
-
-[Serializable]
-public class SavedLaserItem : SavedUseableItem
-{
-    public float Battery;
-
-    public SavedLaserItem(TransformData itemTransform, int itemType, int uid, bool dropped, bool used, bool enabled, float battery) :
-        base(itemTransform, itemType, uid, dropped, used, enabled)
-    {
-        Battery = battery;
-    }
-
-    public override void ApplyToItem(UseableItem item)
-    {
-        base.ApplyToItem(item);
-        if (item is Laser laser)
-        {
-            laser.Battery = Battery;
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f5f07938077a54682350108e5ac565efb2c71a1da2a7a0aaef2ae1bc91e35d35
+size 538

@@ -1,24 +1,3 @@
-using System;
-using UnityEngine;
-
-[Serializable]
-public class QuaternionData
-{
-    public float x;
-    public float y;
-    public float z;
-    public float w;
-
-    public QuaternionData(Quaternion quaternion)
-    {
-        x = quaternion.x;
-        y = quaternion.y;
-        z = quaternion.z;
-        w = quaternion.w;
-    }
-
-    public Quaternion ToQuaternion()
-    {
-        return new Quaternion(x, y, z, w);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:66a73ef2887d704fec653b12f50cc5b74cf9085c2bef681bb891e56160e79fe6
+size 420
