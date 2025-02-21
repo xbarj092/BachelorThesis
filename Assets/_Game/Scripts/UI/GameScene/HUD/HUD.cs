@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
+    [SerializeField] private List<Image> _foodUnits;
     [SerializeField] private StatusEffects _statusEffects;
-    [SerializeField] private Image _foodLeft;
     [SerializeField] private List<ItemSlot> _itemSlots;
     [SerializeField] private TMP_Text _timer;
 
@@ -46,7 +46,25 @@ public class HUD : MonoBehaviour
 
     private void OnPlayerStatsChanged(PlayerStats playerStats)
     {
-        _foodLeft.fillAmount = (float)playerStats.CurrentTimeLeft / (float)playerStats.MaxTimeLeft;
+        for (int i = 0; i < _foodUnits.Count; i++)
+        {
+            float fillAmount;
+            if (i < playerStats.CurrentFood - 1)
+            {
+                fillAmount = 1;
+            }
+            else if (i == playerStats.CurrentFood - 1)
+            {
+                fillAmount = (float)playerStats.CurrentTimeToEatFood / (float)playerStats.TimeToEatFood;
+            }
+            else
+            {
+                fillAmount = 0;
+            }
+
+            _foodUnits[i].fillAmount = fillAmount;
+        }
+
         _statusEffects.HandleStatusEffects(playerStats);
     }
 

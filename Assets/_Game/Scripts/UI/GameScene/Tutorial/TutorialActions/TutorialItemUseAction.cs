@@ -21,11 +21,15 @@ public class TutorialItemUseAction : TutorialAction
     {
         CurrentMouseClickAction = null;
         TutorialManager.Instance.IsPaused = false;
+        TutorialManager.Instance.CanUseItem = true;
+        TutorialManager.Instance.CanDropItem = true;
     }
 
     public override void StartAction()
     {
         TutorialManager.Instance.IsPaused = true;
+        TutorialManager.Instance.CanUseItem = false;
+        TutorialManager.Instance.CanDropItem = false;
         _continueButton.gameObject.SetActive(false);
         _player.Init(_tutorialPlayer.TutorialStorage);
         StartCoroutine(DelayedClickToContinue());
@@ -53,5 +57,7 @@ public class TutorialItemUseAction : TutorialAction
     public override void Exit()
     {
         TutorialManager.Instance.IsPaused = false;
+        TutorialManager.Instance.CanUseItem = true;
+        TutorialManager.Instance.CanDropItem = true;
     }
 }

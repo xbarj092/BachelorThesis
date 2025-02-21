@@ -219,7 +219,8 @@ public class Kitten : Enemy
             {
                 float angleToTarget = Vector2.Angle(transform.right, directionToTarget);
 
-                if (distanceToTarget > _viewRange || angleToTarget > _viewAngle / 2)
+                if (distanceToTarget > _viewRange || angleToTarget > _viewAngle / 2 ||
+                    LocalDataStorage.Instance.PlayerData.PlayerStats.CurrentFood < 2)
                 {
                     continue;
                 }
@@ -350,8 +351,11 @@ public class Kitten : Enemy
         if (collision.gameObject.CompareTag(GlobalConstants.Tags.Player.ToString()) &&
             collision.gameObject.TryGetComponent(out Player player) && !IsRunningAway)
         {
-            UGSAnalyticsManager.Instance.RecordFoodStolen(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
-            player.EatFood(_stats.StealAmount);
+            if (LocalDataStorage.Instance.PlayerData.PlayerStats.CurrentFood > 1)
+            {
+                UGSAnalyticsManager.Instance.RecordFoodStolen(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
+                player.EatFood();
+            }
             _currentTimeToLive = _timeToLive;
             IsRunningAway = true;
         }
@@ -376,7 +380,8 @@ public class Kitten : Enemy
     public void IsInRange(bool inRange)
     {
         IsInRangeOfPlayer = inRange;
-        if (inRange && IsHigherPriority(FocusTargetType.Player, _currentFocusType) && !LocalDataStorage.Instance.PlayerData.PlayerStats.StatusEffects.Any(effect => effect.Type == (int)StatusEffectType.Invisibility))
+        if (inRange && IsHigherPriority(FocusTargetType.Player, _currentFocusType) && LocalDataStorage.Instance.PlayerData.PlayerStats.CurrentFood > 1 &&
+            !LocalDataStorage.Instance.PlayerData.PlayerStats.StatusEffects.Any(effect => effect.Type == (int)StatusEffectType.Invisibility))
         {
             _currentTarget = _playerTransform;
             _currentFocusType = FocusTargetType.Player;

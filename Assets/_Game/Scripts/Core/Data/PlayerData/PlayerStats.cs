@@ -8,16 +8,21 @@ public class PlayerStats
 
     public int TimeAlive;
 
-    public int CurrentTimeLeft;
-    public int MaxTimeLeft;
+    public float TimeToEatFood;
+    public float CurrentTimeToEatFood;
+    public int CurrentFood;
+    public int MaxFood;
 
     public List<StatusEffectData> StatusEffects = new();
 
-    public PlayerStats(int spriteIndex, int timeAlive, int currentTimeLeft, int maxTimeLeft, bool isInvisible)
+    public PlayerStats(int spriteIndex, int timeAlive, float timeToEatFood, float currentTimeToEatFood, int currentFood, int maxFood, bool isInvisible)
     {
         SpriteIndex = spriteIndex;
         TimeAlive = timeAlive;
-        CurrentTimeLeft = currentTimeLeft;
-        MaxTimeLeft = maxTimeLeft;
+
+        TimeToEatFood = timeToEatFood;
+        CurrentTimeToEatFood = currentTimeToEatFood;
+        CurrentFood = currentFood;
+        MaxFood = maxFood;
     }
 }

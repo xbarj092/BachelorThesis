@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -58,8 +59,11 @@ public class Player : MonoBehaviour
                 TutorialEvents.OnPlayerMovedInvoke();
             }
 
-            float targetAngle = Mathf.Atan2(_moveInput.y, _moveInput.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, targetAngle + 90);
+            float targetAngle = Mathf.Atan2(_moveInput.y, _moveInput.x) * Mathf.Rad2Deg + 90;
+            if (targetAngle != transform.rotation.z)
+            {
+                transform.rotation = Quaternion.Euler(0, 0, targetAngle);
+            }
         }
 
         _frameCounter++;
@@ -157,21 +161,22 @@ public class Player : MonoBehaviour
         }
 
         PlayerStats stats = LocalDataStorage.Instance.PlayerData.PlayerStats;
-        stats.CurrentTimeLeft--;
-        if (stats.CurrentTimeLeft <= 0)
+        stats.CurrentTimeToEatFood--;
+        if (stats.CurrentTimeToEatFood <= 0)
         {
-            StartCoroutine(Death());
+            EatFood();
+            stats.CurrentTimeToEatFood = stats.TimeToEatFood;
         }
 
         LocalDataStorage.Instance.PlayerData.PlayerStats = stats;
     }
 
-    public void EatFood(int timeStolen)
+    public void EatFood()
     {
         PlayerStats stats = LocalDataStorage.Instance.PlayerData.PlayerStats;
-        if (stats.CurrentTimeLeft - timeStolen > 0)
+        if (stats.CurrentFood > 1)
         {
-            stats.CurrentTimeLeft -= timeStolen;
+            stats.CurrentFood--;
             LocalDataStorage.Instance.PlayerData.PlayerStats = stats;
         }
         else

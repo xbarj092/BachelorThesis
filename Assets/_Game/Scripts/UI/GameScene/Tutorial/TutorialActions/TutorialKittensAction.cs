@@ -87,7 +87,6 @@ public class TutorialKittensAction : TutorialAction
     private void OnAfterMatingNotified()
     {
         _cinemachineCamera.m_Follow = _player;
-        TutorialManager.Instance.CurrentKittenInRange.Unhighlight();
         CurrentMouseClickAction = null;
         InventoryData inventoryData = LocalDataStorage.Instance.PlayerData.InventoryData;
 
@@ -144,6 +143,7 @@ public class TutorialKittensAction : TutorialAction
         _background.gameObject.SetActive(false);
         _tutorialPlayer.PublicText.text = _strings[1];
         CurrentMouseClickAction = null;
+        TutorialManager.Instance.CurrentKittenInRange.Unhighlight();
         StartCoroutine(DelayedOnItemUsed());
     }
 
@@ -163,6 +163,7 @@ public class TutorialKittensAction : TutorialAction
     {
         _tutorialPlayer.MoveToNextNarratorText();
         _tutorialPlayer.SetTextTransform(_noItemTransform);
+        TutorialManager.Instance.CurrentKittenInRange.Unhighlight();
         _kittenCutout.gameObject.SetActive(false);
         _background.gameObject.SetActive(false);
         CurrentMouseClickAction = OnAfterSilentWalkNotified;

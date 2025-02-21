@@ -553,7 +553,10 @@ public class PlayerInteraction : MonoBehaviour
 
         Vector3 validPosition = GetValidPlacementPosition(transform.position, mousePosition);
         _ghostItem.transform.position = validPosition;
-        _carryingItem.transform.position = validPosition;
+        if (_carryingItem != null)
+        {
+            _carryingItem.transform.position = validPosition;
+        }
     }
 
     private bool CanSeeItem(GameObject item)
