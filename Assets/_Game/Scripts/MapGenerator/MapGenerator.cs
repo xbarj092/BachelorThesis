@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace MapGenerator
         [Space]
         [SerializeField] private GameObject _hallwayPrefab;
         [SerializeField] private GameObject _hallwayFloorPrefab;
+        [Space]
+        [SerializeField] private GameObject _emptySpaceFillPrefab;
 
         [Header("Map Parameters")]
         [SerializeField] private int _dungeonSizeX;
@@ -24,6 +27,7 @@ namespace MapGenerator
         public Transform RoomLayoutSpawnTransform;
         public Transform HallwayFloorLayoutSpawnTransform;
         public Transform HallwayLayoutSpawnTransform;
+        public Transform FillSpawnTransform;
         public Transform ItemSpawnTransform;
         public Transform KittenSpawnTransform;
         public Transform FoodSpawnTransform;
@@ -107,7 +111,22 @@ namespace MapGenerator
             _hallwayGenerator.GenerateHallways(_bowyerWatson.GenerateTriangularMesh(_roomGenerator.PlacedRooms),
                 _roomGenerator.PlacedRooms, _aStar, _primsAlg, _hallwayPrefab, _hallwayFloorPrefab);
             _roomGenerator.BuildRooms(_aStar);
+            FillEmptySpace();
             yield return StartCoroutine(WaitForHallways());
+        }
+
+        private void FillEmptySpace()
+        {
+            for (int i = 0; i < _aStar.Grid.GetWidth(); i++)
+            {
+                for (int j = 0; j < _aStar.Grid.GetHeight(); j++)
+                {
+                    if (_aStar.Grid.GetGridObject(i, j).NodeType == NodeType.None)
+                    {
+                        Instantiate(_emptySpaceFillPrefab, FillSpawnTransform).transform.position = new Vector3(i, j, 0);
+                    }
+                }
+            }
         }
 
         private void LoadItems()

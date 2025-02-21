@@ -3,7 +3,7 @@ public abstract class ConsumableItemStrategy : StrategyBase<ConsumableItem, Cons
     public override void PickUp(ConsumableItem item)
     {
         base.PickUp(item);
-        if (!TutorialManager.Instance.IsTutorialCompleted(item.Stats.ConsumableType))
+        if (!TutorialManager.Instance.IsTutorialCompleted(item.Stats.ConsumableType) && !TutorialManager.Instance.IsTutorialPlaying())
         {
             TutorialManager.Instance.InstantiateTutorial(item.Stats.ConsumableType);
         }

@@ -59,7 +59,12 @@ namespace MapGenerator
 
         private void GenerateBaseRooms(AStar aStar, Room roomPrefab, GameObject roomFloorPrefab)
         {
-            GenerateRoom(aStar, roomPrefab, roomFloorPrefab, 15, 15, RoomType.Start);
+            int positionX = LocalDataStorage.Instance.GameData.Random.Next(5, 40);
+            int positionY = LocalDataStorage.Instance.GameData.Random.Next(5, 40);
+
+            GameManager.Instance.StartRoomLocation = new Vector2(positionX, positionY);
+
+            GenerateRoom(aStar, roomPrefab, roomFloorPrefab, positionX, positionY, RoomType.Start);
             GenerateRoom(aStar, roomPrefab, roomFloorPrefab, 50, 50, RoomType.End);
         }
 

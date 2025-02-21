@@ -24,6 +24,7 @@ public class TutorialStatusEffect : TutorialAction
 
     public override void StartAction()
     {
+        TutorialManager.Instance.IsPaused = true;
         _background.SetActive(true);
         _tutorialPlayer.MoveToNextNarratorText();
         CurrentMouseClickAction = OnAfterStart;

@@ -137,7 +137,7 @@ public class SceneLoadManager : MonoSingleton<SceneLoadManager>
         {
             if (player != null)
             {
-                player.transform.position = new(14, 14);
+                player.transform.position = GameManager.Instance.StartRoomLocation;
             }
 
             KittenManager.Instance.CreateKitten(new(50, 50, 0), false);

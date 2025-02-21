@@ -1,22 +1,31 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class PlayerNoise : MonoBehaviour
 {
-    [SerializeField] private CircleCollider2D _noiseCollider;
+    [SerializeField] private SpriteRenderer _noiseRenderer;
     [SerializeField] private Rigidbody2D _rigidbody;
 
     [SerializeField] private float _baseNoiseRadius = 1f;
     [SerializeField] private float _speedMultiplier = 2f;
+    [SerializeField] private Ease _scaleEase = Ease.OutQuad;
+
+    private float _targetScale;
 
     private void Update()
     {
         AdjustNoiseRadius();
+
+        if (transform.localScale.x != _targetScale)
+        {
+            transform.DOScale(_targetScale, 0.1f).SetEase(_scaleEase);
+        }
     }
 
     private void AdjustNoiseRadius()
     {
         float speed = _rigidbody.velocity.magnitude;
-        _noiseCollider.radius = _baseNoiseRadius + (speed * _speedMultiplier);
+        _targetScale = _baseNoiseRadius + (speed * _speedMultiplier);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

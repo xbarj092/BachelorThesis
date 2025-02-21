@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class Player : MonoBehaviour
     private bool _invincible;
     private Vector2 _moveInput;
     private int _frameCounter = 0;
+
+    public event Action OnTutorialStarted;
 
     private void Awake()
     {
@@ -111,6 +114,7 @@ public class Player : MonoBehaviour
                 {
                     if (hit.TryGetComponent(out Kitten kitten))
                     {
+                        OnTutorialStarted?.Invoke();
                         TutorialManager.Instance.InstantiateTutorial(TutorialID.Kittens);
                         TutorialManager.Instance.CurrentKittenInRange = kitten;
                     }

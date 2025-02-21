@@ -5,16 +5,12 @@ public abstract class UseableItem : Item<UseableItemSO, SavedUseableItem>
 {
     [SerializeField] private GameObject _ghostItem;
     [SerializeField] private InteractionControler _interaction;
-    [SerializeField] private Material _defaultMaterial;
-    [SerializeField] private Material _outlineMaterial;
 
     protected bool _pickedUp;
 
     public ItemUsageType UsageType;
     public virtual bool IsInteractable => _interaction.Interactable;
 
-    public bool IsHovered;
-    public bool Highlighting;
     public bool Dropped;
     public bool Used;
 
@@ -75,27 +71,6 @@ public abstract class UseableItem : Item<UseableItemSO, SavedUseableItem>
     public override void PickUp()
     {
         _strategy.PickUp(this);
-    }
-
-    public void Highlight()
-    {
-        if (!Highlighting)
-        {
-            Highlighting = true;
-            _spriteRenderer.material = _outlineMaterial;
-            _spriteRenderer.material.SetInt("_Outlined", 1);
-        }
-    }
-
-    public void Unhighlight()
-    {
-        IsHovered = false;
-        if (Highlighting)
-        {
-            Highlighting = false;
-            _spriteRenderer.material.SetInt("_Outlined", 0);
-            _spriteRenderer.material = _defaultMaterial;
-        }
     }
 
     public GameObject GetGhostItem()

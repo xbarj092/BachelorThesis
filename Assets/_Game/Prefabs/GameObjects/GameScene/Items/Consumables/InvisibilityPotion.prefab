@@ -50,7 +50,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6779324534085097011, guid: 9f3ac364c7374344db69d3a4f025f6b0, type: 3}
       propertyPath: m_Name
-      value: InvisibilityPotion Variant
+      value: InvisibilityPotion
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779324534085097011, guid: 9f3ac364c7374344db69d3a4f025f6b0, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8266860323416403039, guid: 9f3ac364c7374344db69d3a4f025f6b0, type: 3}
       propertyPath: _item
@@ -82,7 +86,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 3231883648557997830}
+  _defaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  _outlineMaterial: {fileID: -876546973899608171, guid: 59d12df00206918479df5b51a5ae2630, type: 3}
   <Stats>k__BackingField: {fileID: 11400000, guid: 276d3d0c93afd9b49b963c14c760821a, type: 2}
+  IsHovered: 0
+  Highlighting: 0
   UID: 0
 --- !u!212 &3231883648557997830 stripped
 SpriteRenderer:

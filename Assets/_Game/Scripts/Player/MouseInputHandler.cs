@@ -7,8 +7,10 @@ public class MouseInputHandler
     private LayerMask _layerMask;
 
     public event Action<UseableItem> OnItemPickedUp;
+    public event Action<ConsumableItem> OnConsumablePickedUp;
     public event Action OnItemPlaced;
     public event Action<UseableItem> OnItemHighlighted;
+    public event Action<ConsumableItem> OnConsumableHighlighted;
     public event Action OnItemUnhighlighted;
 
     public MouseInputHandler(PlayerInteraction playerInteractions, LayerMask layerMask)
@@ -50,6 +52,14 @@ public class MouseInputHandler
                 return true;
             }
         }
+        else if (hit.collider != null && hit.collider.CompareTag("Food"))
+        {
+            ConsumableItem item = hit.collider.gameObject.GetComponent<ConsumableItem>();
+            if (item != null)
+            {
+                OnConsumablePickedUp?.Invoke(item);
+            }
+        }
         return false;
     }
 
@@ -72,6 +82,14 @@ public class MouseInputHandler
                     item.IsHovered = true;
                     OnItemHighlighted?.Invoke(item);
                 }
+            }
+        }
+        else if (hit.collider != null && hit.collider.CompareTag("Food"))
+        {
+            ConsumableItem item = hit.collider.gameObject.GetComponent<ConsumableItem>();
+            if (item != null)
+            {
+                OnConsumableHighlighted?.Invoke(item);
             }
         }
         else

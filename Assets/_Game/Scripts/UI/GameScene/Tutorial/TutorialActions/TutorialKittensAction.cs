@@ -43,6 +43,7 @@ public class TutorialKittensAction : TutorialAction
         TutorialManager.Instance.CanUseItem = true;
         TutorialManager.Instance.CanDropItem = true;
         CurrentMouseClickAction = null;
+        TutorialManager.Instance.CurrentKittenInRange.Unhighlight();
         TutorialEvents.OnItemPickedUpFromInventory -= OnItemPickedUpFromInventory;
         TutorialEvents.OnItemUsed -= OnItemUsed;
     }
@@ -86,6 +87,7 @@ public class TutorialKittensAction : TutorialAction
     private void OnAfterMatingNotified()
     {
         _cinemachineCamera.m_Follow = _player;
+        TutorialManager.Instance.CurrentKittenInRange.Unhighlight();
         CurrentMouseClickAction = null;
         InventoryData inventoryData = LocalDataStorage.Instance.PlayerData.InventoryData;
 
@@ -117,7 +119,6 @@ public class TutorialKittensAction : TutorialAction
     {
         // highlight item slot on the index
         _kittenCutout.gameObject.SetActive(false);
-        TutorialManager.Instance.CurrentKittenInRange.Unhighlight();
         _itemCutout.gameObject.SetActive(true);
         _itemCutout.transform.localPosition += new Vector3(ITEM_HIGHLIGHT_OFFSET * index, 0);
         _tutorialPlayer.SetTextTransform(_itemTransform);

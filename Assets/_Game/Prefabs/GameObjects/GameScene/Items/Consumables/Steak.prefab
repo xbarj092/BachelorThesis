@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Steak
       objectReference: {fileID: 0}
+    - target: {fileID: 6779324534085097011, guid: 9f3ac364c7374344db69d3a4f025f6b0, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 8266860323416403039, guid: 9f3ac364c7374344db69d3a4f025f6b0, type: 3}
       propertyPath: _item
       value: 
@@ -98,7 +102,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 8753572910618805403}
+  _defaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  _outlineMaterial: {fileID: -876546973899608171, guid: 59d12df00206918479df5b51a5ae2630, type: 3}
   <Stats>k__BackingField: {fileID: 11400000, guid: 25ac8717ad3e05744acf4a93a497bee3, type: 2}
+  IsHovered: 0
+  Highlighting: 0
   UID: 0
 --- !u!212 &8753572910618805403 stripped
 SpriteRenderer:

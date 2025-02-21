@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private Player _player;
 
     private UseableItem _highlightedItem;
+    private ConsumableItem _highlightedConsumable;
     private UseableItem _carryingItem;
     private GameObject _ghostItem;
     private SpriteRenderer _ghostRenderer;
@@ -39,9 +42,13 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnEnable()
     {
+        _player.OnTutorialStarted += OnTutorialStarted;
+
         _mouseInputHandler.OnItemPickedUp += PickUpItem;
+        _mouseInputHandler.OnConsumablePickedUp += PickUpItem;
         _mouseInputHandler.OnItemPlaced += PlaceItem;
         _mouseInputHandler.OnItemHighlighted += HighlightItem;
+        _mouseInputHandler.OnConsumableHighlighted += HighlightItem;
         _mouseInputHandler.OnItemUnhighlighted += UnhighlightItem;
 
         _leftClickAction.performed += PickUpFromGroundOrUse;
@@ -51,9 +58,13 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnDisable()
     {
+        _player.OnTutorialStarted -= OnTutorialStarted;
+
         _mouseInputHandler.OnItemPickedUp -= PickUpItem;
+        _mouseInputHandler.OnConsumablePickedUp -= PickUpItem;
         _mouseInputHandler.OnItemPlaced -= PlaceItem;
         _mouseInputHandler.OnItemHighlighted -= HighlightItem;
+        _mouseInputHandler.OnConsumableHighlighted -= HighlightItem;
         _mouseInputHandler.OnItemUnhighlighted -= UnhighlightItem;
 
         _leftClickAction.performed -= PickUpFromGroundOrUse;
@@ -103,7 +114,8 @@ public class PlayerInteraction : MonoBehaviour
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             _mouseInputHandler.HandleMouseHover(mousePosition);
 
-            if (_highlightedItem != null && !CanSeeItem(_highlightedItem.gameObject))
+            if (_highlightedItem != null && !CanSeeItem(_highlightedItem.gameObject) ||
+                _highlightedConsumable != null && !CanSeeItem(_highlightedConsumable.gameObject))
             {
                 UnhighlightItem();
             }
@@ -114,6 +126,21 @@ public class PlayerInteraction : MonoBehaviour
                 _ghostRenderer.material.SetInt("_Outlined", CanItemBePlaced() ? 1 : 0);
                 _ghostRenderer.color = new Color(_ghostRenderer.color.r, _ghostRenderer.color.g, _ghostRenderer.color.b, CanItemBePlaced() ? 1 : 0.4f);
                 _ghostItem.transform.rotation = Quaternion.identity;
+            }
+        }
+    }
+
+    private void OnTutorialStarted()
+    {
+        if (_carryingItem != null)
+        {
+            if (!LocalDataStorage.Instance.PlayerData.InventoryData.HasRoomInInventory())
+            {
+                OnItemDrop();
+            }
+            else
+            {
+                PlaceInInventory();
             }
         }
     }
@@ -441,6 +468,21 @@ public class PlayerInteraction : MonoBehaviour
         HideItemAndCreateGhost(item);
     }
 
+    private void PickUpItem(ConsumableItem item)
+    {
+        if (_carryingItem != null)
+        {
+            return;
+        }
+
+        if (!TutorialManager.Instance.IsTutorialCompleted(item.Stats.ConsumableType) && !TutorialManager.Instance.IsTutorialPlaying())
+        {
+            TutorialManager.Instance.InstantiateTutorial(item.Stats.ConsumableType);
+        }
+
+        item.PickUp();
+    }
+
     private void HideItemAndCreateGhost(UseableItem item)
     {
         item.gameObject.SetActive(false);
@@ -469,10 +511,19 @@ public class PlayerInteraction : MonoBehaviour
 
     private void HighlightItem(UseableItem item)
     {
-        if (_highlightedItem == null && CanSeeItem(item.gameObject))
+        if (_highlightedItem == null && _highlightedConsumable == null && CanSeeItem(item.gameObject))
         {
             _highlightedItem = item;
             _highlightedItem.Highlight();
+        }
+    }
+
+    private void HighlightItem(ConsumableItem item)
+    {
+        if (_highlightedItem == null && _highlightedConsumable == null && CanSeeItem(item.gameObject))
+        {
+            _highlightedConsumable = item;
+            _highlightedConsumable.Highlight();
         }
     }
 
@@ -482,6 +533,11 @@ public class PlayerInteraction : MonoBehaviour
         {
             _highlightedItem.Unhighlight();
             _highlightedItem = null;
+        }
+        else if (_highlightedConsumable != null)
+        {
+            _highlightedConsumable.Unhighlight();
+            _highlightedConsumable = null;
         }
     }
 
