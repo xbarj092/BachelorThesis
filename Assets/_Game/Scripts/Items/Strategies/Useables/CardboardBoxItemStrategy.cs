@@ -1,3 +1,33 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:12006248b83f3bf72b374463d91837fa24a8fd2fb438f165648abcdd3956a0d8
-size 924
+using UnityEngine;
+
+public class CardboardBoxItemStrategy : UseableItemStrategy
+{
+    public override bool CanUse(UseableItem item)
+    {
+        if (TutorialManager.Instance.IsTutorialPlaying(TutorialID.Kittens))
+        {
+            float distance = Vector2.Distance(Input.mousePosition, Camera.main.WorldToScreenPoint((GameObject.FindFirstObjectByType<Player>().transform.position + TutorialManager.Instance.CurrentKittenInRange.transform.position) / 2));
+
+            if (distance > 400)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public override void Use(UseableItem item)
+    {
+        AudioManager.Instance.Play(SoundType.ItemUsedCardboardBox);
+
+        Debug.Log("[CardboardBoxItemStrategy] - Used cardboard box!");
+        PlaceOnMousePosition(item);
+    }
+
+    public override void PickUp(UseableItem item)
+    {
+        base.PickUp(item);
+        Debug.Log("[CardboardBoxItemStrategy] - Picked up cardboard box!");
+    }
+}
