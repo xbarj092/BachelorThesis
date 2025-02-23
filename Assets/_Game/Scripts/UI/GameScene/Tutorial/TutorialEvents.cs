@@ -1,3 +1,56 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ab71c59bc05365879f69f9747540829290c2efd8c2d0291dd6f96b0db9c7b6dc
-size 1322
+using System;
+
+public static class TutorialEvents
+{
+    // movement tutorial
+    public static event Action OnPlayerMoved;
+    public static void OnPlayerMovedInvoke()
+    {
+        OnPlayerMoved?.Invoke();
+    }
+    
+    // item interactions
+    public static event Action OnItemPickedUp;
+    public static void OnItemPickedUpInvoke()
+    {
+        OnItemPickedUp?.Invoke();
+    }
+
+    public static event Action OnItemPlacedInInventory;
+    public static void OnItemPlacedInInventoryInvoke()
+    {
+        OnItemPlacedInInventory?.Invoke();
+    }
+
+    public static event Action OnItemPickedUpFromInventory;
+    public static void OnItemPickedUpFromInventoryInvoke()
+    {
+        OnItemPickedUpFromInventory?.Invoke();
+    }
+
+    public static event Action OnItemDropped;
+    public static void OnItemDroppedInvoke()
+    {
+        OnItemDropped?.Invoke();
+    }
+
+    // kittens
+    public static event Action OnItemUsed;
+    public static void OnItemUsedInvoke()
+    {
+        OnItemUsed?.Invoke();
+    }
+
+    public static event Action OnScrolledToItem;
+    public static void OnScrolledToItemInvoke()
+    {
+        OnScrolledToItem?.Invoke();
+    }
+
+    // end
+    public static event Action OnTutorialCompleted;
+    public static void OnTutorialCompletedInvoke()
+    {
+        OnTutorialCompleted?.Invoke();
+    }
+}

@@ -1,3 +1,35 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e7812e60799a3505c9ec60969ee7761dfb48b4423f14da8baaf193e2fdea0dfb
-size 640
+using UnityEngine;
+
+public static class GlobalConstants
+{
+    public enum Tags
+    {
+        Room,
+        Hallway,
+        Shop,
+        Enemy,
+        Food,
+        Item,
+        Player,
+        InteractableGhost,
+        Shadowcaster,
+    }
+
+    public enum Layers
+    {
+        Player = 7,
+        Map = 8,
+        Kitten = 11,
+        Interact = 13,
+        KittenInteraction = 18
+    }
+
+    public static class SavedDataPaths
+    {
+#if UNITY_EDITOR
+        public static readonly string BASE_PATH = Application.dataPath + "/Data";
+#else
+        public static readonly string BASE_PATH = Application.persistentDataPath;
+#endif
+    }
+}
