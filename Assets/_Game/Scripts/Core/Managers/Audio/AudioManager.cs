@@ -1,4 +1,6 @@
 using AYellowpaper.SerializedCollections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -35,6 +37,13 @@ public class AudioManager : MonoSingleton<AudioManager>
                 sound.Source.Add(source);
             }
         }
+
+        StartCoroutine(SetAudioMixerValues());
+    }
+
+    private IEnumerator SetAudioMixerValues()
+    {
+        yield return new WaitForSeconds(0.1f);
 
         Dictionary<SoundGroup, float> soundSettings = LocalDataStorage.Instance.PlayerPrefs.LoadAudioSettings();
         if (soundSettings != null)
