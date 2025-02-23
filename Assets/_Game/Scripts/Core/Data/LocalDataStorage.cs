@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class LocalDataStorage : MonoSingleton<LocalDataStorage>
 {
@@ -14,6 +15,12 @@ public class LocalDataStorage : MonoSingleton<LocalDataStorage>
 
     private void Awake()
     {
+        if (!UnityEngine.PlayerPrefs.HasKey("Resetted"))
+        {
+            PlayerPrefs.DeleteCollectibles();
+            UnityEngine.PlayerPrefs.SetString("Resetted", "yes");
+        }
+
         InitPlayerData(false);
         UnlockedCollectibleData data = PlayerPrefs.LoadCollectibles();
         if (data != null)

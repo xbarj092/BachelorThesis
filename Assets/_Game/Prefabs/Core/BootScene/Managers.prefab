@@ -302,6 +302,15 @@ MonoBehaviour:
     Pitch: 1
     VariablePitch: 1
     Source: []
+  - Name: 5
+    Group: 3
+    Clip: {fileID: 8300000, guid: b24cac40ce522bb4683ef934d7c05bcc, type: 3}
+    SpatialBlend: 0
+    NumberOfSource: 1
+    Volume: 0.5
+    Pitch: 1
+    VariablePitch: 0
+    Source: []
   Muted: 0
 --- !u!1 &5360620200155502889
 GameObject:

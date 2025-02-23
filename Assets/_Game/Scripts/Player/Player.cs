@@ -1,9 +1,9 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour
 {
@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
 
     private float _timeBetweenSteps = 0.5f;
     private float _currentTime = 0f;
+
+    public bool IsInvincible = false;
 
     public event Action OnTutorialStarted;
 
@@ -181,18 +183,37 @@ public class Player : MonoBehaviour
         LocalDataStorage.Instance.PlayerData.PlayerStats = stats;
     }
 
-    public void EatFood()
+    public void EatFood(Vector3 kittenPosition = default)
     {
         PlayerStats stats = LocalDataStorage.Instance.PlayerData.PlayerStats;
         if (stats.CurrentFood > 1)
         {
             stats.CurrentFood--;
+
+            if (kittenPosition != default)
+            {
+                _spriteRenderer.DOColor(Color.red, 0.1f).SetLoops(6, LoopType.Yoyo).OnComplete(() =>
+                {
+                    _spriteRenderer.color = Color.white;
+                });
+                StartCoroutine(TemporaryInvincibility(0.5f));
+                Vector2 knockbackDirection = (transform.position - kittenPosition).normalized;
+                _rigidbody.DOMove(transform.position + (Vector3)(knockbackDirection * 0.25f), 0.1f);
+            }
+
             LocalDataStorage.Instance.PlayerData.PlayerStats = stats;
         }
         else
         {
             StartCoroutine(Death());
         }
+    }
+
+    private IEnumerator TemporaryInvincibility(float duration)
+    {
+        IsInvincible = true;
+        yield return new WaitForSeconds(duration);
+        IsInvincible = false;
     }
 
     private IEnumerator Death()

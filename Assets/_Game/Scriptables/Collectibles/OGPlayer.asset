@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bd8617026296114f8813de9f9fd8cc5, type: 3}
   m_Name: OGPlayer
   m_EditorClassIdentifier: 
-  <Title>k__BackingField: Default Player
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 22e993e5c189c284fa55fbbfe4128104, type: 3}
-  <Description>k__BackingField: Default player visual
+  <Title>k__BackingField: OG Player
+  <Sprite>k__BackingField: {fileID: 21300000, guid: c3d8a55599117ea499d15ff26e950d56, type: 3}
+  <Description>k__BackingField: Player visual used in alpha testing. Unlocked after
+    seeing everything in the game

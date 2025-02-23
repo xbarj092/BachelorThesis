@@ -1,3 +1,33 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0cf7653da446b41978d340616128b1f63df7ce713d803d1965da50259774346f
-size 249
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+public class NewGameScreen : BaseScreen
+{
+    [SerializeField] private CharacterSelection _selection;
+    [SerializeField] private Button _newGameButton;
+
+    private void OnEnable()
+    {
+        _selection.OnIconChanged += OnIconChanged;
+    }
+
+    private void OnDisable()
+    {
+        _selection.OnIconChanged -= OnIconChanged;
+    }
+
+    private void OnIconChanged(bool enabled)
+    {
+        _newGameButton.enabled = enabled;
+        _newGameButton.interactable = enabled;
+        _newGameButton.GetComponent<EventTrigger>().enabled = enabled;
+        _newGameButton.targetGraphic.color = enabled ? Color.white : Color.gray;
+    }
+
+    public void StartGame()
+    {
+        _selection.SaveProfile();
+        SceneLoadManager.Instance.GoMenuToGame();
+    }
+}

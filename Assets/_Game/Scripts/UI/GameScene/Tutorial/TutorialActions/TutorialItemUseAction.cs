@@ -27,6 +27,7 @@ public class TutorialItemUseAction : TutorialAction
 
     public override void StartAction()
     {
+        AudioManager.Instance.Play(SoundType.TutorialPopup);
         TutorialManager.Instance.IsPaused = true;
         TutorialManager.Instance.CanUseItem = false;
         TutorialManager.Instance.CanDropItem = false;

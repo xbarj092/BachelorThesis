@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,13 +13,10 @@ public class CharacterSelection : MonoBehaviour
     [SerializeField] private List<MiscCollectibesSO> _collectibles;
     [SerializeField] private TMP_Text _seed;
     [SerializeField] private ChangeSeedPopup _changeSeedPopup;
-    [SerializeField] private Button _rightArrow;
-    [SerializeField] private Button _leftArrow;
 
     private ChangeNamePopup _changeNamePopupInstantiated;
     private ChangeSeedPopup _changeSeedPopupInstantiated;
 
-    private List<MiscCollectibesSO> _characterSprites = new();
     private int _currentIconIndex = 0;
     private string _name;
 
@@ -42,18 +39,15 @@ public class CharacterSelection : MonoBehaviour
         "Dagger", "Grimoire", "Sigil"
     };
 
+    public event Action<bool> OnIconChanged;
+
     private void Awake()
     {
-        UnlockedCollectibleData unlockedCollectibleData = LocalDataStorage.Instance.PlayerData.UnlockedCollectibleData;
         LocalDataStorage.Instance.PlayerData.UnlockedCollectibleData.AddMisc(_collectibles[0]);
 
-        _characterSprites.AddRange(_collectibles.Where(collectible => LocalDataStorage.Instance.PlayerData.UnlockedCollectibleData.HasMisc(collectible)));
-        _rightArrow.interactable = _characterSprites.Count > 1;
-        _leftArrow.interactable = _characterSprites.Count > 1;
-
         SetPlayerName();
-        _seedFieldResizer.UpdateText(Random.Range(999999, int.MaxValue).ToString());
-        _playerIcon.sprite = _characterSprites[LocalDataStorage.Instance.PlayerData.PlayerStats.SpriteIndex].Sprite;
+        _seedFieldResizer.UpdateText(UnityEngine.Random.Range(999999, int.MaxValue).ToString());
+        _playerIcon.sprite = _collectibles[LocalDataStorage.Instance.PlayerData.PlayerStats.SpriteIndex].Sprite;
     }
 
     private void SetPlayerName()
@@ -103,9 +97,9 @@ public class CharacterSelection : MonoBehaviour
 
     private string BuildRandomName()
     {
-        string property = _properties[Random.Range(0, _properties.Count)];
-        string thing = _things[Random.Range(0, _things.Count)];
-        int number = Random.Range(10, 100);
+        string property = _properties[UnityEngine.Random.Range(0, _properties.Count)];
+        string thing = _things[UnityEngine.Random.Range(0, _things.Count)];
+        int number = UnityEngine.Random.Range(10, 100);
 
         string generatedName = $"{property}{thing}{number}";
 
@@ -117,7 +111,7 @@ public class CharacterSelection : MonoBehaviour
         _currentIconIndex--;
         if (_currentIconIndex < 0)
         {
-            _currentIconIndex = _characterSprites.Count - 1;
+            _currentIconIndex = _collectibles.Count - 1;
         }
 
         UpdatePlayerIcon();
@@ -126,7 +120,7 @@ public class CharacterSelection : MonoBehaviour
     public void Next()
     {
         _currentIconIndex++;
-        if (_currentIconIndex >= _characterSprites.Count)
+        if (_currentIconIndex >= _collectibles.Count)
         {
             _currentIconIndex = 0;
         }
@@ -136,6 +130,8 @@ public class CharacterSelection : MonoBehaviour
 
     private void UpdatePlayerIcon()
     {
-        _playerIcon.sprite = _characterSprites[_currentIconIndex].Sprite;
+        _playerIcon.sprite = _collectibles[_currentIconIndex].Sprite;
+        _playerIcon.color = LocalDataStorage.Instance.PlayerData.UnlockedCollectibleData.HasMisc(_collectibles[_currentIconIndex]) ? Color.white : Color.black;
+        OnIconChanged?.Invoke(LocalDataStorage.Instance.PlayerData.UnlockedCollectibleData.HasMisc(_collectibles[_currentIconIndex]));
     }
 }

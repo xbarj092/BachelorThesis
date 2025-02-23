@@ -353,14 +353,15 @@ public class Kitten : Enemy
         if (collision.gameObject.CompareTag(GlobalConstants.Tags.Player.ToString()) &&
             collision.gameObject.TryGetComponent(out Player player) && !IsRunningAway)
         {
-            if (LocalDataStorage.Instance.PlayerData.PlayerStats.CurrentFood > 1)
+            if (LocalDataStorage.Instance.PlayerData.PlayerStats.CurrentFood > 1 && !player.IsInvincible)
             {
                 UGSAnalyticsManager.Instance.RecordFoodStolen(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
                 AudioManager.Instance.Play(SoundType.FoodPickedUp);
-                player.EatFood();
+                player.EatFood(transform.position);
+                _renderer.sprite = _foodSprite;
             }
             _currentTimeToLive = _timeToLive;
-            RunningAway(true);
+            IsRunningAway = true;
         }
 
         if (collision.gameObject.TryGetComponent(out UseableItem item) && item.Stats.ItemType == ItemType.Mouse && item.Used)
