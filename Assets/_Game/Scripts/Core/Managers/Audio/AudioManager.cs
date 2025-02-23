@@ -51,7 +51,6 @@ public class AudioManager : MonoSingleton<AudioManager>
             foreach (KeyValuePair<SoundGroup, float> soundSetting in soundSettings)
             {
                 _masterMixer.audioMixer.SetFloat(GetNameFromGroup(soundSetting.Key), soundSetting.Value);
-                Debug.Log(GetSoundVolume(soundSetting.Key));
             }
         }
         else

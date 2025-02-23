@@ -9,7 +9,7 @@ public abstract class ConsumableItemStrategy : StrategyBase<ConsumableItem, Cons
 
         AudioManager.Instance.Play(SoundType.FoodPickedUp);
 
-        LocalDataStorage.Instance.PlayerData.UnlockedCollectibleData.AddUseable(item.Stats);
+        LocalDataStorage.Instance.PlayerData.UnlockedCollectibleData.AddConsumable(item.Stats);
         base.PickUp(item);
     }
 }

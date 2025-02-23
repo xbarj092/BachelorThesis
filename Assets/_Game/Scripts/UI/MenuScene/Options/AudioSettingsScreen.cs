@@ -10,10 +10,6 @@ public class AudioSettingsScreen : BaseScreen
 
     private void Start()
     {
-        Debug.Log(AudioManager.Instance.GetSoundVolume(SoundGroup.None));
-        Debug.Log(AudioManager.Instance.GetSoundVolume(SoundGroup.SFX));
-        Debug.Log(AudioManager.Instance.GetSoundVolume(SoundGroup.Music));
-        Debug.Log(AudioManager.Instance.GetSoundVolume(SoundGroup.UI));
         _masterSlider.value = AudioManager.Instance.GetSoundVolume(SoundGroup.None);
         _sfxSlider.value = AudioManager.Instance.GetSoundVolume(SoundGroup.SFX);
         _musicSlider.value = AudioManager.Instance.GetSoundVolume(SoundGroup.Music);
