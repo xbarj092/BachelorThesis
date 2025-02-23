@@ -45,7 +45,7 @@ public class TutorialKittensAction : TutorialAction
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && ScreenManager.Instance.ActiveGameScreen == null)
         {
             _currentMouseClickAction?.Invoke();
         }
@@ -71,6 +71,8 @@ public class TutorialKittensAction : TutorialAction
         _cinemachineCamera.m_Follow = TutorialManager.Instance.CurrentKittenInRange.transform;
 
         TutorialManager.Instance.IsPaused = true;
+        TutorialManager.Instance.CanUseItem = false;
+        TutorialManager.Instance.CanDropItem = false;
         _background.gameObject.SetActive(true);
         StartCoroutine(DelayedItemHighlight());
     }
@@ -177,6 +179,8 @@ public class TutorialKittensAction : TutorialAction
     {
         _kittenCutout.gameObject.SetActive(false);
         _itemCutout.gameObject.SetActive(true);
+        TutorialManager.Instance.CanUseItem = true;
+        TutorialManager.Instance.CanDropItem = false;
         _itemCutout.transform.localPosition += new Vector3(ITEM_HIGHLIGHT_OFFSET * _index, 0);
         _tutorialPlayer.SetTextTransform(_itemTransform);
         _tutorialPlayer.SetTextLocalPosition(_tutorialPlayer.PublicText.transform.localPosition + new Vector3(ITEM_HIGHLIGHT_OFFSET * _index, 0));
@@ -321,9 +325,9 @@ public class TutorialKittensAction : TutorialAction
 
     private void OnAfterWaitTime()
     {
-        _continueButton.gameObject.SetActive(true);
         if (_nextAction != null)
         {
+            _continueButton.gameObject.SetActive(true);
             _currentMouseClickAction = new(_nextAction);
             _nextAction = null;
         }

@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f3bd5a18b21b14050250b40e901272aba308064d4291fd85ac73e59a602f0028
-size 304
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Video;
+
+[CreateAssetMenu(fileName = "TutorialStorage", menuName = "Game/TutorialStorage")]
+public class TutorialStorage : ScriptableObject
+{
+    public string Title;
+    public bool Replayable;
+    public VideoClip VideoClip;
+    public List<string> Strings;
+}

@@ -13,7 +13,7 @@ public class TutorialStatusEffect : TutorialAction
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && ScreenManager.Instance.ActiveGameScreen == null)
         {
             _currentMouseClickAction?.Invoke();
         }

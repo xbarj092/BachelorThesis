@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private List<Sprite> _characterSprites;
 
     [Header("Field of View Settings")]
-    [SerializeField] private float _viewRange = 6f;
+    [SerializeField] private float _viewRange = 12f;
     [SerializeField] private float _viewAngle = 60f;
 
     private bool _invincible;
@@ -117,7 +118,7 @@ public class Player : MonoBehaviour
             {
                 if (!TutorialManager.Instance.CompletedTutorialIDs.Contains(TutorialID.ItemInteractions) && !TutorialManager.Instance.IsTutorialPlaying(TutorialID.ItemInteractions))
                 {
-                    if (hit.TryGetComponent(out UseableItem item))
+                    if (hit.TryGetComponent(out UseableItem item) && item.IsInteractable)
                     {
                         TutorialManager.Instance.InstantiateTutorial(TutorialID.ItemInteractions);
                         TutorialManager.Instance.CurrentItemInRange = item;

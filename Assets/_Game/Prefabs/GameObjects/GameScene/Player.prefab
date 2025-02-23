@@ -398,7 +398,7 @@ MonoBehaviour:
   _mapLayer:
     serializedVersion: 2
     m_Bits: 256
-  _maxRange: 3
+  _maxRange: 3.5
   _interactionZone: {fileID: 0}
   _player: {fileID: 5670428107928283071}
 --- !u!114 &5670428107928283071
@@ -418,7 +418,7 @@ MonoBehaviour:
   _characterSprites:
   - {fileID: 21300000, guid: 22e993e5c189c284fa55fbbfe4128104, type: 3}
   - {fileID: 21300000, guid: 40a1805ffb257844092d96994312ab57, type: 3}
-  _viewRange: 3
+  _viewRange: 3.2
   _viewAngle: 160
 --- !u!114 &4608072559281339292
 MonoBehaviour:
