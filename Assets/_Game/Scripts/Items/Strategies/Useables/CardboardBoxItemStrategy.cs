@@ -19,15 +19,12 @@ public class CardboardBoxItemStrategy : UseableItemStrategy
 
     public override void Use(UseableItem item)
     {
-        AudioManager.Instance.Play(SoundType.ItemUsedCardboardBox);
-
-        Debug.Log("[CardboardBoxItemStrategy] - Used cardboard box!");
         PlaceOnMousePosition(item);
+        AudioManager.Instance.Play(SoundType.ItemUsed);
     }
 
     public override void PickUp(UseableItem item)
     {
         base.PickUp(item);
-        Debug.Log("[CardboardBoxItemStrategy] - Picked up cardboard box!");
     }
 }

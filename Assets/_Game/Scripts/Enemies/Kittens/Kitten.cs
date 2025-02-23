@@ -17,6 +17,7 @@ public class Kitten : Enemy
     [SerializeField] private Sprite _defaultSprite;
     [SerializeField] private Sprite _focusedSprite;
     [SerializeField] private Sprite _trappedSprite;
+    [SerializeField] private Sprite _foodSprite;
     [SerializeField] private Material _defaultMaterial;
     [SerializeField] private Material _outlineMaterial;
 
@@ -127,6 +128,7 @@ public class Kitten : Enemy
         if (IsDead) return _deadSprite;
         if (IsTrapped) return _trappedSprite;
         if (CanSeeTarget) return _focusedSprite;
+        if (IsRunningAway) return _foodSprite;
         return _defaultSprite;
     }
 
@@ -334,7 +336,7 @@ public class Kitten : Enemy
     {
         _currentTarget = null;
         _currentFocusType = FocusTargetType.None;
-        if (!IsTrapped)
+        if (!IsTrapped && !IsRunningAway)
         {
             _renderer.sprite = _defaultSprite;
         }
@@ -354,10 +356,11 @@ public class Kitten : Enemy
             if (LocalDataStorage.Instance.PlayerData.PlayerStats.CurrentFood > 1)
             {
                 UGSAnalyticsManager.Instance.RecordFoodStolen(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
+                AudioManager.Instance.Play(SoundType.FoodPickedUp);
                 player.EatFood();
             }
             _currentTimeToLive = _timeToLive;
-            IsRunningAway = true;
+            RunningAway(true);
         }
 
         if (collision.gameObject.TryGetComponent(out UseableItem item) && item.Stats.ItemType == ItemType.Mouse && item.Used)
@@ -365,6 +368,12 @@ public class Kitten : Enemy
             ItemManager.Instance.SpawnedItems.Remove(item);
             Destroy(item.gameObject);
         }
+    }
+
+    public void RunningAway(bool runningAway)
+    {
+        IsRunningAway = runningAway;
+        _renderer.sprite = runningAway ? _foodSprite : _defaultSprite;
     }
 
     public bool CanPerformActions()

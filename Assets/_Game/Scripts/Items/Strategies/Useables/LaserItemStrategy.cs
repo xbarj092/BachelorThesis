@@ -42,8 +42,8 @@ public class LaserItemStrategy : UseableItemStrategy
 
     public override void Use(UseableItem item)
     {
+        AudioManager.Instance.Play(SoundType.ItemUsed);
         MonoBehaviour.StartCoroutine(DepleteBattery(item));
-        Debug.Log("[LaserItemStrategy] - Used laser!");
     }
 
     private IEnumerator DepleteBattery(UseableItem item)
@@ -58,7 +58,6 @@ public class LaserItemStrategy : UseableItemStrategy
     public override void PickUp(UseableItem item)
     {
         base.PickUp(item);
-        Debug.Log("[LaserItemStrategy] - Picked up laser!");
     }
 
     public void StopCoroutines()

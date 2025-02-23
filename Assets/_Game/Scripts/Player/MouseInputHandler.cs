@@ -54,8 +54,6 @@ public class MouseInputHandler
                     }
                 }
 
-                AudioManager.Instance.Play(SoundType.ItemPickedUp);
-
                 OnItemPickedUp?.Invoke(item);
                 return true;
             }
@@ -66,8 +64,6 @@ public class MouseInputHandler
             if (item != null)
             {
                 OnConsumablePickedUp?.Invoke(item);
-
-                AudioManager.Instance.Play(SoundType.FoodPickedUp);
             }
         }
         return false;

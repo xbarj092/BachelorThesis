@@ -21,5 +21,7 @@ public class PotionItemStrategy : ConsumableItemStrategy
 
         LocalDataStorage.Instance.PlayerData.PlayerStats = playerStats;
         base.PickUp(item);
+        AudioManager.Instance.Stop(SoundType.FoodPickedUp);
+        AudioManager.Instance.Play(SoundType.PotionPickUp);
     }
 }

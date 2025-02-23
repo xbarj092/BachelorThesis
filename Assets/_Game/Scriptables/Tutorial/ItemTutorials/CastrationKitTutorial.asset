@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:bb4b69bffa109a0f51e6dca40212a70469e1357fee5b751f71392cc1029e4286
-size 573
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c1e14b2a10164468c2c672ff798b4e, type: 3}
+  m_Name: CastrationKitTutorial
+  m_EditorClassIdentifier: 
+  Title: CASTRATION KIT
+  Replayable: 1
+  VideoClip: {fileID: 32900000, guid: 638d125ab5b1a1d42b45d93888b7b136, type: 3}
+  Strings:
+  - Can be used to prevent kitten from reproducing. Works really well as overpopulation
+    prevention

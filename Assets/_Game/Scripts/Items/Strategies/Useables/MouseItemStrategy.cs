@@ -20,7 +20,7 @@ public class MouseItemStrategy : UseableItemStrategy
 
     public override void Use(UseableItem item)
     {
-        Debug.Log("[MouseItemStrategy] - Used mouse!");
+        AudioManager.Instance.Play(SoundType.ItemUsed);
         PlaceOnMousePosition(item);
         MoveAwayFromPlayerSinusoid(item);
     }
@@ -28,7 +28,6 @@ public class MouseItemStrategy : UseableItemStrategy
     public override void PickUp(UseableItem item)
     {
         base.PickUp(item);
-        Debug.Log("[MouseItemStrategy] - Picked up mouse!");
     }
 
     private void MoveAwayFromPlayerSinusoid(UseableItem item)

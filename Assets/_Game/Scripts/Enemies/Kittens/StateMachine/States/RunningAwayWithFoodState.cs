@@ -132,7 +132,7 @@ public class RunningAwayWithFoodState : BaseState
     public override void OnStateExit()
     {
         Debug.Log("[RunningAwayWithFoodState] - exitted running state");
-        _kitten.IsRunningAway = false;
+        _kitten.RunningAway(false);
     }
 
     private void FollowPath()

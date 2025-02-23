@@ -237,6 +237,7 @@ MonoBehaviour:
     NumberOfSource: 1
     Volume: 1
     Pitch: 1
+    VariablePitch: 0
     Source: []
   - Name: 4
     Group: 3
@@ -245,6 +246,7 @@ MonoBehaviour:
     NumberOfSource: 1
     Volume: 0.25
     Pitch: 1
+    VariablePitch: 0
     Source: []
   - Name: 2
     Group: 2
@@ -253,6 +255,7 @@ MonoBehaviour:
     NumberOfSource: 1
     Volume: 0.25
     Pitch: 1
+    VariablePitch: 0
     Source: []
   - Name: 16
     Group: 1
@@ -261,14 +264,16 @@ MonoBehaviour:
     NumberOfSource: 1
     Volume: 0.5
     Pitch: 1
+    VariablePitch: 1
     Source: []
-  - Name: 11
+  - Name: 10
     Group: 1
     Clip: {fileID: 8300000, guid: da95949a77f18e84791b023d3cbde7e9, type: 3}
     SpatialBlend: 0
     NumberOfSource: 1
     Volume: 0.5
     Pitch: 0.5
+    VariablePitch: 1
     Source: []
   - Name: 8
     Group: 1
@@ -277,6 +282,7 @@ MonoBehaviour:
     NumberOfSource: 1
     Volume: 0.5
     Pitch: 1
+    VariablePitch: 1
     Source: []
   - Name: 6
     Group: 1
@@ -285,6 +291,16 @@ MonoBehaviour:
     NumberOfSource: 1
     Volume: 0.5
     Pitch: 1
+    VariablePitch: 1
+    Source: []
+  - Name: 17
+    Group: 1
+    Clip: {fileID: 8300000, guid: 4718647772b49c04d90c094f994c4b24, type: 3}
+    SpatialBlend: 0
+    NumberOfSource: 1
+    Volume: 0.5
+    Pitch: 1
+    VariablePitch: 1
     Source: []
   Muted: 0
 --- !u!1 &5360620200155502889

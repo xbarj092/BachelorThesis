@@ -1,3 +1,19 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b88078d022d66aa866d38762f0a95f17eaf080b043e94988a4cbf010151d810a
-size 519
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c1e14b2a10164468c2c672ff798b4e, type: 3}
+  m_Name: Towel
+  m_EditorClassIdentifier: 
+  Title: TOWEL
+  Replayable: 1
+  VideoClip: {fileID: 32900000, guid: ec29d94295502c84abeb108927c69b89, type: 3}
+  Strings:
+  - Immobilizes kitten, but the kitten can free itself after a short time

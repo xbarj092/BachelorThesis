@@ -1,3 +1,25 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e97246ae0063c2e369b95549a467955e39552cfc49d93e28094d80f2df269c36
-size 481
+public enum SoundType
+{
+    None = 0,
+
+    // music
+    MenuMusic = 1,
+    GameAmbience = 2,
+
+    // UI
+    ButtonPress = 3,
+    ButtonHover = 4,
+    TutorialPopup = 5,
+
+    // SFX - items
+    FoodPickedUp = 6,
+    ItemPickedUp = 8,
+    ItemUsed = 10,
+    PotionPickUp = 17,
+
+    ItemUseMouse = 14,
+    ItemUseTowel = 15,
+
+    // SFX - other
+    Footsteps = 16,
+}

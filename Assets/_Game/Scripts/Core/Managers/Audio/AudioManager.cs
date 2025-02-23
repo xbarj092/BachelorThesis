@@ -70,6 +70,8 @@ public class AudioManager : MonoSingleton<AudioManager>
     public void Play(SoundType name)
     {
         Sound sound = _sounds.FirstOrDefault(sound => sound.Name == name);
+        if (sound == null) return;
+
         bool find = false;
 
         AudioSource foundSource = sound.Source.Find((source) => {
@@ -77,14 +79,29 @@ public class AudioManager : MonoSingleton<AudioManager>
             return find;
         });
 
+        if (foundSource == null)
+        {
+            foundSource = sound.Source[0];
+        }
+
         if (foundSource != null)
         {
-            foundSource.Play();
+            StartCoroutine(PlayWithPitchVariation(foundSource, sound.VariablePitch));
         }
-        else
+    }
+
+    private IEnumerator PlayWithPitchVariation(AudioSource source, bool variablePitch)
+    {
+        float originalPitch = source.pitch;
+
+        if (variablePitch)
         {
-            sound.Source[0].Play();
+            source.pitch += UnityEngine.Random.Range(-0.08f, 0.09f);
         }
+
+        source.Play();
+        yield return new WaitForSeconds(source.clip.length);
+        source.pitch = originalPitch;
     }
 
     public void Stop(SoundType name)

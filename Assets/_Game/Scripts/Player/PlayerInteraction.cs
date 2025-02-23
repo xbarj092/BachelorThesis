@@ -329,6 +329,8 @@ public class PlayerInteraction : MonoBehaviour
                 return;
             }
 
+            AudioManager.Instance.Play(SoundType.ItemUsed);
+
             _carryingItem.PickUp();
         }
 
@@ -341,6 +343,8 @@ public class PlayerInteraction : MonoBehaviour
         {
             StopUsingItem(default);
         }
+
+        AudioManager.Instance.Play(SoundType.ItemUsed);
 
         _carryingItem.IsPickedUp(false);
         DestroyGhostItem();
@@ -384,6 +388,8 @@ public class PlayerInteraction : MonoBehaviour
         {
             TutorialEvents.OnItemDroppedInvoke();
         }
+
+        AudioManager.Instance.Play(SoundType.ItemUsed);
 
         LocalDataStorage.Instance.PlayerData.InventoryData = inventoryData;
         if (_carryingItem != null)
@@ -468,6 +474,11 @@ public class PlayerInteraction : MonoBehaviour
         if (!TutorialManager.Instance.IsTutorialCompleted(item.Stats.ItemType) && !TutorialManager.Instance.IsTutorialPlaying())
         {
             TutorialManager.Instance.InstantiateTutorial(item.Stats.ItemType);
+        }
+
+        if (!AudioManager.Instance.IsPlaying(SoundType.ItemUsed))
+        {
+            AudioManager.Instance.Play(SoundType.ItemPickedUp);
         }
 
         item.IsPickedUp(true);
