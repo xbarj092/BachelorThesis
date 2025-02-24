@@ -16,5 +16,4 @@ MonoBehaviour:
   Replayable: 1
   VideoClip: {fileID: 32900000, guid: 638d125ab5b1a1d42b45d93888b7b136, type: 3}
   Strings:
-  - Can be used to prevent kitten from reproducing. Works really well as overpopulation
-    prevention
+  - Prevents kittens from reproducing. Highly effective for controlling overpopulation.

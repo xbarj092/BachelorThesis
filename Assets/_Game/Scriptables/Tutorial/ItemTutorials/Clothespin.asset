@@ -16,4 +16,4 @@ MonoBehaviour:
   Replayable: 1
   VideoClip: {fileID: 32900000, guid: 57c6c90c7e1f18847b15d07fe9af9212, type: 3}
   Strings:
-  - Immobilizes kitten
+  - Immobilizes a kitten.

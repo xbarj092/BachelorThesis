@@ -71,7 +71,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     {
         return consumableType switch
         {
-            ConsumableType.Steak or ConsumableType.Fish => TutorialID.FoodPickup,
+            ConsumableType.Steak or ConsumableType.Fish or ConsumableType.GoldenApple => TutorialID.FoodPickup,
             ConsumableType.InvisibilityPotion => TutorialID.InvisibilityPotionPickup,
             _ => default
         };

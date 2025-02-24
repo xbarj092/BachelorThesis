@@ -20,7 +20,7 @@ public class UnlockedCollectibleData
 
         list.Add(new(collectible));
 
-        if (UnlockedConsumables.Count == 3 && UnlockedUseableItems.Count == 6 &&
+        if (UnlockedConsumables.Count == 4 && UnlockedUseableItems.Count == 6 &&
             UnlockedEnemies.Count == 1 && UnlockedMisc.Count == 1)
         {
             UnlockedMisc.Add(new() { Title = "OG Player" });

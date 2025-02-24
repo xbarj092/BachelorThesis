@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class DeathScreen : BaseScreen
 {
+    [SerializeField] private GameObject _loadButton;
     [SerializeField] private TMP_Text _survivalTimeText;
 
     private const string SURVIVAL_TIME_TEXT_PREFIX = "You survived for ";
@@ -11,6 +12,9 @@ public class DeathScreen : BaseScreen
     {
         Time.timeScale = 0;
         _survivalTimeText.text = SURVIVAL_TIME_TEXT_PREFIX + TimeUtils.GetFormattedTimeFromSeconds(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
+
+        GameSave currentSave = LocalDataStorage.Instance.GameData.CurrentSave;
+        _loadButton.SetActive(SceneLoadManager.Instance.IsSceneLoaded(SceneLoader.Scenes.GameScene) && currentSave != null && !string.IsNullOrEmpty(currentSave.Name));
     }
 
     public void LoadLastSave()

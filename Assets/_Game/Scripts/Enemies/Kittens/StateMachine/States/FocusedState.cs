@@ -1,12 +1,13 @@
 using MapGenerator;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 public class FocusedState : BaseState
 {
     [SerializeField] private float _chaseSpeed = 1f;
+    [SerializeField] private float _chaseSpeedAfter1Min = 0.9f;
+    [SerializeField] private float _chaseSpeedAfter2Mins = 1.15f;
     [SerializeField] private float _timeoutDuration = 3f;
 
     private List<PathNode> _path = new();
@@ -319,10 +320,27 @@ public class FocusedState : BaseState
         }
 
         Vector3 direction = (targetPosition - _kitten.transform.position).normalized;
+        float chaseSpeed = GetChaseSpeed(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
         _kitten.transform.position += (_chaseSpeed * Time.deltaTime * direction);
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90;
         _kitten.transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    private float GetChaseSpeed(int timeAlive)
+    {
+        if (timeAlive > 120)
+        {
+            return _chaseSpeedAfter2Mins;
+        }
+        else if (timeAlive > 60)
+        {
+            return _chaseSpeedAfter1Min;
+        }
+        else
+        {
+            return _chaseSpeed;
+        }
     }
 
     private PathNode FindClosestWalkableNeighbor(int nodeX, int nodeY)

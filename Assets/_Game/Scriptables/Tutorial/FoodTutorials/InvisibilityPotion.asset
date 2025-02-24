@@ -17,4 +17,4 @@ MonoBehaviour:
   VideoClip: {fileID: 32900000, guid: 48f88fa1d7df95147b7c6108f3e7987f, type: 3}
   Strings:
   - After consuming, kittens cant see you for a short period of time, but they can
-    still feel you, so dont touch them
+    still feel you, so dont touch them.

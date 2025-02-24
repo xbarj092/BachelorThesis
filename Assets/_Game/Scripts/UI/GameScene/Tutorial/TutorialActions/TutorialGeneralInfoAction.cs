@@ -47,6 +47,14 @@ public class TutorialGeneralInfoAction : TutorialAction
 
     private void OnAfterHungerMeter()
     {
+        _tutorialPlayer.MoveToNextNarratorText();
+        StartCoroutine(DelayedClickToContinue());
+        _currentMouseClickAction = WaitSkip;
+        _nextAction = OnAfterGamePoint;
+    }
+
+    private void OnAfterGamePoint()
+    {
         _hungerMeterCutout.gameObject.SetActive(false);
         _timeAliveCutout.gameObject.SetActive(true);
         _tutorialPlayer.SetTextTransform(_timeAliveTransform);

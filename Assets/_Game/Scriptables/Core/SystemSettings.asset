@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb647219809fc244ae0748acf2e2541, type: 3}
   m_Name: SystemSettings
   m_EditorClassIdentifier: 
-  CurrentEnvironment: 0
+  CurrentEnvironment: 1
   LootLockerLeaderboardIDs:
     _serializedList:
     - Key: 0

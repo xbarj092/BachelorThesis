@@ -358,6 +358,7 @@ public class Kitten : Enemy
                 UGSAnalyticsManager.Instance.RecordFoodStolen(LocalDataStorage.Instance.PlayerData.PlayerStats.TimeAlive);
                 AudioManager.Instance.Play(SoundType.FoodPickedUp);
                 player.EatFood(transform.position);
+                GameEvents.OnFoodStateChangedInvoke(-_stats.StealAmount);
                 _renderer.sprite = _foodSprite;
             }
             _currentTimeToLive = _timeToLive;

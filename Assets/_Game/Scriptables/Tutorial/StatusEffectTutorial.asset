@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:834ad1116ff6f489b7a159e08c6db736dcf7d2c5f1143f872826eae21626c2d2
-size 695
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c1e14b2a10164468c2c672ff798b4e, type: 3}
+  m_Name: StatusEffectTutorial
+  m_EditorClassIdentifier: 
+  Title: STATUS EFFECTS
+  Replayable: 0
+  VideoClip: {fileID: 0}
+  Strings:
+  - Some potions grant temporary status effects.
+  - Active status effects are displayed in the top left corner of the screen.
+  - You can see how long each status effect will remain active.

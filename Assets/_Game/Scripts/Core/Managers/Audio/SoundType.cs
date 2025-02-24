@@ -22,4 +22,5 @@ public enum SoundType
 
     // SFX - other
     Footsteps = 16,
+    Rumbling = 17,
 }

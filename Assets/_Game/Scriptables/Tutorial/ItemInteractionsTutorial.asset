@@ -1,3 +1,23 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1fdfd24f38cf5e9da7c3f952a1a075a96c55ab05fd2cccd63d76526ccbd86683
-size 769
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c1e14b2a10164468c2c672ff798b4e, type: 3}
+  m_Name: ItemInteractionsTutorial
+  m_EditorClassIdentifier: 
+  Title: ITEM INTERACTIONS
+  Replayable: 0
+  VideoClip: {fileID: 0}
+  Strings:
+  - Hey, an item! Click {0} or collide with it to pick it up.
+  - Once picked up, the item will be stored in your inventory. Click {0} to move
+    it there.
+  - To equip an item from your inventory, press {0} again.
+  - You can drop unwanted items with {0}.

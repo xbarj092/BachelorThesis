@@ -641,6 +641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameScreenType: 2
+  _loadButton: {fileID: 5694789049303733177}
   _survivalTimeText: {fileID: 7925440669255683647}
 --- !u!1001 &1469738284979847713
 PrefabInstance:
@@ -759,6 +760,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}
+--- !u!1 &5694789049303733177 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6584961228283351448, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}
+  m_PrefabInstance: {fileID: 1469738284979847713}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8100627491332608318 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7209905551203947295, guid: 80df890a01ae28a48aa02fa2d734c002, type: 3}

@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: KittensTutorial
   m_EditorClassIdentifier: 
   Title: KITTENS
+  Replayable: 0
   VideoClip: {fileID: 0}
   Strings:
-  - Beware of kittens. They are hungry and will steal your food
-  - Kittens can either see you or hear your steps
-  - Here you can see how much noise you are making
-  - When they are hungry for too long, they will starve to death
-  - If they survive, they will mate, so be careful, as they can overpopulate quickly
+  - Beware of kittens. They are hungry and will steal your food.
+  - Kittens can detect you by sight or by hearing your footsteps.
+  - This indicator shows how much noise you're making.
+  - If they go hungry for too long, they will starve to death.
+  - If they survive, they will mate - be careful, as they can overpopulate quickly.
   - Oh damn, you dont have any items that could help you. The more you walk, the
     louder you are and kittens will hear you.

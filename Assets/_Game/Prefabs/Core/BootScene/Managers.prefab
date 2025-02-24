@@ -223,9 +223,9 @@ MonoBehaviour:
   _mixers:
     _serializedList:
     - Key: 2
-      Value: {fileID: -6805654092006982248, guid: 30f5dfe55936138488d5cb1bec4884ff, type: 2}
-    - Key: 1
       Value: {fileID: 2492351062735055466, guid: 30f5dfe55936138488d5cb1bec4884ff, type: 2}
+    - Key: 1
+      Value: {fileID: -6805654092006982248, guid: 30f5dfe55936138488d5cb1bec4884ff, type: 2}
     - Key: 3
       Value: {fileID: 5411111184790683999, guid: 30f5dfe55936138488d5cb1bec4884ff, type: 2}
   _masterMixer: {fileID: 24300002, guid: 30f5dfe55936138488d5cb1bec4884ff, type: 2}
@@ -308,6 +308,15 @@ MonoBehaviour:
     SpatialBlend: 0
     NumberOfSource: 1
     Volume: 0.5
+    Pitch: 1
+    VariablePitch: 0
+    Source: []
+  - Name: 17
+    Group: 1
+    Clip: {fileID: 8300000, guid: 15e31a4c82c71584888b19d218c3f786, type: 3}
+    SpatialBlend: 0
+    NumberOfSource: 1
+    Volume: 0
     Pitch: 1
     VariablePitch: 0
     Source: []
@@ -446,6 +455,8 @@ MonoBehaviour:
       Value: {fileID: 2242458297373148142, guid: 63d5a82f66fd6f147a191978486750cc, type: 3}
     - Key: 3
       Value: {fileID: 1913867062892782376, guid: 3d3e90bd186788841841dafc3d7d1a28, type: 3}
+    - Key: 4
+      Value: {fileID: 7624099581603710896, guid: 04ddba8f8fb5d57458644c98218ad83d, type: 3}
   SpawnedItems: []
   SavedItems: []
   SpawnedConsumables: []

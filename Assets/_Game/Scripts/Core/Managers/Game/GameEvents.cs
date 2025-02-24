@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:734a4010acbdcae1bba081bf083092042011dffc0f18efa1b21eeb1a721e70f2
-size 180
+using System;
+
+public static class GameEvents
+{
+    public static event Action OnMapLoaded;
+    public static void OnMapLoadedInvoke()
+    {
+        OnMapLoaded?.Invoke();
+    }
+
+    public static event Action<float> OnFoodStateChanged;
+    public static void OnFoodStateChangedInvoke(float foodAmount)
+    {
+        OnFoodStateChanged?.Invoke(foodAmount);
+    }
+
+    public static event Action OnAppleEaten;
+    public static void OnAppleEatenInvoke()
+    {
+        OnAppleEaten?.Invoke();
+    }
+}

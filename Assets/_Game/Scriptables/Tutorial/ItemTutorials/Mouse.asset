@@ -16,4 +16,4 @@ MonoBehaviour:
   Replayable: 1
   VideoClip: {fileID: 32900000, guid: d1df1347b20b81747ab7d4a16683d7eb, type: 3}
   Strings:
-  - Catches kittens attention, and kittens will try to eat it
+  - Catches kittens attention, and kittens will try to eat it.

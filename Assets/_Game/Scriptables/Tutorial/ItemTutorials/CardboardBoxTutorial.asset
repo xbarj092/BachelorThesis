@@ -16,5 +16,5 @@ MonoBehaviour:
   Replayable: 1
   VideoClip: {fileID: 32900000, guid: ccc6a90c97d21b047aad07c598392910, type: 3}
   Strings:
-  - You can place the box anywhere you want, when kitten walks into it, it occupies
-    the box
+  - You can place the box anywhere. When a kitten walks into it, it gets trapped
+    inside.
